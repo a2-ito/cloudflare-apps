@@ -1,26 +1,48 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@source "./src/app/**/*.{ts,tsx}";
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+/* dark: を class ベースに切り替える */
+@custom-variant dark (&:where(.dark, .dark *));
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* 3D フリップ用 */
+@layer utilities {
+  .backface-hidden {
+    backface-visibility: hidden;
+  }
+  .transform-style-preserve-3d {
+    transform-style: preserve-3d;
+  }
+  .rotate-x-180 {
+    transform: rotateX(180deg);
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
-}
+/*@tailwind base;*/
+/*@tailwind components;*/
+/*@tailwind utilities;*/
+
+/*:root {*/
+/*  --background: #ffffff;*/
+/*  --foreground: #171717;*/
+/*}*/
+/**/
+/*@theme inline {*/
+/*  --color-background: var(--background);*/
+/*  --color-foreground: var(--foreground);*/
+/*  --font-sans: var(--font-geist-sans);*/
+/*  --font-mono: var(--font-geist-mono);*/
+/*}*/
+/**/
+/*@media (prefers-color-scheme: dark) {*/
+/*  :root {*/
+/*    --background: #0a0a0a;*/
+/*    --foreground: #ededed;*/
+/*  }*/
+/*}*/
+/**/
+/*body {*/
+/*  background: var(--background);*/
+/*  color: var(--foreground);*/
+/*  font-family: Arial, Helvetica, sans-serif;*/
+/*}*/
