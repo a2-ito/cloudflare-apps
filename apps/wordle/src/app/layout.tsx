@@ -1,4 +1,3 @@
-
 import "./globals.css";
 
 export default function RootLayout({
@@ -8,10 +7,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="ja" className="">
-      <body className="font-sans bg-gray-100 text-gray-900 dark:bg-gray-900 dark:text-gray-100">
+      <body className="bg-gray-100 font-sans text-gray-900 dark:bg-gray-900 dark:text-gray-100">
         {children}
       </body>
     </html>
   );
 }
-

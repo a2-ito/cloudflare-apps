@@ -1,4 +1,3 @@
-
 "use client";
 
 type Props = {
@@ -9,10 +8,8 @@ type Props = {
 
 export default function ResultModal({ state, answer, onClose }: Props) {
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center
-                    bg-black/40">
-      <div className="w-80 rounded-lg bg-white p-6 text-center
-                      dark:bg-gray-800">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
+      <div className="w-80 rounded-lg bg-white p-6 text-center dark:bg-gray-800">
         <h2 className="mb-2 text-xl font-bold">
           {state === "won" ? "🎉 You Win!" : "😢 Game Over"}
         </h2>
@@ -23,8 +20,7 @@ export default function ResultModal({ state, answer, onClose }: Props) {
 
         <button
           onClick={onClose}
-          className="rounded bg-green-600 px-4 py-2
-                     font-bold text-white hover:bg-green-700"
+          className="rounded bg-green-600 px-4 py-2 font-bold text-white hover:bg-green-700"
         >
           OK
         </button>
