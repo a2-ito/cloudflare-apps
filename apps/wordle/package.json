@@ -7,10 +7,12 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
+    "deploy": "opennextjs-cloudflare build && opennextjs-cloudflare deploy",
     "format": "prettier --check .",
     "format:fix": "prettier --write ."
   },
   "dependencies": {
+    "@opennextjs/cloudflare": "^1.14.4",
     "i18next-resources-to-backend": "^1.2.1",
     "next": "16.0.10",
     "react": "19.2.1",
