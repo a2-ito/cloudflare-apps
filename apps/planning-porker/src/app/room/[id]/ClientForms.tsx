@@ -106,12 +106,12 @@ export function ClientForms({
             name="name"
             placeholder="あなたの名前"
             required
-            className="w-full rounded-lg border bg-white px-4 py-2 text-slate-900 placeholder:text-slate-400 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+            className="w-full rounded-lg border bg-white px-4 py-3 text-base text-slate-900 placeholder:text-slate-400 focus:ring-2 focus:ring-blue-500 focus:outline-none"
           />
 
           <button
             type="submit"
-            className="w-full rounded-lg bg-blue-600 py-2 font-semibold text-white transition hover:bg-blue-700"
+            className="rounded-lx w-full bg-blue-600 py-3 text-lg font-semibold text-white transition hover:bg-blue-700 active:scale-95"
           >
             参加
           </button>

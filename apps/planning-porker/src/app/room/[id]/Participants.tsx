@@ -22,7 +22,7 @@ export function Participants({ participants, votes, revealed }: Props) {
   }, [participants, votes]);
 
   return (
-    <ul className="grid grid-cols-2 gap-4">
+    <ul className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-5">
       {participants.map((p) => {
         const voted = votedMap[p];
 
@@ -32,7 +32,9 @@ export function Participants({ participants, votes, revealed }: Props) {
               {/* 裏面 */}
               <div className="card-face card-back">
                 <div className="text-center">
-                  <div className="text-sm text-slate-700">{p}</div>
+                  <div className="text-sm text-slate-700 sm:text-base md:text-lg">
+                    {p}
+                  </div>
                   <div className="mt-1 text-3xl font-bold text-slate-700">
                     {voted ? "✓" : "…"}
                   </div>

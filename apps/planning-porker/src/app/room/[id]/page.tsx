@@ -88,14 +88,16 @@ export default async function RoomPage({ params }: Props) {
         <>
           <h2>参加 / 投票</h2>
 
-          <ClientForms
-            roomId={id}
-            onJoin={joinRoom.bind(null, id)}
-            onVote={vote.bind(null, id)}
-            onUnvote={unvote.bind(null, id)}
-            onLeave={leaveRoom}
-            revealed={room.revealed}
-          />
+          <div className="fixed right-0 bottom-0 left-0 z-40 border-t bg-white p-3 sm:static sm:border-0">
+            <ClientForms
+              roomId={id}
+              onJoin={joinRoom.bind(null, id)}
+              onVote={vote.bind(null, id)}
+              onUnvote={unvote.bind(null, id)}
+              onLeave={leaveRoom}
+              revealed={room.revealed}
+            />
+          </div>
         </>
       )}
 
