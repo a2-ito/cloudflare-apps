@@ -20,489 +20,6 @@ const emptyStatuses: TileStatus[][] = Array.from({ length: ROWS }, () =>
 
 const emptyFlippedRows: boolean[] = Array.from({ length: ROWS }, () => false);
 
-// 日替わりワード（固定ワードリスト）
-// 日替わりワード用・5文字英単語リスト（拡張版）
-// ※ すべて小文字・5文字
-const WORDS = [
-  "about",
-  "above",
-  "abuse",
-  "actor",
-  "acute",
-  "admit",
-  "adopt",
-  "adult",
-  "after",
-  "again",
-  "agent",
-  "agree",
-  "ahead",
-  "alarm",
-  "album",
-  "alert",
-  "alike",
-  "alive",
-  "allow",
-  "alone",
-  "along",
-  "alter",
-  "among",
-  "anger",
-  "angle",
-  "angry",
-  "apart",
-  "apple",
-  "apply",
-  "arena",
-  "argue",
-  "arise",
-  "array",
-  "aside",
-  "asset",
-  "audio",
-  "audit",
-  "avoid",
-  "award",
-  "aware",
-
-  "badly",
-  "baker",
-  "bases",
-  "basic",
-  "basis",
-  "beach",
-  "began",
-  "begin",
-  "begun",
-  "being",
-  "below",
-  "bench",
-  "billy",
-  "birth",
-  "black",
-  "blame",
-  "blind",
-  "block",
-  "blood",
-  "board",
-  "boost",
-  "booth",
-  "bound",
-  "brain",
-  "brand",
-  "bread",
-  "break",
-  "breed",
-  "brief",
-  "bring",
-  "broad",
-  "brown",
-  "build",
-  "buyer",
-  "cable",
-  "calif",
-  "carry",
-  "catch",
-  "cause",
-  "chain",
-
-  "chair",
-  "chart",
-  "chase",
-  "cheap",
-  "check",
-  "chest",
-  "chief",
-  "child",
-  "china",
-  "chose",
-  "civil",
-  "claim",
-  "class",
-  "clean",
-  "clear",
-  "click",
-  "clock",
-  "close",
-  "coach",
-  "coast",
-  "could",
-  "count",
-  "court",
-  "cover",
-  "craft",
-  "crash",
-  "cream",
-  "crime",
-  "cross",
-  "crowd",
-
-  "daily",
-  "dance",
-  "dated",
-  "dealt",
-  "death",
-  "debut",
-  "delay",
-  "depth",
-  "doing",
-  "doubt",
-  "dozen",
-  "draft",
-  "drama",
-  "drawn",
-  "dream",
-  "dress",
-  "drill",
-  "drink",
-  "drive",
-  "drove",
-
-  "eager",
-  "early",
-  "earth",
-  "eight",
-  "elite",
-  "empty",
-  "enemy",
-  "enjoy",
-  "enter",
-  "equal",
-  "error",
-  "event",
-  "every",
-  "exact",
-  "exist",
-  "extra",
-
-  "faith",
-  "false",
-  "fault",
-  "fiber",
-  "field",
-  "fifth",
-  "fifty",
-  "fight",
-  "final",
-  "first",
-  "fixed",
-  "flash",
-  "fleet",
-  "floor",
-  "fluid",
-  "focus",
-  "force",
-  "forth",
-  "forty",
-  "forum",
-  "found",
-  "frame",
-  "fresh",
-  "front",
-  "fruit",
-  "fully",
-  "funny",
-
-  "giant",
-  "given",
-  "glass",
-  "globe",
-  "going",
-  "grace",
-  "grade",
-  "grand",
-  "grant",
-  "grass",
-  "great",
-  "green",
-  "gross",
-  "group",
-  "grown",
-  "guard",
-  "guess",
-  "guest",
-  "guide",
-
-  "happy",
-  "harry",
-  "heart",
-  "heavy",
-  "hence",
-  "hotel",
-  "house",
-  "human",
-  "ideal",
-  "image",
-  "index",
-  "inner",
-  "input",
-  "issue",
-
-  "japan",
-  "joint",
-  "judge",
-  "known",
-  "label",
-  "large",
-  "laser",
-  "later",
-  "laugh",
-  "layer",
-  "learn",
-  "lease",
-  "least",
-  "leave",
-  "legal",
-  "level",
-  "light",
-  "limit",
-  "local",
-  "logic",
-  "loose",
-  "lower",
-  "lucky",
-  "lunch",
-
-  "major",
-  "maker",
-  "march",
-  "match",
-  "maybe",
-  "media",
-  "metal",
-  "might",
-  "minor",
-  "model",
-  "money",
-  "month",
-  "moral",
-  "motor",
-  "mount",
-  "mouse",
-  "mouth",
-  "movie",
-  "music",
-
-  "never",
-  "newly",
-  "night",
-  "noise",
-  "north",
-  "novel",
-  "nurse",
-
-  "occur",
-  "ocean",
-  "offer",
-  "often",
-  "order",
-  "other",
-  "ought",
-  "paint",
-  "panel",
-  "paper",
-  "party",
-  "peace",
-  "phase",
-  "phone",
-  "photo",
-  "piece",
-  "pilot",
-  "pitch",
-  "place",
-  "plain",
-  "plane",
-  "plant",
-  "plate",
-  "point",
-  "pound",
-  "power",
-  "press",
-  "price",
-  "pride",
-  "prime",
-  "print",
-  "prior",
-  "prize",
-  "proof",
-  "proud",
-  "prove",
-
-  "queen",
-  "quick",
-  "quiet",
-  "quite",
-  "radio",
-  "raise",
-  "range",
-  "rapid",
-  "ratio",
-  "reach",
-  "react",
-  "ready",
-  "refer",
-  "right",
-  "rival",
-  "river",
-  "robot",
-  "rough",
-  "round",
-  "route",
-
-  "scale",
-  "scene",
-  "scope",
-  "score",
-  "sense",
-  "serve",
-  "seven",
-  "shall",
-  "shape",
-  "share",
-  "sharp",
-  "sheet",
-  "shelf",
-  "shell",
-  "shift",
-  "shirt",
-  "shock",
-  "shoot",
-  "short",
-  "shown",
-  "sight",
-  "since",
-  "skill",
-  "sleep",
-  "small",
-  "smart",
-  "smile",
-  "smoke",
-  "solid",
-  "solve",
-  "sorry",
-  "sound",
-  "south",
-  "space",
-  "spare",
-  "speak",
-  "speed",
-  "spend",
-  "spent",
-  "split",
-  "sport",
-  "staff",
-  "stage",
-  "stand",
-  "start",
-  "state",
-  "steam",
-  "steel",
-  "stick",
-  "still",
-  "stock",
-  "stone",
-  "stood",
-  "store",
-  "storm",
-  "story",
-  "strip",
-  "stuck",
-  "study",
-  "stuff",
-  "style",
-  "sugar",
-  "suite",
-  "super",
-  "sweet",
-  "table",
-  "taken",
-  "taste",
-  "teach",
-  "teeth",
-  "thank",
-  "their",
-  "theme",
-  "there",
-  "these",
-  "thick",
-  "thing",
-  "think",
-  "third",
-  "those",
-  "three",
-  "throw",
-  "tight",
-  "times",
-  "tired",
-  "title",
-  "today",
-  "topic",
-  "total",
-  "touch",
-  "tough",
-  "tower",
-  "track",
-  "trade",
-  "train",
-  "treat",
-  "trend",
-  "trial",
-  "tried",
-  "trust",
-  "truth",
-  "twice",
-  "under",
-  "union",
-  "unity",
-  "until",
-  "upper",
-  "upset",
-  "urban",
-  "usage",
-
-  "valid",
-  "value",
-  "video",
-  "virus",
-  "visit",
-  "vital",
-  "voice",
-
-  "waste",
-  "watch",
-  "water",
-  "wheel",
-  "where",
-  "which",
-  "while",
-  "white",
-  "whole",
-  "whose",
-  "woman",
-  "women",
-  "world",
-  "worry",
-  "worth",
-  "would",
-  "write",
-  "wrong",
-
-  "yield",
-  "young",
-  "youth",
-];
-
-function getDailyWord() {
-  const start = new Date("2024-01-01");
-  const today = new Date();
-  const diffDays = Math.floor(
-    (today.getTime() - start.getTime()) / (1000 * 60 * 60 * 24)
-  );
-  return WORDS[diffDays % WORDS.length];
-}
-
-//const ANSWER = getDailyWord();
-
 type TileStatus = "empty" | "correct" | "present" | "absent";
 type KeyStatus = "unused" | "correct" | "present" | "absent";
 
@@ -530,15 +47,7 @@ export default function Board() {
   //const [gameState, setGameState] = useState<"playing" | "won" | "lost">(
   //  "playing"
   //);
-
-  const [answer, setAnswer] = useState<string | null>(null);
   const [storageKey, setStorageKey] = useState<string | null>(null);
-
-  useEffect(() => {
-    const today = new Date().toISOString().slice(0, 10);
-    setStorageKey(`wordle-${today}`);
-    setAnswer(getDailyWord());
-  }, []);
 
   const loadSavedState = useCallback((): SavedState | null => {
     if (typeof window === "undefined") return null;
@@ -566,6 +75,69 @@ export default function Board() {
 
   const [currentRow, setCurrentRow] = useState(0);
   const [currentCol, setCurrentCol] = useState(0);
+
+  const [answer, setAnswer] = useState<string | null>(null);
+
+  // 旧：ANSWER の計算
+  // const ANSWER = getDailyWord();
+
+  //useEffect(() => {
+  //  async function fetchWord() {
+  //    const res = await fetch("/api/daily-word");
+  //    const data = await res.json();
+  //    setAnswer(data.word);
+  //
+  //    const today = new Date().toISOString().slice(0, 10);
+  //    setStorageKey(`wordle-${today}`);
+  //  }
+  //  fetchWord();
+  //}, []);
+  //
+  //// storageKey が決まったら localStorage から復元
+  //useEffect(() => {
+  //  if (!storageKey || typeof window === "undefined") return;
+  //
+  //  const saved = localStorage.getItem(storageKey);
+  //  if (!saved) return;
+  //
+  //  const data: SavedState = JSON.parse(saved);
+  //  setBoard(data.board);
+  //  setStatuses(data.statuses);
+  //  setFlippedRows(data.flippedRows);
+  //  setKeyStatuses(data.keyStatuses);
+  //  setGameState(data.gameState);
+  //  setCurrentRow(data.currentRow);
+  //  setCurrentCol(data.currentCol);
+  //}, [storageKey]);
+
+  // 2. daily word と storageKey を取得
+  useEffect(() => {
+    async function init() {
+      const res = await fetch("/api/daily-word");
+      const data = await res.json();
+      setAnswer(data.word);
+
+      const today = new Date().toISOString().slice(0, 10);
+      const key = `wordle-${today}`;
+      setStorageKey(key);
+
+      // ここで localStorage から一度に state を初期化する
+      if (typeof window !== "undefined") {
+        const saved = localStorage.getItem(key);
+        if (saved) {
+          const parsed: SavedState = JSON.parse(saved);
+          setBoard(parsed.board);
+          setStatuses(parsed.statuses);
+          setFlippedRows(parsed.flippedRows);
+          setKeyStatuses(parsed.keyStatuses);
+          setGameState(parsed.gameState);
+          setCurrentRow(parsed.currentRow);
+          setCurrentCol(parsed.currentCol);
+        }
+      }
+    }
+    init();
+  }, []);
 
   function evaluateGuess(guess: string[], answer: string): TileStatus[] {
     const result: TileStatus[] = Array(COLS).fill("absent");
@@ -675,6 +247,7 @@ export default function Board() {
       currentCol,
       flippedRows,
       keyStatuses,
+      answer,
     ]
   );
 
@@ -710,7 +283,7 @@ export default function Board() {
 
     if (!storageKey) return;
     localStorage.setItem(
-			storageKey,
+      storageKey,
       JSON.stringify({
         board,
         statuses,
@@ -729,9 +302,8 @@ export default function Board() {
     flippedRows,
     keyStatuses,
     gameState,
-		storageKey
+    storageKey,
   ]);
-  // }, [gameState]);
 
   return (
     <div className="flex flex-col items-center">
