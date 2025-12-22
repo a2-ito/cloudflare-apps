@@ -117,7 +117,10 @@ export default async function RoomPage({ params }: Props) {
       )}
 
       {/* ★ 準リアルタイム化 */}
-      <PollingRefresher intervalMs={3000} />
+      <PollingRefresher
+        intervalMs={3000}
+        participantsCount={room.participants.length}
+      />
     </main>
   );
 }
