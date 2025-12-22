@@ -6,7 +6,9 @@ import { vote, unvote } from "./vote-actions";
 import { reveal } from "./reveal-actions";
 import { leaveRoom } from "./leave-actions";
 import { resetRoom } from "./reset-actions";
-import { Participants } from "./Participants"
+import { Participants } from "./Participants";
+
+import { PollingRefresher } from "./PollingRefresher";
 
 type Props = {
   params: Promise<{ id: string }>;
@@ -67,13 +69,13 @@ export default async function RoomPage({ params }: Props) {
         }) */}
       </ul>
 
-<section>
-  <Participants
-    participants={room.participants}
-    votes={room.votes}
-    revealed={room.revealed}
-  />
-</section>
+      <section>
+        <Participants
+          participants={room.participants}
+          votes={room.votes}
+          revealed={room.revealed}
+        />
+      </section>
 
       {!room.revealed && (
         <>
@@ -113,6 +115,9 @@ export default async function RoomPage({ params }: Props) {
           </button>{" "}
         </form>
       )}
+
+      {/* ★ 準リアルタイム化 */}
+      <PollingRefresher intervalMs={3000} />
     </main>
   );
 }

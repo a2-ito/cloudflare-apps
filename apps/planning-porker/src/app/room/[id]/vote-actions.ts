@@ -43,7 +43,7 @@ export async function unvote(roomId: string, formData: FormData) {
   if (!room) return;
 
   // voted = false を意味する → vote を削除
-  delete room.votes[name]
+  delete room.votes[name];
 
   await env.planning_porker.put(key, JSON.stringify(room));
 

@@ -59,7 +59,7 @@
   "routes": [
     {
       "pattern": "porker.a2ito.work",
-      "custom_domain": true
-    }
-  ]
+      "custom_domain": true,
+    },
+  ],
 }
