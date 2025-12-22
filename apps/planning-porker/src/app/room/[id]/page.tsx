@@ -9,6 +9,7 @@ import { resetRoom } from "./reset-actions";
 import { Participants } from "./Participants";
 
 import { PollingRefresher } from "./PollingRefresher";
+import { CopyRoomUrlButton } from "./CopyRoomUrlButton";
 
 type Props = {
   params: Promise<{ id: string }>;
@@ -28,6 +29,12 @@ export default async function RoomPage({ params }: Props) {
 
   return (
     <main style={{ padding: 40 }}>
+      <header className="flex items-center justify-between">
+        <h1 className="text-xl font-bold">Planning Poker</h1>
+
+        <CopyRoomUrlButton />
+      </header>
+
       <h1>Planning Poker</h1>
 
       <p>
