@@ -1,5 +1,13 @@
 import "./globals.css";
 
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  other: {
+    "google-adsense-account": "ca-pub-1048349982279112",
+  },
+};
+
 export default function RootLayout({
   children,
 }: {
