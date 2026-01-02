@@ -50,4 +50,10 @@
    * https://developers.cloudflare.com/workers/configuration/secrets/
    */
   // "vars": {  "MY_VARIABLE": "production_value" }
+  "routes": [
+    {
+      "pattern": "tetris.a2ito.work",
+      "custom_domain": true,
+    }
+  ]
 }
