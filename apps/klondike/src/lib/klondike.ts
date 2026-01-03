@@ -1,5 +1,6 @@
 // lib/klondike.ts
-export type Suit = "♠" | "♥" | "♦" | "♣";
+//export type Suit = "♠" | "♥" | "♦" | "♣";
+export type Suit = "spade" | "heart" | "diamond" | "club";
 
 export interface Card {
   suit: Suit;
@@ -9,7 +10,7 @@ export interface Card {
 }
 
 export function createDeck(): Card[] {
-  const suits: Suit[] = ["♠", "♥", "♦", "♣"];
+  const suits: Suit[] = ["spade", "heart", "diamond", "club"];
   const deck: Card[] = [];
 
   for (const suit of suits) {

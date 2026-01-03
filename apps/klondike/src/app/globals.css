@@ -1,10 +1,11 @@
 @import "tailwindcss";
 
-/* globals.css */
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@source "./src/app/**/*.{ts,tsx}";
 
-body {
-  @apply bg-gray-900 text-gray-100;
-}
+/* dark: を class ベースに切り替える */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* globals.css */
+/*@tailwind base;*/
+/*@tailwind components;*/
+/*@tailwind utilities;*/

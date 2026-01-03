@@ -1,22 +1,51 @@
 // components/Card.tsx
 import type { Card as CardType } from "@/lib/klondike";
+import { SuitIcon } from "./SuitIcon";
+import { CardBack } from "./CardBack";
 
-export function Card({ card }: { card: CardType }) {
+type Props = {
+  card: CardType;
+  onDragStart?: () => void;
+};
+
+export function Card({ card, onDragStart }: Props) {
   if (!card.faceUp) {
-    return (
-      <div className="w-16 h-24 rounded bg-gray-700 border border-gray-500" />
-    );
+    return <CardBack />;
   }
 
-  const color =
-    card.suit === "♥" || card.suit === "♦" ? "text-red-400" : "text-white";
+  //const color =
+  //  card.suit === "♥" || card.suit === "♦" ? "text-red-400" : "text-white";
+
+  const isRed = card.suit === "heart" || card.suit === "diamond";
+
+  const suit = card.suit.toLowerCase(); // "spade", etc.
+  const rank =
+    card.rank === 1
+      ? "ace"
+      : card.rank === 11
+        ? "jack"
+        : card.rank === 12
+          ? "queen"
+          : card.rank === 13
+            ? "king"
+            : card.rank.toString();
+
+  const fileName = `${rank}_of_${suit}s.svg`;
 
   return (
-    <div
-      className={`w-16 h-24 rounded bg-gray-800 border border-gray-500 p-1 ${color}`}
-    >
-      <div className="text-sm">{card.rank}</div>
-      <div className="text-xl text-center">{card.suit}</div>
-    </div>
+    <img
+      draggable
+      onDragStart={onDragStart}
+      src={`/cards/${fileName}`}
+      className="
+				w-16
+				h-24
+				cursor-grab
+				active:cursor-grabbing
+				active:scale-105
+				transition-transform
+			"
+      alt={`${rank} of ${suit}s`}
+    />
   );
 }

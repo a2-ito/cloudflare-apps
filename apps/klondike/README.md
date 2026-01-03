@@ -37,3 +37,42 @@ A modern **Klondike Solitaire** game built with **Next.js** and deployed on **Cl
 ---
 
 ## 📁 Project Structure
+
+```
+src/
+├ app/
+│ ├ page.tsx # Game screen
+│ ├ layout.tsx # Root layout (dark mode)
+│ └ api/
+│ └ score/route.ts # High score API (KV)
+│
+├ components/
+│ ├ Card.tsx
+│ └ ScoreModal.tsx
+│
+├ lib/
+│ ├ klondike.ts # Game logic
+│ └ score.ts # API helpers
+│
+└ styles/
+└ globals.css
+```
+
+---
+
+## 🚀 Getting Started
+
+### 1. Install dependencies
+
+```bash
+npm install
+```
+
+2. Run locally
+
+```bash
+npm run dev
+```
+
+Open:
+👉 http://localhost:3000
