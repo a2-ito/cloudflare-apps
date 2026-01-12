@@ -5,6 +5,7 @@ import { useEffect, useMemo, useState } from "react";
 import { Pencil, Trash2 } from "lucide-react";
 import Link from "next/link";
 import dynamic from "next/dynamic";
+import { getCurrentMonth, addMonth } from "@/lib/month";
 
 import EditExpenseModal, {
   ExpenseForEdit,
@@ -39,10 +40,9 @@ export default function DashboardPage() {
   const [expenses, setExpenses] = useState<Expense[]>([]);
   const [summary, setSummary] = useState<Summary[]>([]);
   const [loading, setLoading] = useState(true);
-
   const [editing, setEditing] = useState<ExpenseForEdit | null>(null);
-
   const [categories, setCategories] = useState<Category[]>([]);
+  const [month, setMonth] = useState(getCurrentMonth());
 
   useEffect(() => {
     const loadCategories = async () => {
@@ -54,10 +54,10 @@ export default function DashboardPage() {
     loadCategories();
   }, []);
 
-  const month = useMemo(() => {
-    const d = new Date();
-    return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}`;
-  }, []);
+  //const month = useMemo(() => {
+  //  const d = new Date();
+  //  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}`;
+  //}, []);
 
   const fetchExpenses = async () => {
     setLoading(true);
@@ -129,9 +129,32 @@ export default function DashboardPage() {
         <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">
           家計簿
         </h1>
+				{/*
         <p className="text-sm text-gray-500 dark:text-gray-400">
           {month} の支出
         </p>
+				*/}
+
+<div className="flex items-center justify-between mb-4">
+  <button
+    onClick={() => setMonth(addMonth(month, -1))}
+    className="px-3 py-1 rounded bg-gray-100 dark:bg-gray-700"
+  >
+    ◀
+  </button>
+
+  <h2 className="text-lg font-semibold">
+    {month.replace("-", "年")}月
+  </h2>
+
+  <button
+    onClick={() => setMonth(addMonth(month, 1))}
+    className="px-3 py-1 rounded bg-gray-100 dark:bg-gray-700"
+  >
+    ▶
+  </button>
+</div>
+
       </header>
 
       {/* 合計 */}
