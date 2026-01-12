@@ -1,12 +1,11 @@
 import { NextResponse } from "next/server";
 
 export async function GET() {
+  const clientId = process.env.GOOGLE_CLIENT_ID;
 
-const clientId = process.env.GOOGLE_CLIENT_ID
-
-if (!clientId) {
-  return new Response('OAuth env not set', { status: 500 })
-}
+  if (!clientId) {
+    return new Response("OAuth env not set", { status: 500 });
+  }
 
   const params = new URLSearchParams({
     client_id: clientId,

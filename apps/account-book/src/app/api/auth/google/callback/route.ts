@@ -21,12 +21,12 @@ export async function GET(request: Request) {
     return NextResponse.redirect("/login?error=oauth");
   }
 
-const clientId = process.env.GOOGLE_CLIENT_ID
-const clientSecret = process.env.GOOGLE_CLIENT_SECRET
+  const clientId = process.env.GOOGLE_CLIENT_ID;
+  const clientSecret = process.env.GOOGLE_CLIENT_SECRET;
 
-if (!clientId || !clientSecret) {
-  return new Response('OAuth env not set', { status: 500 })
-}
+  if (!clientId || !clientSecret) {
+    return new Response("OAuth env not set", { status: 500 });
+  }
 
   // ① トークン取得
   const tokenRes = await fetch("https://oauth2.googleapis.com/token", {

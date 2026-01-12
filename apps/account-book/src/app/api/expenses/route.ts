@@ -21,8 +21,8 @@ export async function GET(request: Request) {
     return NextResponse.json({ error: "unauthorized" }, { status: 401 });
   }
 
-    const { env } = getCloudflareContext();
-    const db = drizzle(env.DB);
+  const { env } = getCloudflareContext();
+  const db = drizzle(env.DB);
 
   const groupId = await getUserGroupId(db, userId);
 
@@ -40,16 +40,14 @@ export async function GET(request: Request) {
         amount: expenses.amount,
         date: expenses.date,
         memo: expenses.memo,
-        category: categories.name,
+        categoryName: categories.name,
+        categoryId: expenses.categoryId,
       })
       .from(expenses)
       .innerJoin(categories, eq(expenses.categoryId, categories.id))
       .where(
-				and(
-					like(expenses.date, `${month}%`),
-      		eq(expenses.groupId, groupId),
-				)
-			)
+        and(like(expenses.date, `${month}%`), eq(expenses.groupId, groupId)),
+      )
       .orderBy(desc(expenses.date));
 
     // 🔑 空でも必ず JSON を返す

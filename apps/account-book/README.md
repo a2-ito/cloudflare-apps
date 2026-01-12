@@ -5,21 +5,21 @@
 このアプリは **Cloudflare Workers 上で動作する Next.js App Router** を用いた、
 **グループ単位で管理できる家計簿アプリ** です。
 
-* Google 認証（事前登録ユーザのみ利用可）
-* グループ単位での支出管理
-* カテゴリ別集計・ダッシュボード
-* レスポンシブ対応（モバイル / PC）
+- Google 認証（事前登録ユーザのみ利用可）
+- グループ単位での支出管理
+- カテゴリ別集計・ダッシュボード
+- レスポンシブ対応（モバイル / PC）
 
 ---
 
 ## 技術スタック
 
-* **Frontend / Backend**: Next.js (App Router)
-* **Runtime**: Cloudflare Workers
-* **Database**: Cloudflare D1 (SQLite)
-* **ORM**: Drizzle ORM
-* **Auth**: Google OAuth 2.0
-* **Chart**: Recharts
+- **Frontend / Backend**: Next.js (App Router)
+- **Runtime**: Cloudflare Workers
+- **Database**: Cloudflare D1 (SQLite)
+- **ORM**: Drizzle ORM
+- **Auth**: Google OAuth 2.0
+- **Chart**: Recharts
 
 ---
 
@@ -27,25 +27,25 @@
 
 ### 認証
 
-* Google アカウントでログイン
-* DB に事前登録されたユーザのみ利用可能
-* セッションは Cookie で管理
+- Google アカウントでログイン
+- DB に事前登録されたユーザのみ利用可能
+- セッションは Cookie で管理
 
 ### グループ管理
 
-* ユーザは 1 つ以上のグループに所属
-* 支出（Expenses）は必ずグループに紐づく
+- ユーザは 1 つ以上のグループに所属
+- 支出（Expenses）は必ずグループに紐づく
 
 ### 支出管理
 
-* 支出の登録 / 一覧表示
-* カテゴリ別管理
-* 月別表示
+- 支出の登録 / 一覧表示
+- カテゴリ別管理
+- 月別表示
 
 ### ダッシュボード
 
-* 月次合計金額
-* カテゴリ別集計（円グラフ）
+- 月次合計金額
+- カテゴリ別集計（円グラフ）
 
 ---
 
@@ -111,18 +111,18 @@ npx drizzle-kit migrate
 
 ## セキュリティ設計
 
-* OAuth client secret は `.env.local` で管理
-* Workers 環境変数は `wrangler secret` を使用
-* Cookie は `httpOnly / sameSite=lax`
+- OAuth client secret は `.env.local` で管理
+- Workers 環境変数は `wrangler secret` を使用
+- Cookie は `httpOnly / sameSite=lax`
 
 ---
 
 ## 今後の予定
 
-* 支出編集 / 削除
-* グループ招待機能
-* CSV エクスポート
-* 年次レポート
+- 支出編集 / 削除
+- グループ招待機能
+- CSV エクスポート
+- 年次レポート
 
 ---
 
@@ -132,21 +132,21 @@ npx drizzle-kit migrate
 
 This is a **group-based account book application** built with **Next.js App Router** and running on **Cloudflare Workers**.
 
-* Google OAuth authentication (pre-registered users only)
-* Expense management per group
-* Category-based analytics dashboard
-* Fully responsive design
+- Google OAuth authentication (pre-registered users only)
+- Expense management per group
+- Category-based analytics dashboard
+- Fully responsive design
 
 ---
 
 ## Tech Stack
 
-* **Frontend / Backend**: Next.js (App Router)
-* **Runtime**: Cloudflare Workers
-* **Database**: Cloudflare D1 (SQLite)
-* **ORM**: Drizzle ORM
-* **Auth**: Google OAuth 2.0
-* **Charts**: Recharts
+- **Frontend / Backend**: Next.js (App Router)
+- **Runtime**: Cloudflare Workers
+- **Database**: Cloudflare D1 (SQLite)
+- **ORM**: Drizzle ORM
+- **Auth**: Google OAuth 2.0
+- **Charts**: Recharts
 
 ---
 
@@ -154,25 +154,25 @@ This is a **group-based account book application** built with **Next.js App Rout
 
 ### Authentication
 
-* Google Sign-In
-* Only users registered in DB can access
-* Session managed via HTTP-only cookies
+- Google Sign-In
+- Only users registered in DB can access
+- Session managed via HTTP-only cookies
 
 ### Group-based Management
 
-* Users belong to one or more groups
-* Expenses are always scoped to a group
+- Users belong to one or more groups
+- Expenses are always scoped to a group
 
 ### Expense Management
 
-* Create & list expenses
-* Category management
-* Monthly filtering
+- Create & list expenses
+- Category management
+- Monthly filtering
 
 ### Dashboard
 
-* Monthly total
-* Category breakdown (pie chart)
+- Monthly total
+- Category breakdown (pie chart)
 
 ---
 
@@ -212,17 +212,17 @@ npx drizzle-kit migrate
 
 ## Security Notes
 
-* Secrets are stored in `.env.local` or Workers secrets
-* Cookies are `httpOnly` and `sameSite=lax`
+- Secrets are stored in `.env.local` or Workers secrets
+- Cookies are `httpOnly` and `sameSite=lax`
 
 ---
 
 ## Roadmap
 
-* Edit / delete expenses
-* Group invitations
-* CSV export
-* Yearly reports
+- Edit / delete expenses
+- Group invitations
+- CSV export
+- Yearly reports
 
 ---
 

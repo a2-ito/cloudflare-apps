@@ -2,8 +2,13 @@
 
 //import { useRouter } from "next/router";
 import { useEffect, useMemo, useState } from "react";
+import { Pencil, Trash2 } from "lucide-react";
 import Link from "next/link";
 import dynamic from "next/dynamic";
+
+import EditExpenseModal, {
+  ExpenseForEdit,
+} from "@/components/EditExpenseModal";
 
 const CategoryPieChart = dynamic(
   () => import("@/components/CategoryPieChart"),
@@ -15,12 +20,19 @@ type Summary = {
   total: number;
 };
 
+type Category = {
+  id: number;
+  name: string;
+};
+
 type Expense = {
   id: number;
   amount: number;
   date: string;
   memo: string | null;
   category: string;
+  categoryName: string;
+  categoryId: number;
 };
 
 export default function DashboardPage() {
@@ -28,38 +40,88 @@ export default function DashboardPage() {
   const [summary, setSummary] = useState<Summary[]>([]);
   const [loading, setLoading] = useState(true);
 
-  //const router = useRouter();
+  const [editing, setEditing] = useState<ExpenseForEdit | null>(null);
+
+  const [categories, setCategories] = useState<Category[]>([]);
+
+  useEffect(() => {
+    const loadCategories = async () => {
+      const res = await fetch("/api/categories");
+      const data: Category[] = (await res.json()) as Category[];
+      setCategories(data);
+    };
+
+    loadCategories();
+  }, []);
 
   const month = useMemo(() => {
     const d = new Date();
     return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}`;
   }, []);
 
+  const fetchExpenses = async () => {
+    setLoading(true);
+    const [expensesRes] = await Promise.all([
+      fetch(`/api/expenses?month=${month}`),
+    ]);
+    const expensesText = await expensesRes.text();
+    setExpenses(expensesText ? JSON.parse(expensesText) : []);
+    setLoading(false);
+  };
+
+  const fetchSummary = async () => {
+    setLoading(true);
+    const [summaryRes] = await Promise.all([
+      fetch(`/api/expenses/summary?month=${month}`),
+    ]);
+    const summaryText = await summaryRes.text();
+    setSummary(summaryText ? JSON.parse(summaryText) : []);
+    setLoading(false);
+  };
+
   useEffect(() => {
-    const load = async () => {
-      setLoading(true);
-
-      const [expensesRes, summaryRes] = await Promise.all([
-        fetch(`/api/expenses?month=${month}`),
-        fetch(`/api/expenses/summary?month=${month}`),
-      ]);
-
-      const expensesText = await expensesRes.text();
-      const summaryText = await summaryRes.text();
-
-      setExpenses(expensesText ? JSON.parse(expensesText) : []);
-      setSummary(summaryText ? JSON.parse(summaryText) : []);
-
-      setLoading(false);
-    };
-
-    load();
+    fetchExpenses();
+    fetchSummary();
   }, [month]);
+
+  //  useEffect(() => {
+  //    const load = async () => {
+  //      setLoading(true);
+  //
+  //      const [expensesRes, summaryRes] = await Promise.all([
+  //        fetch(`/api/expenses?month=${month}`),
+  //        fetch(`/api/expenses/summary?month=${month}`),
+  //      ]);
+  //
+  //      const expensesText = await expensesRes.text();
+  //      const summaryText = await summaryRes.text();
+  //
+  //      setExpenses(expensesText ? JSON.parse(expensesText) : []);
+  //      setSummary(summaryText ? JSON.parse(summaryText) : []);
+  //
+  //      setLoading(false);
+  //    };
+  //
+  //    load();
+  //  }, [month]);
 
   const total = useMemo(() => {
     if (!Array.isArray(expenses)) return 0;
     return expenses.reduce((sum, e) => sum + e.amount, 0);
   }, [expenses]);
+
+  const deleteExpense = async (id: number) => {
+    if (!confirm("この支出を削除しますか？")) return;
+
+    await fetch(`/api/expenses/${id}`, {
+      method: "DELETE",
+    });
+
+    // mutate(); // 再取得 or state 更新
+    //setExpenses((prev) => prev.filter((e) => e.id !== id));
+    fetchExpenses();
+    fetchSummary();
+  };
 
   return (
     <main className="min-h-screen bg-gray-50 dark:bg-gray-900 p-4 pb-24">
@@ -101,18 +163,41 @@ export default function DashboardPage() {
             key={e.id}
             className="flex items-center justify-between rounded-lg bg-white dark:bg-gray-800 p-3 shadow-sm"
           >
-            <div>
-              <p className="text-sm font-medium text-gray-900 dark:text-gray-100">
-                {e.category}
+            {/* 左側：カテゴリ・日付 */}
+            <div className="min-w-0">
+              <p className="text-sm font-medium text-gray-900 dark:text-gray-100 truncate">
+                {e.categoryName}
               </p>
               <p className="text-xs text-gray-500">
                 {e.date}
                 {e.memo && ` · ${e.memo}`}
               </p>
             </div>
-            <p className="font-semibold text-gray-900 dark:text-gray-100">
-              ¥{e.amount.toLocaleString()}
-            </p>
+
+            {/* 右側：金額 + 操作 */}
+            <div className="flex items-center gap-3 ml-4">
+              <p className="font-semibold text-gray-900 dark:text-gray-100 whitespace-nowrap">
+                ¥{e.amount.toLocaleString()}
+              </p>
+
+              <div className="flex items-center gap-1">
+                <button
+                  onClick={() => setEditing(e)}
+                  className="p-1.5 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700"
+                  aria-label="Edit"
+                >
+                  <Pencil className="w-4 h-4 text-gray-500" />
+                </button>
+
+                <button
+                  onClick={() => deleteExpense(e.id)}
+                  className="p-1.5 rounded-md hover:bg-red-100 dark:hover:bg-red-900/30"
+                  aria-label="Delete"
+                >
+                  <Trash2 className="w-4 h-4 text-red-500" />
+                </button>
+              </div>
+            </div>
           </div>
         ))}
       </section>
@@ -124,6 +209,15 @@ export default function DashboardPage() {
       >
         ＋ 支出を追加
       </Link>
+
+      {editing && (
+        <EditExpenseModal
+          expense={editing}
+          categories={categories}
+          onClose={() => setEditing(null)}
+          onSaved={fetchExpenses} // 再取得関数
+        />
+      )}
     </main>
   );
 }
