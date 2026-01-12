@@ -1,0 +1,8 @@
+-- Migration number: 0004 	 2026-01-11T10:52:30.025Z
+CREATE TABLE IF NOT EXISTS users (
+  id TEXT PRIMARY KEY,
+	email TEXT,
+	name TEXT,
+	created_at TEXT DEFAULT CURRENT_TIMESTAMP
+);
+

@@ -1,0 +1,12 @@
+-- Migration number: 0002 	 2026-01-10T11:53:24.735Z
+CREATE TABLE IF NOT EXISTS expenses (
+id INTEGER PRIMARY KEY AUTOINCREMENT,
+  group_id TEXT NOT NULL,
+amount INTEGER NOT NULL,
+category_id INTEGER NOT NULL,
+date TEXT NOT NULL,
+memo TEXT,
+created_at TEXT DEFAULT CURRENT_TIMESTAMP,
+FOREIGN KEY (category_id) REFERENCES categories(id)
+);
+
