@@ -39,6 +39,8 @@ type Expense = {
 export default function DashboardPage() {
   const [expenses, setExpenses] = useState<Expense[]>([]);
   const [summary, setSummary] = useState<Summary[]>([]);
+  const [prevSummary, setPrevSummary] = useState<Summary[]>([]);
+
   const [loading, setLoading] = useState(true);
   const [editing, setEditing] = useState<ExpenseForEdit | null>(null);
   const [categories, setCategories] = useState<Category[]>([]);
@@ -69,19 +71,21 @@ export default function DashboardPage() {
     setLoading(false);
   };
 
-  const fetchSummary = async () => {
+  const fetchSummary = async (month: string) => {
     setLoading(true);
     const [summaryRes] = await Promise.all([
       fetch(`/api/expenses/summary?month=${month}`),
     ]);
     const summaryText = await summaryRes.text();
-    setSummary(summaryText ? JSON.parse(summaryText) : []);
+    //setSummary(summaryText ? JSON.parse(summaryText) : []);
     setLoading(false);
+    return summaryText ? JSON.parse(summaryText) : [];
   };
 
   useEffect(() => {
     fetchExpenses();
-    fetchSummary();
+    fetchSummary(month).then(setSummary);
+    fetchSummary(addMonth(month, -1)).then(setPrevSummary);
   }, [month]);
 
   //  useEffect(() => {
@@ -110,6 +114,15 @@ export default function DashboardPage() {
     return expenses.reduce((sum, e) => sum + e.amount, 0);
   }, [expenses]);
 
+  const prevTotal = useMemo(
+    () => prevSummary.reduce((sum, s) => sum + Number(s.total), 0),
+    [prevSummary],
+  );
+
+  const diff = total - prevTotal;
+
+  const rate = prevTotal === 0 ? null : ((diff / prevTotal) * 100).toFixed(1);
+
   const deleteExpense = async (id: number) => {
     if (!confirm("この支出を削除しますか？")) return;
 
@@ -120,7 +133,7 @@ export default function DashboardPage() {
     // mutate(); // 再取得 or state 更新
     //setExpenses((prev) => prev.filter((e) => e.id !== id));
     fetchExpenses();
-    fetchSummary();
+    fetchSummary(month);
   };
 
   return (
@@ -129,32 +142,31 @@ export default function DashboardPage() {
         <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">
           家計簿
         </h1>
-				{/*
+        {/*
         <p className="text-sm text-gray-500 dark:text-gray-400">
           {month} の支出
         </p>
 				*/}
 
-<div className="flex items-center justify-between mb-4">
-  <button
-    onClick={() => setMonth(addMonth(month, -1))}
-    className="px-3 py-1 rounded bg-gray-100 dark:bg-gray-700"
-  >
-    ◀
-  </button>
+        <div className="flex items-center justify-between mb-4">
+          <button
+            onClick={() => setMonth(addMonth(month, -1))}
+            className="px-3 py-1 rounded bg-gray-100 dark:bg-gray-700"
+          >
+            ◀
+          </button>
 
-  <h2 className="text-lg font-semibold">
-    {month.replace("-", "年")}月
-  </h2>
+          <h2 className="text-lg font-semibold">
+            {month.replace("-", "年")}月
+          </h2>
 
-  <button
-    onClick={() => setMonth(addMonth(month, 1))}
-    className="px-3 py-1 rounded bg-gray-100 dark:bg-gray-700"
-  >
-    ▶
-  </button>
-</div>
-
+          <button
+            onClick={() => setMonth(addMonth(month, 1))}
+            className="px-3 py-1 rounded bg-gray-100 dark:bg-gray-700"
+          >
+            ▶
+          </button>
+        </div>
       </header>
 
       {/* 合計 */}
@@ -163,6 +175,17 @@ export default function DashboardPage() {
         <p className="mt-1 text-3xl font-bold text-gray-900 dark:text-gray-100">
           ¥{total.toLocaleString()}
         </p>
+
+        <div className="mt-2 text-sm">
+          {prevTotal === 0 ? (
+            <span className="text-gray-500">前月データなし</span>
+          ) : (
+            <span className={diff >= 0 ? "text-red-600" : "text-green-600"}>
+              {diff >= 0 ? "▲" : "▼"} ¥{Math.abs(diff).toLocaleString()}（{rate}
+              %）
+            </span>
+          )}
+        </div>
       </section>
 
       {/* 円グラフ */}

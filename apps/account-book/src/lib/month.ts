@@ -1,4 +1,3 @@
-
 // src/lib/month.ts
 export const getCurrentMonth = () => {
   const d = new Date();
