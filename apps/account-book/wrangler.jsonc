@@ -49,7 +49,7 @@
    * Note: Use secrets to store sensitive data.
    * https://developers.cloudflare.com/workers/configuration/secrets/
    */
-  "vars": {  "ORIGIN": "https://account-book.a2ito.work" },
+  "vars": { "ORIGIN": "https://account-book.a2ito.work" },
   "d1_databases": [
     {
       "binding": "DB",
