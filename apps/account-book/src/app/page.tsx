@@ -36,6 +36,14 @@ type Expense = {
   categoryId: number;
 };
 
+type CategoryDiff = {
+  category: string;
+  current: number;
+  previous: number;
+  diff: number;
+  rate: number | null;
+};
+
 export default function DashboardPage() {
   const [expenses, setExpenses] = useState<Expense[]>([]);
   const [summary, setSummary] = useState<Summary[]>([]);
@@ -136,6 +144,29 @@ export default function DashboardPage() {
     fetchSummary(month);
   };
 
+const categoryDiffs: CategoryDiff[] = useMemo(() => {
+  const prevMap = new Map(
+    prevSummary.map((s) => [s.category, Number(s.total)])
+  );
+
+  return summary.map((s) => {
+    const current = Number(s.total);
+    const previous = prevMap.get(s.category) ?? 0;
+    const diff = current - previous;
+
+    return {
+      category: s.category,
+      current,
+      previous,
+      diff,
+      rate:
+        previous === 0
+          ? null
+          : Math.round((diff / previous) * 100),
+    };
+  });
+}, [summary, prevSummary]);
+
   return (
     <main className="min-h-screen bg-gray-50 dark:bg-gray-900 p-4 pb-24">
       <header className="mb-6">
@@ -171,7 +202,7 @@ export default function DashboardPage() {
 
       {/* 合計 */}
       <section className="mb-6 rounded-xl bg-white dark:bg-gray-800 p-4 shadow">
-        <p className="text-sm text-gray-500 dark:text-gray-400">今月の合計</p>
+        <p className="text-sm text-gray-500 dark:text-gray-400">{month.replace("-", "年")}月の合計</p>
         <p className="mt-1 text-3xl font-bold text-gray-900 dark:text-gray-100">
           ¥{total.toLocaleString()}
         </p>
@@ -186,6 +217,38 @@ export default function DashboardPage() {
             </span>
           )}
         </div>
+
+<div className="mt-6 space-y-2">
+  <h3 className="text-sm font-semibold text-gray-700 dark:text-gray-300">
+    カテゴリ別 前月比
+  </h3>
+
+  {categoryDiffs.map((c) => (
+    <div
+      key={c.category}
+      className="flex items-center justify-between rounded-lg bg-white dark:bg-gray-800 px-3 py-2 shadow-sm"
+    >
+      <span className="text-sm">{c.category}</span>
+
+      <span
+        className={`text-sm font-medium ${
+          c.diff > 0
+            ? "text-red-600"
+            : c.diff < 0
+            ? "text-green-600"
+            : "text-gray-500"
+        }`}
+      >
+        {c.diff > 0 && "▲"}
+        {c.diff < 0 && "▼"}
+        ¥{Math.abs(c.diff).toLocaleString()}
+        {c.rate !== null && ` (${c.rate}%)`}
+      </span>
+    </div>
+  ))}
+</div>
+
+
       </section>
 
       {/* 円グラフ */}
