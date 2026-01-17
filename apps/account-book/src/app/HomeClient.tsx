@@ -88,15 +88,16 @@ export default function DashboardPage() {
       fetch(`/api/expenses/summary?month=${month}`),
     ]);
     const summaryText = await summaryRes.text();
-    setSummary(summaryText ? JSON.parse(summaryText) : []);
+    // memo: 前月データのセットは then 句で実行する
+    // setSummary(summaryText ? JSON.parse(summaryText) : []);
     setLoading(false);
     return summaryText ? JSON.parse(summaryText) : [];
   };
 
   useEffect(() => {
     fetchExpenses(month);
-    fetchSummary(month);
-    fetchSummary(addMonth(month, -1));
+    fetchSummary(month).then(setSummary);
+    fetchSummary(addMonth(month, -1)).then(setPrevSummary);
   }, [month]);
 
   const total = useMemo(() => {
@@ -112,6 +113,7 @@ export default function DashboardPage() {
   const diff = total - prevTotal;
 
   const rate = prevTotal === 0 ? null : ((diff / prevTotal) * 100).toFixed(1);
+  //console.log(prevSummary, total, prevTotal, diff, rate)
 
   const deleteExpense = async (id: number) => {
     if (!confirm("この支出を削除しますか？")) return;
