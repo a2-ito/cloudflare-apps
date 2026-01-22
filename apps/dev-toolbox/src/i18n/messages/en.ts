@@ -1,5 +1,5 @@
 // src/i18n/messages/en.ts
-import type { ToolSlug } from "@/config/tools"
+import type { ToolSlug } from "@/config/tools";
 
 export default {
   app: {
@@ -42,6 +42,17 @@ export default {
       indent: "Indent",
       error: "JSON Format Error",
     },
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+    "sql-formatter": {
+      name: "SQL Formatter",
+      description: "Format SQL for readability",
+      input: "Input",
+      output: "Output",
+      format: "Format",
+      minify: "Compress",
+      copy: "Copy",
+      indent: "Indent",
+      error: "SQL Format Error",
+    },
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } satisfies Record<ToolSlug, any>,
 };

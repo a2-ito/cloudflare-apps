@@ -26,9 +26,9 @@ function getPreferredLocale(request: NextRequest): string {
     //if (locales.includes(base)) {
     //  return base;
     //}
-		if (isLocale(base)) {
-			return base
-		}
+    if (isLocale(base)) {
+      return base;
+    }
   }
 
   return defaultLocale;

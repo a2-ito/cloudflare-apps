@@ -1,5 +1,5 @@
 import "./globals.css";
-import type { Locale } from "@/i18n/config"
+import type { Locale } from "@/i18n/config";
 
 export async function generateMetadata({
   params,
@@ -15,6 +15,11 @@ export async function generateMetadata({
         en: "/en",
       },
       canonical: `/${lang}`,
+    },
+    icons: {
+      icon: "/favicon.ico",
+      shortcut: "/favicon.ico",
+      apple: "/logo.png",
     },
   };
 }

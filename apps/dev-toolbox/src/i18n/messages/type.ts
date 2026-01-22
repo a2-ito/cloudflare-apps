@@ -35,7 +35,7 @@ export type UnixTimeConverterMessages = {
   now: string;
   utc: string;
   local: string;
-}
+};
 
 export type JsonFormatterMessages = {
   name: string;
@@ -47,7 +47,19 @@ export type JsonFormatterMessages = {
   copy: string;
   indent: string;
   error: string;
-}
+};
+
+export type SqlFormatterMessages = {
+  name: string;
+  description: string;
+  input: string;
+  output: string;
+  format: string;
+  minify: string;
+  copy: string;
+  indent: string;
+  error: string;
+};
 
 export type Messages = {
   app: {
@@ -58,8 +70,8 @@ export type Messages = {
   };
   // tools: ToolMessages;
   tools: {
-		"password-generator": PasswordGeneratorMessages;
-		"unix-time": UnixTimeConverterMessages;
-		"json-formatter": JsonFormatterMessages;
-	};
+    "password-generator": PasswordGeneratorMessages;
+    "unix-time": UnixTimeConverterMessages;
+    "json-formatter": JsonFormatterMessages;
+  };
 };

@@ -1,6 +1,6 @@
 import type { Locale } from "@/i18n/config";
 import { getMessages } from "@/i18n/getMessages";
-import type { ToolSlug } from "@/config/tools"
+import type { ToolSlug } from "@/config/tools";
 
 export async function generateMetadata({
   params,

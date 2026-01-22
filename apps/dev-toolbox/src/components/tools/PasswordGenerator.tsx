@@ -13,9 +13,9 @@ const options = {
   uppercase: true,
   numbers: true,
   symbols: false,
-}
+};
 
-type PasswordOptionKey = keyof typeof options
+type PasswordOptionKey = keyof typeof options;
 
 export default function PasswordGenerator({ t }: Props) {
   const [length, setLength] = useState(16);
@@ -74,17 +74,17 @@ export default function PasswordGenerator({ t }: Props) {
       {/* オプション */}
       <div className="grid grid-cols-2 gap-2">
         {(Object.entries(options) as [PasswordOptionKey, boolean][]).map(
-					([key, value]) => (
-          <label key={key} className="flex gap-2 items-center">
-            <input
-              type="checkbox"
-              checked={value}
-              onChange={() => setOptions({ ...options, [key]: !value })}
-            />
-            {t[key]}
-          </label>
-        )
-				)}
+          ([key, value]) => (
+            <label key={key} className="flex gap-2 items-center">
+              <input
+                type="checkbox"
+                checked={value}
+                onChange={() => setOptions({ ...options, [key]: !value })}
+              />
+              {t[key]}
+            </label>
+          ),
+        )}
       </div>
 
       <button

@@ -1,5 +1,5 @@
 // src/i18n/messages/ja.ts
-import type { ToolSlug } from "@/config/tools"
+import type { ToolSlug } from "@/config/tools";
 
 export default {
   app: {
@@ -42,6 +42,17 @@ export default {
       indent: "インデント",
       error: "JSON の形式が正しくありません",
     },
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+    "sql-formatter": {
+      name: "SQL 整形",
+      description: "SQL を見やすくフォーマットします",
+      input: "入力",
+      output: "出力",
+      format: "整形",
+      minify: "圧縮",
+      copy: "コピー",
+      indent: "インデント",
+      error: "SQ: の形式が正しくありません",
+    },
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } satisfies Record<ToolSlug, any>,
 };

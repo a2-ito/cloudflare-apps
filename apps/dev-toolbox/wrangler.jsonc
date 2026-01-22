@@ -54,6 +54,6 @@
     {
       "pattern": "toolbox.a2ito.work",
       "custom_domain": true,
-    }
-  ]
+    },
+  ],
 }

@@ -8,47 +8,41 @@ It provides a collection of small, fast, and privacy-friendly tools such as pass
 
 ## ✨ Features
 
-* 🧰 **Engineer Utilities**
+- 🧰 **Engineer Utilities**
+  - Password Generator
+  - Unix Time Converter
+  - JSON Formatter
+  - (More tools planned)
 
-  * Password Generator
-  * Unix Time Converter
-  * JSON Formatter
-  * (More tools planned)
+- 🌍 **Internationalization (i18n)**
+  - Language-aware routing (`/en`, `/ja`)
+  - Automatic locale detection via browser settings
 
-* 🌍 **Internationalization (i18n)**
+- 🌙 **Dark Mode**
+  - Fully supported via Tailwind CSS
+  - Manual toggle + system preference
 
-  * Language-aware routing (`/en`, `/ja`)
-  * Automatic locale detection via browser settings
+- 🧱 **Admin-style UI**
+  - Sidebar-based layout
+  - Tools can be added or removed easily
 
-* 🌙 **Dark Mode**
+- ⚡ **Edge-first Architecture**
+  - Runs on Cloudflare Workers
+  - Minimal server-side processing
 
-  * Fully supported via Tailwind CSS
-  * Manual toggle + system preference
-
-* 🧱 **Admin-style UI**
-
-  * Sidebar-based layout
-  * Tools can be added or removed easily
-
-* ⚡ **Edge-first Architecture**
-
-  * Runs on Cloudflare Workers
-  * Minimal server-side processing
-
-* 🔍 **SEO-friendly**
-
-  * Dynamic metadata per tool
-  * Open Graph / canonical / alternates support
+- 🔍 **SEO-friendly**
+  - Dynamic metadata per tool
+  - Open Graph / canonical / alternates support
 
 ---
 
 ## 🛠 Tech Stack
 
-* **Framework**: Next.js (App Router)
-* **Runtime**: Cloudflare Workers
-* **Styling**: Tailwind CSS
-* **Language**: TypeScript (strict)
-* **i18n**: Custom lightweight implementation
+- **Framework**: Next.js (App Router)
+- **Runtime**: Cloudflare Workers
+- **Styling**: Tailwind CSS
+- **Language**: TypeScript (strict)
+- **i18n**: Custom lightweight implementation
 
 ---
 
@@ -87,17 +81,14 @@ src/
 ## ➕ Adding a New Tool
 
 1. **Define the tool slug**
-
-   * Add it to `src/tools/config.ts`
+   - Add it to `src/tools/config.ts`
 
 2. **Add translations**
-
-   * Update `src/i18n/messages/ja.ts` and `en.ts`
+   - Update `src/i18n/messages/ja.ts` and `en.ts`
 
 3. **Create the UI**
-
-   * Add a React component under `src/components/tools/`
-   * Add a route under `app/[lang]/tools/[slug]/`
+   - Add a React component under `src/components/tools/`
+   - Add a route under `app/[lang]/tools/[slug]/`
 
 TypeScript will guide you if anything is missing.
 
@@ -125,15 +116,14 @@ Make sure your `wrangler.toml` (or `wrangler.jsonc`) is configured correctly for
 
 ## 📌 Philosophy
 
-* Small, focused tools
-* No unnecessary backend logic
-* Strong type safety
-* Easy to extend
-* Fast at the edge
+- Small, focused tools
+- No unnecessary backend logic
+- Strong type safety
+- Easy to extend
+- Fast at the edge
 
 ---
 
 ## 📄 License
 
 MIT License
-

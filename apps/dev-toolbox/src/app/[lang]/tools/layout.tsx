@@ -1,6 +1,6 @@
 import AdminLayout from "@/components/admin/AdminLayout";
-import type { Locale } from "@/i18n/config"
-import { isLocale } from "@/i18n/config"
+import type { Locale } from "@/i18n/config";
+import { isLocale } from "@/i18n/config";
 
 export default async function ToolsLayout({
   children,
@@ -11,7 +11,7 @@ export default async function ToolsLayout({
   params: Promise<{ lang: string }>;
 }) {
   const { lang } = await params;
-	const safeLang = isLocale(lang) ? lang : "ja"
+  const safeLang = isLocale(lang) ? lang : "ja";
 
   return <AdminLayout lang={safeLang}>{children}</AdminLayout>;
 }

@@ -17,29 +17,38 @@ export const toolsConfig = {
   "json-formatter": {
     path: "json-formatter",
   },
-} as const
+  "sql-formatter": {
+    path: "sql-formatter",
+  },
+} as const;
 
-export type ToolSlug = keyof typeof toolsConfig
+export type ToolSlug = keyof typeof toolsConfig;
 
 export const tools: Tool[] = [
   {
-		slug: "password-generator",
-		name: "password-generator",
-		description: "password-generator",
-		enabled: true
-	},
+    slug: "password-generator",
+    name: "password-generator",
+    description: "password-generator",
+    enabled: true,
+  },
   {
-		slug: "unix-time",
-		name: "unix-time",
-		description: "unix-time",
-		enabled: true
-	},
+    slug: "unix-time",
+    name: "unix-time",
+    description: "unix-time",
+    enabled: true,
+  },
   {
-		slug: "json-formatter",
-		name: "json-formatter",
-		description: "json-formatter",
-		enabled: true
-	},
+    slug: "json-formatter",
+    name: "json-formatter",
+    description: "json-formatter",
+    enabled: true,
+  },
+  {
+    slug: "sql-formatter",
+    name: "sql-formatter",
+    description: "sql-formatter",
+    enabled: true,
+  },
 ];
 //export const tools: Tool[] = [
 //  {
