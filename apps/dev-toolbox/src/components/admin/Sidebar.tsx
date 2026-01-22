@@ -1,7 +1,7 @@
 // src/components/admin/Sidebar.tsx
 import SidebarClient from "./SidebarClient";
 import { getMessages } from "@/i18n/getMessages";
-import { getToolsWithI18n } from "@/lib/getToolsWithI18n";
+import { getAvailableTools } from "@/lib/getAvailableTools";
 import type { Locale } from "@/i18n/config";
 
 type Props = {
@@ -10,7 +10,7 @@ type Props = {
 
 export default async function Sidebar({ lang }: Props) {
   const t = await getMessages(lang);
-  const tools = getToolsWithI18n(t);
+  const tools = await getAvailableTools(lang);
 
   return (
     <SidebarClient

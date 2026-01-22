@@ -4,6 +4,8 @@
 import Link from "next/link";
 import { useTheme } from "@/hooks/useTheme";
 import LanguageSwitcher from "../LanguageSwitcher";
+import { getMessages } from "@/i18n/getMessages";
+import type { Locale } from "@/i18n/config";
 
 type Tool = {
   slug: string;
@@ -11,7 +13,7 @@ type Tool = {
 };
 
 type Props = {
-  lang: string;
+  lang: Locale;
   title: string;
   utilitiesLabel: string;
   tools: Tool[];
@@ -33,7 +35,7 @@ export default function SidebarClient({
       </div>
 			*/}
       <div className="p-4 flex justify-between items-center">
-        <span className="font-bold">Utility Admin</span>
+        <span className="font-bold">{utilitiesLabel}</span>
         <LanguageSwitcher />
       </div>
 
