@@ -61,6 +61,13 @@ export default {
       testString: "テストする文字列",
       result: "結果",
     },
+    "jwt-decoder": {
+      name: "JWT デコーダ",
+      description: "JWT をデコードします",
+      token: "JWT トークン",
+      header: "ヘッダ",
+      payload: "ペイロード",
+    },
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } satisfies Record<ToolSlug, any>,
 };

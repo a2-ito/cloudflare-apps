@@ -61,6 +61,14 @@ export default {
       testString: "Test String",
       result: "Result",
     },
+    "jwt-decoder": {
+      name: "JWT Decoder",
+      description: "Decode JWT header and payload",
+      token: "JWT Token",
+      header: "Header",
+      payload: "Payload",
+    },
+
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } satisfies Record<ToolSlug, any>,
 };

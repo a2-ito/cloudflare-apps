@@ -23,6 +23,9 @@ export const toolsConfig = {
   "regex-tester": {
     path: "regex-tester",
   },
+  "jwt-decoder": {
+    path: "jwt-decoder",
+  },
 } as const;
 
 export type ToolSlug = keyof typeof toolsConfig;
@@ -56,6 +59,12 @@ export const tools: Tool[] = [
     slug: "regex-tester",
     name: "regex-tester",
     description: "regex-tester",
+    enabled: true,
+  },
+  {
+    slug: "jwt-decoder",
+    name: "jwt-decoder",
+    description: "jwt-decoder",
     enabled: true,
   },
 ];
