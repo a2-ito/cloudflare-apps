@@ -20,6 +20,9 @@ export const toolsConfig = {
   "sql-formatter": {
     path: "sql-formatter",
   },
+  "regex-tester": {
+    path: "regex-tester",
+  },
 } as const;
 
 export type ToolSlug = keyof typeof toolsConfig;
@@ -47,6 +50,12 @@ export const tools: Tool[] = [
     slug: "sql-formatter",
     name: "sql-formatter",
     description: "sql-formatter",
+    enabled: true,
+  },
+  {
+    slug: "regex-tester",
+    name: "regex-tester",
+    description: "regex-tester",
     enabled: true,
   },
 ];

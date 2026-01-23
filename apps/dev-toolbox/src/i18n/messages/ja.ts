@@ -53,6 +53,14 @@ export default {
       indent: "インデント",
       error: "SQ: の形式が正しくありません",
     },
+    "regex-tester": {
+      name: "正規表現テスター",
+      description: "正規表現をテストできます",
+      pattern: "パターン",
+      flags: "フラグ",
+      testString: "テストする文字列",
+      result: "結果",
+    },
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } satisfies Record<ToolSlug, any>,
 };

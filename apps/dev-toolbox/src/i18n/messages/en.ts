@@ -53,6 +53,14 @@ export default {
       indent: "Indent",
       error: "SQL Format Error",
     },
+    "regex-tester": {
+      name: "Regex Tester",
+      description: "Test Regex",
+      pattern: "Pattern",
+      flags: "Flags",
+      testString: "Test String",
+      result: "Result",
+    },
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } satisfies Record<ToolSlug, any>,
 };
