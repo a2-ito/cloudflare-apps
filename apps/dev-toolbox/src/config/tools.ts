@@ -26,6 +26,9 @@ export const toolsConfig = {
   "jwt-decoder": {
     path: "jwt-decoder",
   },
+  "base64-tool": {
+    path: "base64-tool",
+  },
 } as const;
 
 export type ToolSlug = keyof typeof toolsConfig;
@@ -65,6 +68,12 @@ export const tools: Tool[] = [
     slug: "jwt-decoder",
     name: "jwt-decoder",
     description: "jwt-decoder",
+    enabled: true,
+  },
+  {
+    slug: "base64-tool",
+    name: "base64-tool",
+    description: "base64-tool",
     enabled: true,
   },
 ];

@@ -22,6 +22,7 @@ function formatDate(value: unknown) {
   if (typeof value !== "number") return value;
   return new Date(value * 1000).toLocaleString();
 }
+
 type Props = {
   t: {
     name: string;

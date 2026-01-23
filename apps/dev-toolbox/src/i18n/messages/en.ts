@@ -68,7 +68,13 @@ export default {
       header: "Header",
       payload: "Payload",
     },
-
+    "base64-tool": {
+      name: "Base64 Encode / Decode",
+      description: "Convert text to Base64 and decode it back",
+      encode: "Encode",
+      decode: "Decode",
+      result: "Result",
+    },
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } satisfies Record<ToolSlug, any>,
 };

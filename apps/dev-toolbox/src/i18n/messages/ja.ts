@@ -68,6 +68,13 @@ export default {
       header: "ヘッダ",
       payload: "ペイロード",
     },
+    "base64-tool": {
+      name: "Base64 エンコード・デコード",
+      description: "テキストをBase64エンコード・デコードします",
+      encode: "エンコード",
+      decode: "デコード",
+      result: "結果",
+    },
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } satisfies Record<ToolSlug, any>,
 };
