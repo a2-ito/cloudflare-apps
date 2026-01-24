@@ -33,14 +33,7 @@ type Props = {
   };
 };
 
-type DecodeOk = {
-  header: DecodedPart;
-  payload: DecodedPart;
-};
 
-type DecodeError = {
-  error: string;
-};
 
 
 

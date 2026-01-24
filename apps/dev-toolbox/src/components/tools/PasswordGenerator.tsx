@@ -8,14 +8,7 @@ type Props = {
   t: PasswordGeneratorMessages;
 };
 
-const PASSWORD_OPTIONS = {
-  lowercase: true,
-  uppercase: true,
-  numbers: true,
-  symbols: false,
-} as const;
-
-type PasswordOptionKey = keyof typeof PASSWORD_OPTIONS;
+type PasswordOptionKey = "lowercase" | "uppercase" | "numbers" | "symbols";
 
 export default function PasswordGenerator({ t }: Props) {
   const [length, setLength] = useState(16);
