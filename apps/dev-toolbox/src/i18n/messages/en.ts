@@ -86,6 +86,13 @@ export default {
       description:
         "Temporary markdown memo. Content will be cleared when the tab is closed.",
     },
+    "url-encoder-decoder": {
+      name: "URL Encode / Decode",
+      description: "",
+      encode: "Encode",
+      decode: "Decode",
+      run: "Run",
+    },
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } satisfies Record<ToolSlug, any>,
 };

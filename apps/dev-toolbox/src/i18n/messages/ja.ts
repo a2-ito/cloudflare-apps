@@ -86,6 +86,13 @@ export default {
       description:
         "一時的なメモとしてご利用ください（タブを閉じると消えてしまうのでご注意ください）",
     },
+    "url-encoder-decoder": {
+      name: "URL エンコード・デコード",
+      description: "",
+      encode: "エンコード",
+      decode: "デコード",
+      run: "実行",
+    },
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } satisfies Record<ToolSlug, any>,
 };

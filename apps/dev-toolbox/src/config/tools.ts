@@ -35,6 +35,9 @@ export const toolsConfig = {
   "markdown-scratchpad": {
     path: "markdown-scratchpad",
   },
+  "url-encoder-decoder": {
+    path: "url-encoder-decoder",
+  },
 } as const;
 
 export type ToolSlug = keyof typeof toolsConfig;
@@ -92,6 +95,12 @@ export const tools: Tool[] = [
     slug: "markdown-scratchpad",
     name: "markdown-scratchpad",
     description: "markdown-scratchpad",
+    enabled: true,
+  },
+  {
+    slug: "url-encoder-decoder",
+    name: "url-encoder-decoder",
+    description: "url-encoder-decoder",
     enabled: true,
   },
 ];
