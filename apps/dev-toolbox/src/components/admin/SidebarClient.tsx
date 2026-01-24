@@ -2,7 +2,6 @@
 "use client";
 
 import Link from "next/link";
-import { useTheme } from "@/hooks/useTheme";
 import LanguageSwitcher from "../LanguageSwitcher";
 import type { Locale } from "@/i18n/config";
 
@@ -22,7 +21,6 @@ export default function SidebarClient({
   utilitiesLabel,
   tools,
 }: Props) {
-  const { theme, toggleTheme } = useTheme();
 
   return (
     <aside className="w-64 bg-white dark:bg-gray-900 border-r dark:border-gray-700">
@@ -52,17 +50,7 @@ export default function SidebarClient({
           ))}
       </nav>
 
-      <div className="p-4 mt-auto">
-        <button
-          onClick={toggleTheme}
-          className="w-full rounded border px-3 py-2
-            text-sm
-            bg-gray-100 dark:bg-gray-800
-            text-gray-800 dark:text-gray-200"
-        >
-          {theme === "dark" ? "🌙 Dark" : "☀️ Light"}
-        </button>
-      </div>
+
     </aside>
   );
 }
