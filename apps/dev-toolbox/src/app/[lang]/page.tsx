@@ -1,7 +1,6 @@
 // src/app/[lang]/page.tsx
 import AdminLayout from "@/components/admin/AdminLayout";
 import { getMessages } from "@/i18n/getMessages";
-import { getToolsWithI18n } from "@/lib/getToolsWithI18n";
 import { getAvailableTools } from "@/lib/getAvailableTools";
 import type { Locale } from "@/i18n/config";
 

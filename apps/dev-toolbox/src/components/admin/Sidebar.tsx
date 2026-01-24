@@ -15,7 +15,6 @@ export default async function Sidebar({ lang }: Props) {
   return (
     <SidebarClient
       lang={lang}
-      title={t.app.title}
       utilitiesLabel={t.menu.utilities}
       tools={tools}
     />

@@ -1,7 +1,7 @@
 // src/i18n/messages/ja.ts
 import type { ToolSlug } from "@/config/tools";
 
-export default {
+const messages = {
   app: {
     title: "Utilities",
     description: "エンジニア向けの便利ユーティリティ集",
@@ -94,5 +94,7 @@ export default {
       run: "実行",
     },
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  } satisfies Record<ToolSlug, any>,
+  } satisfies Record<ToolSlug, any>
 };
+
+export default messages;

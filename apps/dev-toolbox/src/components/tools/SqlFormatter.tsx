@@ -58,7 +58,7 @@ export default function SqlFormatterPage({ t }: Props) {
         uppercase: true,
       } as FormatOptionsWithLanguage);
       setOutput(formatted);
-    } catch (e) {
+    } catch {
       setOutput("❌ SQL parse error");
     }
   };

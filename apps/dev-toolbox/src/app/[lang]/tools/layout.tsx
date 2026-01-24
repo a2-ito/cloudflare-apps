@@ -1,5 +1,4 @@
 import AdminLayout from "@/components/admin/AdminLayout";
-import type { Locale } from "@/i18n/config";
 import { isLocale } from "@/i18n/config";
 
 export default async function ToolsLayout({

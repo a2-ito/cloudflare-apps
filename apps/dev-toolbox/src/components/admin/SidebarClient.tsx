@@ -4,7 +4,6 @@
 import Link from "next/link";
 import { useTheme } from "@/hooks/useTheme";
 import LanguageSwitcher from "../LanguageSwitcher";
-import { getMessages } from "@/i18n/getMessages";
 import type { Locale } from "@/i18n/config";
 
 type Tool = {
@@ -14,14 +13,12 @@ type Tool = {
 
 type Props = {
   lang: Locale;
-  title: string;
   utilitiesLabel: string;
   tools: Tool[];
 };
 
 export default function SidebarClient({
   lang,
-  title,
   utilitiesLabel,
   tools,
 }: Props) {

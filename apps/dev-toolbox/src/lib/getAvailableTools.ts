@@ -1,5 +1,4 @@
 import { tools } from "@/config/tools";
-import type { Tool } from "@/config/tools";
 import { getMessages } from "@/i18n/getMessages";
 import type { Locale } from "@/i18n/config";
 import type { ToolSlug } from "@/config/tools";

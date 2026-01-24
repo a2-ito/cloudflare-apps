@@ -42,7 +42,7 @@ type DecodeError = {
   error: string;
 };
 
-type DecodeResult = DecodeOk | DecodeError | null;
+
 
 export default function JwtDecoder({ t }: Props) {
   const [token, setToken] = useState("");

@@ -31,7 +31,7 @@ export default function Base64Tool({ t }: Props) {
 
     try {
       return mode === "encode" ? encodeBase64(input) : decodeBase64(input);
-    } catch (e) {
+    } catch {
       return "⚠️ Invalid Base64 string";
     }
   }, [input, mode]);
