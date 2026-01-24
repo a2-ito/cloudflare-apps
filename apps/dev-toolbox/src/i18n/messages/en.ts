@@ -75,6 +75,17 @@ export default {
       decode: "Decode",
       result: "Result",
     },
+    scratchpad: {
+      name: "Scratchpad",
+      description:
+        "Temporary markdown memo. Content will be cleared when the tab is closed.",
+      note: "💡 Supports paste, undo, bold, lists, and code blocks.",
+    },
+    "markdown-scratchpad": {
+      name: "Scratchpad (Markdown)",
+      description:
+        "Temporary markdown memo. Content will be cleared when the tab is closed.",
+    },
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } satisfies Record<ToolSlug, any>,
 };

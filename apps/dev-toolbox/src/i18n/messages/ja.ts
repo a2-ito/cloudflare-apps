@@ -75,6 +75,17 @@ export default {
       decode: "デコード",
       result: "結果",
     },
+    scratchpad: {
+      name: "メモ帳",
+      description:
+        "一時的なメモとしてご利用ください（タブを閉じると消えてしまうのでご注意ください）",
+      note: "箇条書き、コードブロックなどいくつかのリッチテキストに対応しています",
+    },
+    "markdown-scratchpad": {
+      name: "Markdown メモ帳",
+      description:
+        "一時的なメモとしてご利用ください（タブを閉じると消えてしまうのでご注意ください）",
+    },
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } satisfies Record<ToolSlug, any>,
 };

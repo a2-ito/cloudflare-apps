@@ -29,6 +29,12 @@ export const toolsConfig = {
   "base64-tool": {
     path: "base64-tool",
   },
+  scratchpad: {
+    path: "scratchpad",
+  },
+  "markdown-scratchpad": {
+    path: "markdown-scratchpad",
+  },
 } as const;
 
 export type ToolSlug = keyof typeof toolsConfig;
@@ -74,6 +80,18 @@ export const tools: Tool[] = [
     slug: "base64-tool",
     name: "base64-tool",
     description: "base64-tool",
+    enabled: true,
+  },
+  {
+    slug: "scratchpad",
+    name: "scratchpad",
+    description: "scratchpad",
+    enabled: true,
+  },
+  {
+    slug: "markdown-scratchpad",
+    name: "markdown-scratchpad",
+    description: "markdown-scratchpad",
     enabled: true,
   },
 ];
