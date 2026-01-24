@@ -5,42 +5,10 @@ export type Tool = {
   description: string;
   //icon?: string;
   enabled: boolean;
+  path: string;
 };
 
-export const toolsConfig = {
-  "password-generator": {
-    path: "password-generator",
-  },
-  "unix-time": {
-    path: "unix-time",
-  },
-  "json-formatter": {
-    path: "json-formatter",
-  },
-  "sql-formatter": {
-    path: "sql-formatter",
-  },
-  "regex-tester": {
-    path: "regex-tester",
-  },
-  "jwt-decoder": {
-    path: "jwt-decoder",
-  },
-  "base64-tool": {
-    path: "base64-tool",
-  },
-  scratchpad: {
-    path: "scratchpad",
-  },
-  "markdown-scratchpad": {
-    path: "markdown-scratchpad",
-  },
-  "url-encoder-decoder": {
-    path: "url-encoder-decoder",
-  },
-} as const;
-
-export type ToolSlug = keyof typeof toolsConfig;
+export type ToolSlug = "password-generator" | "unix-time" | "json-formatter" | "sql-formatter" | "regex-tester" | "jwt-decoder" | "base64-tool" | "scratchpad" | "markdown-scratchpad" | "url-encoder-decoder";
 
 export const tools: Tool[] = [
   {
@@ -48,79 +16,69 @@ export const tools: Tool[] = [
     name: "password-generator",
     description: "password-generator",
     enabled: true,
+    path: "password-generator",
   },
   {
     slug: "unix-time",
     name: "unix-time",
     description: "unix-time",
     enabled: true,
+    path: "unix-time",
   },
   {
     slug: "json-formatter",
     name: "json-formatter",
     description: "json-formatter",
     enabled: true,
+    path: "json-formatter",
   },
   {
     slug: "sql-formatter",
     name: "sql-formatter",
     description: "sql-formatter",
     enabled: true,
+    path: "sql-formatter",
   },
   {
     slug: "regex-tester",
     name: "regex-tester",
     description: "regex-tester",
     enabled: true,
+    path: "regex-tester",
   },
   {
     slug: "jwt-decoder",
     name: "jwt-decoder",
     description: "jwt-decoder",
     enabled: true,
+    path: "jwt-decoder",
   },
   {
     slug: "base64-tool",
     name: "base64-tool",
     description: "base64-tool",
     enabled: true,
+    path: "base64-tool",
   },
   {
     slug: "scratchpad",
     name: "scratchpad",
     description: "scratchpad",
     enabled: true,
+    path: "scratchpad",
   },
   {
     slug: "markdown-scratchpad",
     name: "markdown-scratchpad",
     description: "markdown-scratchpad",
     enabled: true,
+    path: "markdown-scratchpad",
   },
   {
     slug: "url-encoder-decoder",
     name: "url-encoder-decoder",
     description: "url-encoder-decoder",
     enabled: true,
+    path: "url-encoder-decoder",
   },
 ];
-//export const tools: Tool[] = [
-//  {
-//    slug: "password-generator",
-//    name: "パスワード生成",
-//    description: "安全なランダムパスワードを生成",
-//    enabled: true,
-//  },
-//  {
-//    slug: "unix-time",
-//    name: "Unix Time 変換",
-//    description: "Unix Time ↔ 日時",
-//    enabled: true,
-//  },
-//  {
-//    slug: "json-formatter",
-//    name: "JSON 整形",
-//    description: "JSON を見やすくフォーマット",
-//    enabled: true,
-//  },
-//]
