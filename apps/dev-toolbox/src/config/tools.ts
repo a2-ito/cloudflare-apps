@@ -6,7 +6,18 @@ export type Tool = {
   path: string;
 };
 
-export type ToolSlug = "password-generator" | "unix-time" | "json-formatter" | "sql-formatter" | "regex-tester" | "jwt-decoder" | "base64-tool" | "scratchpad" | "markdown-scratchpad" | "url-encoder-decoder";
+export type ToolSlug =
+  | "password-generator"
+  | "unix-time"
+  | "json-formatter"
+  | "sql-formatter"
+  | "regex-tester"
+  | "jwt-decoder"
+  | "base64-tool"
+  | "scratchpad"
+  | "markdown-scratchpad"
+  | "url-encoder-decoder"
+  | "cron-expression-tester";
 
 export const tools: Tool[] = [
   {
@@ -58,5 +69,10 @@ export const tools: Tool[] = [
     slug: "url-encoder-decoder",
     enabled: true,
     path: "url-encoder-decoder",
+  },
+  {
+    slug: "cron-expression-tester",
+    enabled: true,
+    path: "cron-expression-tester",
   },
 ];

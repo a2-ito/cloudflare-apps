@@ -93,8 +93,21 @@ const messages = {
       decode: "デコード",
       run: "実行",
     },
+    "cron-expression-tester": {
+      name: "Cron 式テスター",
+      description: "Cron 式の検証と実行時間を表示します",
+      cronExpression: "Cron 式",
+      timezone: "タイムゾーン",
+      nextRuns: "次回の実行時間",
+      previousRuns: "前回の実行時間",
+      explanation: "式の説明",
+      error: "エラー",
+      copy: "コピー",
+      invalidExpression: "無効な Cron 式です",
+      loading: "読み込み中...",
+    },
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  } satisfies Record<ToolSlug, any>
+  } satisfies Record<ToolSlug, any>,
 };
 
 export default messages;

@@ -93,8 +93,21 @@ const messages = {
       decode: "Decode",
       run: "Run",
     },
+    "cron-expression-tester": {
+      name: "Cron Expression Tester",
+      description: "Validate cron expressions and show execution times",
+      cronExpression: "Cron Expression",
+      timezone: "Timezone",
+      nextRuns: "Next Runs",
+      previousRuns: "Previous Runs",
+      explanation: "Explanation",
+      error: "Error",
+      copy: "Copy",
+      invalidExpression: "Invalid cron expression",
+      loading: "Loading...",
+    },
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  } satisfies Record<ToolSlug, any>
+  } satisfies Record<ToolSlug, any>,
 };
 
 export default messages;

@@ -16,6 +16,8 @@
   },
   "dependencies": {
     "@opennextjs/cloudflare": "^1.14.4",
+    "cron-parser": "^4.9.0",
+    "cronstrue": "^3.9.0",
     "marked": "^17.0.1",
     "next": "15.5.9",
     "react": "19.1.4",
