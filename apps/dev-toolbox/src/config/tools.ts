@@ -18,7 +18,8 @@ export type ToolSlug =
   | "markdown-scratchpad"
   | "url-encoder-decoder"
   | "cron-expression-tester"
-  | "keypair-generator";
+  | "keypair-generator"
+  | "ogp-checker";
 
 export const tools: Tool[] = [
   {
@@ -80,5 +81,10 @@ export const tools: Tool[] = [
     slug: "keypair-generator",
     enabled: true,
     path: "keypair-generator",
+  },
+  {
+    slug: "ogp-checker",
+    enabled: true,
+    path: "ogp-checker",
   },
 ];

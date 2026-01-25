@@ -12,7 +12,16 @@ It provides a collection of small, fast, and privacy-friendly tools such as pass
   - Password Generator
   - Unix Time Converter
   - JSON Formatter
-  - (More tools planned)
+  - SQL Formatter
+  - Regex Tester
+  - JWT Decoder
+  - Base64 Tool
+  - Scratchpad
+  - Markdown Scratchpad
+  - URL Encoder/Decoder
+  - Cron Expression Tester
+  - Keypair Generator
+  - OGP Checker
 
 - 🌍 **Internationalization (i18n)**
   - Language-aware routing (`/en`, `/ja`)

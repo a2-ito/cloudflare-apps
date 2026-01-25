@@ -21,3 +21,21 @@ export type UnixTimeConverterMessages = {
   utc: string;
   local: string;
 };
+
+export type OgpCheckerMessages = {
+  name: string;
+  description: string;
+  urlInput: string;
+  check: string;
+  title: string;
+  type: string;
+  image: string;
+  ogpDescription: string;
+  siteName: string;
+  locale: string;
+  ogpError: string;
+  loading: string;
+  noOgpData: string;
+  invalidUrl: string;
+  copy: string;
+};

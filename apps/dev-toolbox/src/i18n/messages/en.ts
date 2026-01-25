@@ -128,6 +128,23 @@ const messages = {
       generatedAt: "Generated At",
       error: "Error",
     },
+    "ogp-checker": {
+      name: "OGP Checker",
+      description: "Check Open Graph Protocol information for web pages",
+      urlInput: "URL",
+      check: "Check",
+      title: "Title",
+      type: "Type",
+      image: "Image",
+      ogpDescription: "Description",
+      siteName: "Site Name",
+      locale: "Locale",
+      ogpError: "Error",
+      loading: "Loading...",
+      noOgpData: "No OGP data found",
+      invalidUrl: "Invalid URL",
+      copy: "Copy",
+    },
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } satisfies Record<ToolSlug, any>,
 };

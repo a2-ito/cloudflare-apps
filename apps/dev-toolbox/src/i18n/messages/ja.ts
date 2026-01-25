@@ -128,6 +128,23 @@ const messages = {
       generatedAt: "生成時刻",
       error: "エラー",
     },
+    "ogp-checker": {
+      name: "OGP チェッカー",
+      description: "ウェブページの OGP (Open Graph Protocol) 情報を確認します",
+      urlInput: "URL",
+      check: "チェック",
+      title: "タイトル",
+      type: "タイプ",
+      image: "画像",
+      ogpDescription: "説明",
+      siteName: "サイト名",
+      locale: "言語",
+      ogpError: "エラー",
+      loading: "読み込み中...",
+      noOgpData: "OGP データが見つかりません",
+      invalidUrl: "無効な URL です",
+      copy: "コピー",
+    },
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } satisfies Record<ToolSlug, any>,
 };
