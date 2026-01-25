@@ -9,6 +9,9 @@ const messages = {
   menu: {
     utilities: "Utilities",
   },
+  common: {
+    backToHome: "Back to Home",
+  },
   tools: {
     "password-generator": {
       name: "Password Generator",

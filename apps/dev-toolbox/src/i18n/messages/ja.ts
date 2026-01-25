@@ -9,6 +9,9 @@ const messages = {
   menu: {
     utilities: "ユーティリティ一覧",
   },
+  common: {
+    backToHome: "トップ画面に戻る",
+  },
   tools: {
     "password-generator": {
       name: "パスワード生成",

@@ -3,13 +3,16 @@ import Sidebar from "./Sidebar";
 import type { Locale } from "@/i18n/config";
 import Link from "next/link";
 import ThemeToggle from "./ThemeToggle";
+import { getMessages } from "@/i18n/getMessages";
 
 type Props = {
   children: React.ReactNode;
   lang: Locale;
 };
 
-export default function AdminLayout({ children, lang }: Props) {
+export default async function AdminLayout({ children, lang }: Props) {
+  const t = await getMessages(lang);
+
   return (
     <div
       className="
@@ -33,17 +36,15 @@ export default function AdminLayout({ children, lang }: Props) {
               hover:bg-gray-50 dark:hover:bg-gray-700
               transition-colors"
           >
-            ← トップ画面に戻る
+            ← {t.common.backToHome}
           </Link>
-          
+
           {/* ダークモード切り替えボタン */}
           <ThemeToggle />
         </header>
-        
+
         {/* メインコンテンツ */}
-        <main className="flex-1 p-6">
-          {children}
-        </main>
+        <main className="flex-1 p-6">{children}</main>
       </div>
     </div>
   );
