@@ -1,0 +1,67 @@
+# To get started with Dependabot version 2, you'll need to specify a
+# version and at least one update ecosystem.
+# For more information, see:
+# https://docs.github.com/en/code-security/dependabot/dependabot-version-2
+
+version: 2
+updates:
+  # Enable version updates for npm
+  - package-ecosystem: "npm"
+    directory: "/"
+    # Check the npm registry for updates at 09:00 UTC on Monday
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+    open-pull-requests-limit: 5
+
+    # Group updates to reduce noise
+    groups:
+      # Group production dependencies updates
+      production-dependencies:
+        dependency-type: "production"
+        update-types:
+          - "minor"
+          - "patch"
+
+      # Group development dependencies updates
+      development-dependencies:
+        dependency-type: "development"
+        update-types:
+          - "minor"
+          - "patch"
+
+    # Add labels to pull requests
+    labels:
+      - "dependencies"
+      - "npm"
+
+  # Enable version updates for GitHub Actions
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    # Check for updates at 09:00 UTC on Monday
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+    open-pull-requests-limit: 3
+
+    # Group all GitHub Actions updates
+    groups:
+      github-actions:
+        pattern: "*"
+        update-types:
+          - "minor"
+          - "patch"
+
+    # Add labels to pull requests
+    labels:
+      - "dependencies"
+      - "github-actions"
+
+# Assign Dependabot as a reviewer for consistency
+assignees:
+  - "dependabot[bot]"
+
+reviewers:
+  - "dependabot[bot]"
