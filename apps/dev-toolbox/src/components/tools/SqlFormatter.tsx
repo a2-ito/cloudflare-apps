@@ -10,7 +10,24 @@ const DIALECTS = [
   { label: "SQLite", value: "sqlite" },
 ];
 
-type SqlDialect = "sql" | "mysql" | "postgresql" | "sqlite" | "bigquery" | "clickhouse" | "db2" | "db2i" | "duckdb" | "hive" | "mariadb" | "tidb" | "n1ql" | "plsql" | "redshift" | "spark" | "trino";
+type SqlDialect =
+  | "sql"
+  | "mysql"
+  | "postgresql"
+  | "sqlite"
+  | "bigquery"
+  | "clickhouse"
+  | "db2"
+  | "db2i"
+  | "duckdb"
+  | "hive"
+  | "mariadb"
+  | "tidb"
+  | "n1ql"
+  | "plsql"
+  | "redshift"
+  | "spark"
+  | "trino";
 
 type Props = {
   t: {

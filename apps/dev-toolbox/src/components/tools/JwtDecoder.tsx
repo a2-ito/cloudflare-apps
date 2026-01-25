@@ -33,10 +33,6 @@ type Props = {
   };
 };
 
-
-
-
-
 export default function JwtDecoder({ t }: Props) {
   const [token, setToken] = useState("");
 
