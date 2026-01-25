@@ -8,6 +8,7 @@ import type { Locale } from "@/i18n/config";
 import Link from "next/link";
 import { getMessages } from "@/i18n/getMessages";
 import { getAvailableTools } from "@/lib/getAvailableTools";
+import LanguageSwitcher from "../LanguageSwitcher";
 
 type Props = {
   children: React.ReactNode;
@@ -58,7 +59,7 @@ export default function AdminLayout({ children, lang }: Props) {
             {/* トップ画面に戻るボタン */}
             <Link
               href={`/${lang}`}
-              className="hidden sm:inline-flex items-center gap-2 px-4 py-2 
+              className="hidden sm:inline-flex items-center gap-2 px-4 py-2
                 text-sm font-medium
                 bg-white dark:bg-gray-800
                 border border-gray-300 dark:border-gray-600
@@ -72,7 +73,7 @@ export default function AdminLayout({ children, lang }: Props) {
             {/* スマホ用省略版 */}
             <Link
               href={`/${lang}`}
-              className="sm:hidden inline-flex items-center gap-2 px-3 py-2 
+              className="sm:hidden inline-flex items-center gap-2 px-3 py-2
                 text-sm font-medium
                 bg-white dark:bg-gray-800
                 border border-gray-300 dark:border-gray-600
@@ -83,6 +84,9 @@ export default function AdminLayout({ children, lang }: Props) {
               ← Home
             </Link>
           </div>
+
+          {/* 言語切替 */}
+          <LanguageSwitcher />
 
           {/* ダークモード切り替えボタン */}
           <ThemeToggle />

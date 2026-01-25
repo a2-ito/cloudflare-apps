@@ -1,6 +1,5 @@
 "use client";
 import Link from "next/link";
-import LanguageSwitcher from "../LanguageSwitcher";
 import type { Locale } from "@/i18n/config";
 
 type Tool = {
@@ -49,7 +48,6 @@ export default function SidebarClient({
               {utilitiesLabel}
             </span>
             <div className="flex items-center gap-3">
-              <LanguageSwitcher />
               {/* 閉じるボタン（モバイルのみ表示） */}
               <button
                 onClick={onClose}
