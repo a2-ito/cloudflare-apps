@@ -1,5 +1,3 @@
-import { getCloudflareContext } from "@opennextjs/cloudflare";
-
 export type Env = {
   DB: D1Database;
 };

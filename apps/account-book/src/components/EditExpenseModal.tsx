@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 
 export type ExpenseForEdit = {
   id: number;
@@ -59,7 +59,7 @@ export default function EditExpenseModal({
     const h = (e: KeyboardEvent) => e.key === "Escape" && onClose();
     window.addEventListener("keydown", h);
     return () => window.removeEventListener("keydown", h);
-  }, []);
+  }, [onClose]);
 
   //useEffect(() => {
   //  if (expense.categoryId !== null && expense.categoryId !== undefined) {

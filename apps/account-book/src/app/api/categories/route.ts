@@ -6,7 +6,7 @@ import { getCloudflareContext } from "@opennextjs/cloudflare";
 import { drizzle } from "drizzle-orm/d1";
 import { categories } from "@/db/schema";
 
-export async function GET(request: Request) {
+export async function GET() {
   // const db = getDB()
   // const env = (request as any).env
   // const db = env.DB as D1Database

@@ -313,6 +313,14 @@ export default function DashboardPage() {
           onSaved={() => fetchExpenses(month)} // 再取得関数
         />
       )}
+
+      {/* 年次ページ */}
+      <Link
+        href="/yearly"
+        className="fixed bottom-4 right-4 bg-blue-600 text-white px-4 py-2 rounded-full shadow-lg"
+      >
+        📅 年間
+      </Link>
     </main>
   );
 }
