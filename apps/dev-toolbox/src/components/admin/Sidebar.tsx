@@ -6,9 +6,11 @@ import type { Locale } from "@/i18n/config";
 
 type Props = {
   lang: Locale;
+  isOpen?: boolean;
+  onClose?: () => void;
 };
 
-export default async function Sidebar({ lang }: Props) {
+export default async function Sidebar({ lang, isOpen, onClose }: Props) {
   const t = await getMessages(lang);
   const tools = await getAvailableTools(lang);
 
@@ -17,6 +19,8 @@ export default async function Sidebar({ lang }: Props) {
       lang={lang}
       utilitiesLabel={t.menu.utilities}
       tools={tools}
+      isOpen={isOpen}
+      onClose={onClose}
     />
   );
 }

@@ -17,14 +17,16 @@ export default async function HomePage({
 
   return (
     <AdminLayout lang={lang}>
-      <h1 className="text-2xl font-bold mb-4">{t.menu.utilities}</h1>
+      <h1 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6">
+        {t.menu.utilities}
+      </h1>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {tools.map((tool) => (
           <Link
             key={tool.slug}
             href={`/${lang}/tools/${tool.slug}`}
-            className="rounded border p-4
+            className="rounded border p-4 sm:p-6
               bg-white dark:bg-gray-900
               border-gray-200 dark:border-gray-700
               hover:bg-gray-50 dark:hover:bg-gray-800
@@ -33,8 +35,8 @@ export default async function HomePage({
               hover:shadow-md
               cursor-pointer"
           >
-            <h2 className="font-semibold">{tool.name}</h2>
-            <p className="text-sm text-gray-500 dark:text-gray-400">
+            <h2 className="font-semibold text-base sm:text-lg">{tool.name}</h2>
+            <p className="text-sm text-gray-500 dark:text-gray-400 mt-2">
               {tool.description}
             </p>
           </Link>

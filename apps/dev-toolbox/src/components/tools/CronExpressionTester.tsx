@@ -110,14 +110,14 @@ export default function CronExpressionTester({ t }: Props) {
   };
 
   return (
-    <div className="space-y-6 max-w-4xl">
-      <h1 className="text-2xl font-bold">{t.name}</h1>
+    <div className="space-y-4 sm:space-y-6 max-w-4xl px-2 sm:px-0">
+      <h1 className="text-xl sm:text-2xl font-bold">{t.name}</h1>
 
       {/* Cron Expression Input */}
       <div className="space-y-2">
         <label className="block font-medium">{t.cronExpression}</label>
         <input
-          className="w-full border rounded px-3 py-2 dark:bg-zinc-900"
+          className="w-full border rounded px-3 py-2 text-sm dark:bg-zinc-900"
           placeholder="e.g. 0 12 * * *"
           value={expression}
           onChange={(e) => setExpression(e.target.value)}
@@ -125,12 +125,12 @@ export default function CronExpressionTester({ t }: Props) {
       </div>
 
       {/* Configuration */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         {/* Timezone Selection */}
         <div className="space-y-2">
           <label className="block font-medium">{t.timezone}</label>
           <select
-            className="w-full border rounded px-3 py-2 dark:bg-zinc-900"
+            className="w-full border rounded px-3 py-2 text-sm dark:bg-zinc-900"
             value={timezone}
             onChange={(e) => setTimezone(e.target.value)}
           >
@@ -146,7 +146,7 @@ export default function CronExpressionTester({ t }: Props) {
         <div className="space-y-2">
           <label className="block font-medium">Number of results</label>
           <select
-            className="w-full border rounded px-3 py-2 dark:bg-zinc-900"
+            className="w-full border rounded px-3 py-2 text-sm dark:bg-zinc-900"
             value={count}
             onChange={(e) => setCount(Number(e.target.value))}
           >
@@ -175,10 +175,10 @@ export default function CronExpressionTester({ t }: Props) {
           {/* Explanation */}
           {result.explanation && (
             <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 dark:bg-blue-900/20 dark:border-blue-800">
-              <h3 className="font-medium text-blue-800 dark:text-blue-200 mb-1">
+              <h3 className="font-medium text-blue-800 dark:text-blue-200 mb-1 text-sm sm:text-base">
                 {t.explanation}
               </h3>
-              <p className="text-blue-600 dark:text-blue-300">
+              <p className="text-blue-600 dark:text-blue-300 text-sm">
                 {result.explanation}
               </p>
             </div>
@@ -187,8 +187,8 @@ export default function CronExpressionTester({ t }: Props) {
           {/* Next Runs */}
           {result.nextRuns.length > 0 && (
             <div className="space-y-2">
-              <div className="flex items-center justify-between">
-                <h3 className="font-semibold">
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+                <h3 className="font-semibold text-sm sm:text-base">
                   {t.nextRuns} ({result.nextRuns.length})
                 </h3>
                 <button
@@ -198,8 +198,8 @@ export default function CronExpressionTester({ t }: Props) {
                   {t.copy}
                 </button>
               </div>
-              <div className="bg-white border rounded-lg p-3 dark:bg-zinc-800 dark:border-zinc-700">
-                <ul className="space-y-1 text-sm font-mono">
+              <div className="bg-white border rounded-lg p-2 sm:p-3 dark:bg-zinc-800 dark:border-zinc-700">
+                <ul className="space-y-1 text-xs sm:text-sm font-mono">
                   {result.nextRuns.map((run, index) => (
                     <li
                       key={index}
@@ -216,8 +216,8 @@ export default function CronExpressionTester({ t }: Props) {
           {/* Previous Runs */}
           {result.previousRuns.length > 0 && (
             <div className="space-y-2">
-              <div className="flex items-center justify-between">
-                <h3 className="font-semibold">
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+                <h3 className="font-semibold text-sm sm:text-base">
                   {t.previousRuns} ({result.previousRuns.length})
                 </h3>
                 <button
@@ -229,8 +229,8 @@ export default function CronExpressionTester({ t }: Props) {
                   {t.copy}
                 </button>
               </div>
-              <div className="bg-white border rounded-lg p-3 dark:bg-zinc-800 dark:border-zinc-700">
-                <ul className="space-y-1 text-sm font-mono">
+              <div className="bg-white border rounded-lg p-2 sm:p-3 dark:bg-zinc-800 dark:border-zinc-700">
+                <ul className="space-y-1 text-xs sm:text-sm font-mono">
                   {result.previousRuns.map((run, index) => (
                     <li
                       key={index}
