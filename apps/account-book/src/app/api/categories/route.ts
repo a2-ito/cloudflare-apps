@@ -5,6 +5,12 @@ import { NextResponse } from "next/server";
 import { getCloudflareContext } from "@opennextjs/cloudflare";
 import { drizzle } from "drizzle-orm/d1";
 import { categories } from "@/db/schema";
+import { getSessionUser } from "@/lib/session";
+import { getUserGroupId } from "@/lib/getUserGroupId";
+
+type CategorySchema = {
+  name: string;
+};
 
 export async function GET() {
   // const db = getDB()
@@ -20,4 +26,24 @@ export async function GET() {
 
   const result = await db.select().from(categories);
   return NextResponse.json(result);
+}
+
+export async function POST(request: Request) {
+  const userId = getSessionUser(request);
+
+  if (!userId) {
+    return NextResponse.json({ error: "unauthorized" }, { status: 401 });
+  }
+
+  const { env } = getCloudflareContext();
+  const db = drizzle(env.DB);
+  const groupId = await getUserGroupId(db, userId);
+
+  const { name } = (await request.json()) as CategorySchema;
+
+  await db.insert(categories).values({
+    name,
+  });
+
+  return NextResponse.json({ ok: true });
 }
