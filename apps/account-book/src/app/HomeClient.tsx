@@ -297,6 +297,16 @@ export default function DashboardPage() {
           ))}
       </section>
 
+      {/* カテゴリページ */}
+      <Link
+        href="/categories"
+        className="fixed bottom-4 left-4 bg-blue-600 text-white px-4 py-2 rounded-full shadow-lg"
+        //className="px-3 py-1 rounded bg-gray-200 dark:bg-gray-700
+        //         text-sm hover:opacity-80"
+      >
+        カテゴリ管理
+      </Link>
+
       {/* 追加ボタン */}
       <Link
         href="/add"

@@ -6,7 +6,6 @@ import { getCloudflareContext } from "@opennextjs/cloudflare";
 import { drizzle } from "drizzle-orm/d1";
 import { categories } from "@/db/schema";
 import { getSessionUser } from "@/lib/session";
-import { getUserGroupId } from "@/lib/getUserGroupId";
 
 type CategorySchema = {
   name: string;
@@ -37,7 +36,6 @@ export async function POST(request: Request) {
 
   const { env } = getCloudflareContext();
   const db = drizzle(env.DB);
-  const groupId = await getUserGroupId(db, userId);
 
   const { name } = (await request.json()) as CategorySchema;
 
