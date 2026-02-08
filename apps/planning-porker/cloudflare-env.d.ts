@@ -7,7 +7,7 @@ declare namespace Cloudflare {
     WORKER_SELF_REFERENCE: Fetcher /* planning-porker */;
     IMAGES: ImagesBinding;
     ASSETS: Fetcher;
-    planning_porker: KVNamespace;
+    DB: D1Database;
   }
 }
 interface CloudflareEnv extends Cloudflare.Env {}

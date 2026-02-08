@@ -8,7 +8,9 @@ type Props = {
   onVote: (formData: FormData) => void;
   onUnvote: (formData: FormData) => void;
   onLeave: (roomId: string, name: string) => void;
+  onRoomFetch: () => void;
   revealed?: boolean;
+  roomVotes: Record<string, number | null>;
 };
 
 const STORAGE_PREFIX = "planning-poker:";
@@ -19,7 +21,9 @@ export function ClientForms({
   onVote,
   onUnvote,
   onLeave,
+  onRoomFetch,
   revealed = false,
+  roomVotes,
 }: Props) {
   const [name, setName] = useState<string | null>(null);
   const [selected, setSelected] = useState<number | null>(null);
@@ -39,9 +43,16 @@ export function ClientForms({
     }
   }, [roomId]);
 
-  // Reveal が解除されたら選択をリセット
+  // 自分の投票を復元
   useEffect(() => {
-    if (!revealed) {
+    if (name && roomVotes[name] !== undefined) {
+      setSelected(roomVotes[name]);
+    }
+  }, [name, roomVotes]);
+
+  // Reveal されたら選択をリセット
+  useEffect(() => {
+    if (revealed) {
       setSelected(null);
     }
   }, [revealed]);
@@ -75,10 +86,32 @@ export function ClientForms({
   };
 
   // 投票
-  const handleVote = (formData: FormData) => {
+  const handleVote = async (formData: FormData) => {
     if (!name) return;
+
+    const value = Number(formData.get("value"));
+
+    // 選択解除の場合
+    if (selected === null) {
+      const fd = new FormData();
+      fd.set("name", name);
+      await onUnvote(fd);
+      await onRoomFetch();
+      return;
+    }
+
     formData.set("name", name);
-    onVote(formData);
+    await onVote(formData);
+    await onRoomFetch();
+  };
+
+  // 投票取り消し
+  const handleUnvote = () => {
+    if (!name) return;
+    const fd = new FormData();
+    fd.set("name", name);
+    onUnvote(fd);
+    onRoomFetch?.();
   };
 
   // 退出
@@ -133,7 +166,7 @@ export function ClientForms({
             </p>
 
             <div className="flex flex-wrap justify-center gap-3">
-              {[1, 2, 3, 5, 8, 13].map((v) => {
+              {[1, 2, 3, 5, 8, 13, 21].map((v) => {
                 const isSelected = selected === v;
 
                 return (
@@ -146,10 +179,6 @@ export function ClientForms({
                       setSelected((prev) => {
                         // 解除
                         if (prev === v) {
-                          const fd = new FormData();
-                          fd.set("name", name!);
-                          onUnvote(fd); // ← サーバーに送る
-
                           return null;
                         }
 

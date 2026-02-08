@@ -1,24 +1,18 @@
 "use server";
 
 import { redirect } from "next/navigation";
-import { getCloudflareContext } from "@opennextjs/cloudflare";
-import type { RoomData } from "@/types/room";
+import { getDB } from "@/db";
+import { rooms } from "@/db/schema";
 
 export async function createRoom() {
-  const { env } = getCloudflareContext();
+  const db = getDB();
 
   const id = crypto.randomUUID().slice(0, 8);
 
-  const room: RoomData = {
+  await db.insert(rooms).values({
     id,
     createdAt: new Date().toISOString(),
-    participants: [],
-    votes: {},
-    revealed: false,
-  };
-
-  await env.planning_porker.put(`room:${id}`, JSON.stringify(room), {
-    expirationTtl: 60 * 60,
+    revealed: 0,
   });
 
   redirect(`/room/${id}`);

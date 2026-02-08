@@ -1,23 +1,18 @@
 "use server";
 
 import { redirect } from "next/navigation";
-import { getCloudflareContext } from "@opennextjs/cloudflare";
-import type { RoomData } from "@/types/room";
+import { getDB } from "@/db";
+import { rooms, votes } from "@/db/schema";
+import { eq } from "drizzle-orm";
 
 export async function resetRoom(roomId: string) {
-  const { env } = getCloudflareContext();
-  const key = `room:${roomId}`;
+  const db = getDB();
 
-  const room = await env.planning_porker.get<RoomData>(key, "json");
-  if (!room) return;
+  // Delete all votes for this room
+  await db.delete(votes).where(eq(votes.roomId, roomId));
 
-  const updated: RoomData = {
-    ...room,
-    votes: {},
-    revealed: false,
-  };
-
-  await env.planning_porker.put(key, JSON.stringify(updated));
+  // Update room to not revealed
+  await db.update(rooms).set({ revealed: 0 }).where(eq(rooms.id, roomId));
 
   redirect(`/room/${roomId}`);
 }

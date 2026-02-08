@@ -1,8 +1,9 @@
 "use server";
 
 import { redirect } from "next/navigation";
-import { getCloudflareContext } from "@opennextjs/cloudflare";
-import type { RoomData } from "@/types/room";
+import { getDB } from "@/db";
+import { rooms, votes } from "@/db/schema";
+import { eq, and } from "drizzle-orm";
 
 export async function vote(roomId: string, formData: FormData) {
   const name = formData.get("name")?.toString();
@@ -10,42 +11,59 @@ export async function vote(roomId: string, formData: FormData) {
 
   if (!name || Number.isNaN(value)) return;
 
-  const { env } = getCloudflareContext();
-  const key = `room:${roomId}`;
+  const db = getDB();
 
-  const room = await env.planning_porker.get<RoomData>(key, "json");
-  if (!room) return;
+  // Check if room exists
+  const room = await db
+    .select()
+    .from(rooms)
+    .where(eq(rooms.id, roomId))
+    .limit(1);
+  if (!room.length) return;
 
-  // 上書きOK（簡易版）
-  const updated: RoomData = {
-    ...room,
-    votes: {
-      ...room.votes,
-      [name]: value,
-    },
-  };
+  // Check if vote already exists and update/insert accordingly
+  const existingVote = await db
+    .select()
+    .from(votes)
+    .where(and(eq(votes.roomId, roomId), eq(votes.participantName, name)))
+    .limit(1);
 
-  await env.planning_porker.put(key, JSON.stringify(updated));
+  if (existingVote.length) {
+    await db
+      .update(votes)
+      .set({ value, votedAt: new Date().toISOString() })
+      .where(and(eq(votes.roomId, roomId), eq(votes.participantName, name)));
+  } else {
+    await db.insert(votes).values({
+      roomId,
+      participantName: name,
+      value,
+      votedAt: new Date().toISOString(),
+    });
+  }
 
-  redirect(`/room/${roomId}`);
+  // Remove redirect to allow client-side refresh
 }
 
 export async function unvote(roomId: string, formData: FormData) {
   const name = formData.get("name")?.toString();
-  const value = Number(formData.get("value"));
 
-  if (!name || Number.isNaN(value)) return;
+  if (!name) return;
 
-  const { env } = getCloudflareContext();
-  const key = `room:${roomId}`;
+  const db = getDB();
 
-  const room = await env.planning_porker.get<RoomData>(key, "json");
-  if (!room) return;
+  // Check if room exists
+  const room = await db
+    .select()
+    .from(rooms)
+    .where(eq(rooms.id, roomId))
+    .limit(1);
+  if (!room.length) return;
 
-  // voted = false を意味する → vote を削除
-  delete room.votes[name];
+  // Delete the vote
+  await db
+    .delete(votes)
+    .where(and(eq(votes.roomId, roomId), eq(votes.participantName, name)));
 
-  await env.planning_porker.put(key, JSON.stringify(room));
-
-  redirect(`/room/${roomId}`);
+  // Remove redirect to allow client-side refresh
 }

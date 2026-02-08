@@ -1,25 +1,22 @@
 "use server";
 
 import { redirect } from "next/navigation";
-import { getCloudflareContext } from "@opennextjs/cloudflare";
-import type { RoomData } from "@/types/room";
+import { getDB } from "@/db";
+import { participants, votes } from "@/db/schema";
+import { eq, and } from "drizzle-orm";
 
 export async function leaveRoom(roomId: string, name: string) {
-  const { env } = getCloudflareContext();
-  const key = `room:${roomId}`;
+  const db = getDB();
 
-  const room = await env.planning_porker.get<RoomData>(key, "json");
-  if (!room) return;
+  // Delete participant
+  await db
+    .delete(participants)
+    .where(and(eq(participants.roomId, roomId), eq(participants.name, name)));
 
-  const updated: RoomData = {
-    ...room,
-    participants: room.participants.filter((p) => p !== name),
-    votes: Object.fromEntries(
-      Object.entries(room.votes).filter(([k]) => k !== name)
-    ),
-  };
-
-  await env.planning_porker.put(key, JSON.stringify(updated));
+  // Delete participant's votes
+  await db
+    .delete(votes)
+    .where(and(eq(votes.roomId, roomId), eq(votes.participantName, name)));
 
   redirect(`/`);
 }

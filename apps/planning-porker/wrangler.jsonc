@@ -32,10 +32,12 @@
   "observability": {
     "enabled": true,
   },
-  "kv_namespaces": [
+  "d1_databases": [
     {
-      "binding": "planning_porker",
-      "id": "d368aba25cf84d2eb75881b05d66866b",
+      "binding": "DB",
+      "database_name": "planning-porker-db",
+      "database_id": "a2a11d45-42af-4788-a1e5-8a1bef409137",
+      "migrations_dir": "drizzle/migrations",
     },
   ],
   /**

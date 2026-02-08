@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
 import { useRouter } from "next/navigation";
 
 export function PollingRefresher({
@@ -16,7 +16,7 @@ export function PollingRefresher({
 
   const canPoll = participantsCount > 1;
 
-  const startPolling = () => {
+  const startPolling = useCallback(() => {
     if (!canPoll) return;
     if (timerRef.current) return;
 
@@ -26,7 +26,7 @@ export function PollingRefresher({
 
       setTimeout(() => setPolling(false), 400);
     }, intervalMs);
-  };
+  }, [canPoll, intervalMs, router]);
 
   const stopPolling = () => {
     if (timerRef.current) {
@@ -59,7 +59,7 @@ export function PollingRefresher({
       stopPolling();
       document.removeEventListener("visibilitychange", handleVisibilityChange);
     };
-  }, [router, intervalMs, canPoll]);
+  }, [router, intervalMs, canPoll, startPolling]);
 
   if (!polling) return null;
 

@@ -1,26 +1,37 @@
 "use server";
 
 import { redirect } from "next/navigation";
-import { getCloudflareContext } from "@opennextjs/cloudflare";
-import type { RoomData } from "@/types/room";
+import { getDB } from "@/db";
+import { rooms, participants } from "@/db/schema";
+import { eq, and } from "drizzle-orm";
 
 export async function joinRoom(roomId: string, formData: FormData) {
   const name = formData.get("name")?.toString().trim();
   if (!name) return;
 
-  const { env } = getCloudflareContext();
-  const key = `room:${roomId}`;
+  const db = getDB();
 
-  const room = await env.planning_porker.get<RoomData>(key, "json");
-  if (!room) return;
+  // Check if room exists
+  const room = await db
+    .select()
+    .from(rooms)
+    .where(eq(rooms.id, roomId))
+    .limit(1);
+  if (!room.length) return;
 
-  if (!room.participants.includes(name)) {
-    const updated: RoomData = {
-      ...room,
-      participants: [...room.participants, name],
-    };
+  // Check if participant already exists
+  const existingParticipant = await db
+    .select()
+    .from(participants)
+    .where(and(eq(participants.roomId, roomId), eq(participants.name, name)))
+    .limit(1);
 
-    await env.planning_porker.put(key, JSON.stringify(updated));
+  if (!existingParticipant.length) {
+    await db.insert(participants).values({
+      roomId,
+      name,
+      joinedAt: new Date().toISOString(),
+    });
   }
 
   redirect(`/room/${roomId}`);
