@@ -17,11 +17,8 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const googleClientId = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID;
-
-  if (!googleClientId) {
-    throw new Error("NEXT_PUBLIC_GOOGLE_CLIENT_ID is not set");
-  }
+  const googleClientId =
+    process.env.GOOGLE_CLIENT_ID ?? "";
 
   return (
     <html lang="ja" className="dark">
