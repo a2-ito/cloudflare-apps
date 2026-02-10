@@ -13,7 +13,7 @@ export default function Dashboard() {
       <div className="grid gap-6 sm:grid-cols-2">
         <Link
           href="/questions"
-          className="block rounded-2xl bg-zinc-900 p-6 hover:bg-zinc-800 transition"
+          className="block rounded-2xl light:bg-white dark:bg-zinc-900 p-6 hover:bg-zinc-800 transition"
         >
           <h3 className="text-lg font-semibold">問題一覧</h3>
           <p className="mt-2 text-sm text-zinc-400">
@@ -23,7 +23,7 @@ export default function Dashboard() {
 
         <Link
           href="/questions/new"
-          className="block rounded-2xl bg-zinc-900 p-6 hover:bg-zinc-800 transition"
+          className="block rounded-2xl light:bg-white dark:bg-zinc-900 p-6 hover:bg-zinc-800 transition"
         >
           <h3 className="text-lg font-semibold">問題を登録</h3>
           <p className="mt-2 text-sm text-zinc-400">新しい問題を作成します。</p>
@@ -31,7 +31,7 @@ export default function Dashboard() {
 
         <Link
           href="/exams"
-          className="block rounded-2xl bg-zinc-900 p-6 hover:bg-zinc-800 transition"
+          className="block rounded-2xl light:bg-white dark:bg-zinc-900 p-6 hover:bg-zinc-800 transition"
         >
           <h3 className="text-lg font-semibold">試験管理</h3>
           <p className="mt-2 text-sm text-zinc-400">
@@ -41,7 +41,7 @@ export default function Dashboard() {
 
         <Link
           href="/categories"
-          className="block rounded-2xl bg-zinc-900 p-6 hover:bg-zinc-800 transition"
+          className="block rounded-2xl light:bg-white dark:bg-zinc-900 p-6 hover:bg-zinc-800 transition"
         >
           <h3 className="text-lg font-semibold">カテゴリ管理</h3>
           <p className="mt-2 text-sm text-zinc-400">
