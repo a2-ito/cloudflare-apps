@@ -11,7 +11,8 @@ type Exam = {
 type Session = {
   id: number;
   name: string;
-  examDate: number;
+  examId: number;
+  note?: string;
 };
 
 /**
@@ -45,6 +46,19 @@ export default function NewQuestionPage() {
       .then((r) => r.json() as Promise<{ items: Exam[] }>)
       .then((d) => setExams(d.items));
   }, []);
+
+  /** 試験日程取得 */
+  useEffect(() => {
+    if (!examId) {
+      setSessions([]);
+      return;
+    }
+
+    fetch(`/api/exam-sessions?examId=${examId}`)
+      .then((r) => r.json() as Promise<{ items: Session[] }>)
+      .then((d) => setSessions(d.items))
+      .catch(() => setSessions([]));
+  }, [examId]);
   const updateChoice = (
     index: number,
     field: "text" | "isCorrect",
@@ -120,7 +134,7 @@ export default function NewQuestionPage() {
             <option value="">選択してください</option>
             {sessions.map((s) => (
               <option key={s.id} value={s.id}>
-                {s.name}（{new Date(s.examDate).toLocaleDateString()}）
+                {s.name}
               </option>
             ))}
           </select>
