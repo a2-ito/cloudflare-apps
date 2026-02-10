@@ -50,7 +50,7 @@ export default function QuestionsPage() {
   }
 
   return (
-    <main className="max-w-4xl mx-auto px-4 py-8">
+    <div className="max-w-4xl mx-auto px-4 py-8">
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
         <h1 className="text-2xl font-bold">問題一覧</h1>
@@ -88,6 +88,6 @@ export default function QuestionsPage() {
           </Link>
         ))}
       </div>
-    </main>
+    </div>
   );
 }
