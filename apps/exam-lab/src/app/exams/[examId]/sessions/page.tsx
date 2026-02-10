@@ -6,7 +6,6 @@ import { useParams } from "next/navigation";
 type Session = {
   id: number;
   name: string;
-  examDate: number;
 };
 
 type ApiResponse = {
@@ -17,7 +16,6 @@ export default function ExamSessionsPage() {
   const { examId } = useParams<{ examId: string }>();
   const [items, setItems] = useState<Session[]>([]);
   const [name, setName] = useState("");
-  const [examDate, setExamDate] = useState("");
 
   const load = async () => {
     const res = await fetch(`/api/exam-sessions?examId=${examId}`);
@@ -31,19 +29,17 @@ export default function ExamSessionsPage() {
 
   /** 追加 */
   const add = async () => {
-    if (!name || !examDate) return;
+    if (!name) return;
 
     await fetch("/api/exam-sessions", {
       method: "POST",
       body: JSON.stringify({
         examId: Number(examId),
         name,
-        examDate: new Date(examDate).getTime(),
       }),
     });
 
     setName("");
-    setExamDate("");
     load();
   };
 
@@ -54,7 +50,7 @@ export default function ExamSessionsPage() {
     load();
   };
 
-  /** 更新（名前 or 日付） */
+  /** 更新（名前） */
   const update = async (id: number, patch: Partial<Session>) => {
     await fetch(`/api/exam-sessions/${id}`, {
       method: "PUT",
@@ -72,7 +68,6 @@ export default function ExamSessionsPage() {
         <thead className="bg-gray-100 dark:bg-gray-800">
           <tr>
             <th className="border p-2 text-left">試験名</th>
-            <th className="border p-2">試験日</th>
             <th className="border p-2 w-24">操作</th>
           </tr>
         </thead>
@@ -86,18 +81,6 @@ export default function ExamSessionsPage() {
                   onBlur={(e) =>
                     e.target.value !== s.name &&
                     update(s.id, { name: e.target.value })
-                  }
-                />
-              </td>
-              <td className="border p-2 text-center">
-                <input
-                  type="date"
-                  className="bg-transparent"
-                  defaultValue={new Date(s.examDate).toISOString().slice(0, 10)}
-                  onBlur={(e) =>
-                    update(s.id, {
-                      examDate: new Date(e.target.value).getTime(),
-                    })
                   }
                 />
               </td>
@@ -120,13 +103,6 @@ export default function ExamSessionsPage() {
           placeholder="例：2026年 春期"
           value={name}
           onChange={(e) => setName(e.target.value)}
-        />
-
-        <input
-          type="date"
-          className="border p-2 rounded"
-          value={examDate}
-          onChange={(e) => setExamDate(e.target.value)}
         />
 
         <button

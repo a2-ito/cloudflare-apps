@@ -17,8 +17,7 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const googleClientId =
-    process.env.GOOGLE_CLIENT_ID ?? "";
+  const googleClientId = process.env.GOOGLE_CLIENT_ID ?? "";
 
   return (
     <html lang="ja" className="dark">
