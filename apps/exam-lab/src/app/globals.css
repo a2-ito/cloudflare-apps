@@ -5,6 +5,15 @@
 /* dark: を class ベースに切り替える */
 @custom-variant dark (&:where(.dark, .dark *));
 
+/* ヘッダーの表示状態に応じてメインコンテンツの余白を調整 */
+.main-content {
+  padding-top: 4rem;
+}
+
+.header-hidden + .main-content {
+  padding-top: 0;
+}
+
 /*
 root {
   --background: #ffffff;
