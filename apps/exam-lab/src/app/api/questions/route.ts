@@ -1,7 +1,14 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getDB } from "@/db";
-import { questions, choices } from "@/db/schema";
-import { desc } from "drizzle-orm";
+import {
+  questions,
+  choices,
+  categories,
+  groups,
+  exams,
+  examSessions,
+} from "@/db/schema";
+import { desc, eq } from "drizzle-orm";
 
 type ChoiceInput = {
   text: string;
@@ -13,6 +20,8 @@ type QuestionInput = {
   body: string;
   explanation?: string;
   choices: ChoiceInput[];
+  examId: number;
+  examSessionId: number;
 };
 
 export async function POST(request: NextRequest) {
@@ -24,6 +33,8 @@ export async function POST(request: NextRequest) {
       body: questionBody,
       explanation,
       choices: choiceList,
+      examId,
+      examSessionId,
     } = body;
 
     // ---- validation ----
@@ -88,6 +99,8 @@ export async function POST(request: NextRequest) {
         body: questionBody,
         explanation,
         categoryId,
+        examId,
+        examSessionId,
         createdBy,
         createdAt: Date.now(),
         updatedAt: Date.now(),
@@ -128,8 +141,16 @@ export async function GET() {
         title: questions.title,
         categoryId: questions.categoryId,
         createdAt: questions.createdAt,
+        categoryName: categories.name,
+        groupName: groups.name,
+        examName: exams.name,
+        examSession: examSessions.name,
       })
       .from(questions)
+      .innerJoin(exams, eq(questions.examId, exams.id))
+      .innerJoin(examSessions, eq(questions.examSessionId, examSessions.id))
+      .leftJoin(categories, eq(questions.categoryId, categories.id))
+      .leftJoin(groups, eq(categories.groupId, groups.id))
       .orderBy(desc(questions.createdAt))
       .limit(50);
 

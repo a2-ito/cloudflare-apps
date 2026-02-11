@@ -8,6 +8,10 @@ type Question = {
   title: string;
   categoryId: number;
   createdAt: number;
+  categoryName: string;
+  groupName: string;
+  examName: string;
+  examSession: string;
 };
 
 type QuestionsResponse = {
@@ -75,15 +79,17 @@ export default function QuestionsPage() {
             href={`/questions/${q.id}`}
             className="block border rounded-md p-4 hover:bg-gray-50 transition"
           >
+            <div className="text-xs text-gray-600 mt-2 space-y-1">
+              <div>
+                試験: {q.examName} {q.examSession} {q.groupName}{" "}
+                {q.categoryName}
+              </div>
+            </div>
             <div className="flex justify-between items-center">
               <h2 className="font-medium">{q.title}</h2>
               <span className="text-xs text-gray-500">
                 {new Date(q.createdAt).toLocaleDateString()}
               </span>
-            </div>
-
-            <div className="text-xs text-gray-400 mt-1">
-              categoryId: {q.categoryId}
             </div>
           </Link>
         ))}

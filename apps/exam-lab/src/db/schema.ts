@@ -51,6 +51,8 @@ export const examSessions = sqliteTable("exam_sessions", {
 export const questions = sqliteTable("questions", {
   id: integer("id").primaryKey({ autoIncrement: true }),
   categoryId: integer("category_id").notNull(),
+  examId: integer("exam_id").notNull().default(1),
+  examSessionId: integer("exam_session_id").notNull().default(1),
   title: text("title").notNull(),
   body: text("body").notNull(),
   explanation: text("explanation"),
@@ -73,6 +75,7 @@ export const usersRelations = relations(users, ({ many }) => ({
 export const examsRelations = relations(exams, ({ many }) => ({
   groups: many(groups),
   examSessions: many(examSessions),
+  questions: many(questions),
 }));
 
 export const groupsRelations = relations(groups, ({ one, many }) => ({
@@ -96,6 +99,14 @@ export const questionsRelations = relations(questions, ({ one, many }) => ({
     fields: [questions.categoryId],
     references: [categories.id],
   }),
+  exam: one(exams, {
+    fields: [questions.examId],
+    references: [exams.id],
+  }),
+  examSession: one(examSessions, {
+    fields: [questions.examSessionId],
+    references: [examSessions.id],
+  }),
   createdByUser: one(users, {
     fields: [questions.createdBy],
     references: [users.id],
@@ -103,12 +114,16 @@ export const questionsRelations = relations(questions, ({ one, many }) => ({
   choices: many(choices),
 }));
 
-export const examSessionsRelations = relations(examSessions, ({ one }) => ({
-  exam: one(exams, {
-    fields: [examSessions.examId],
-    references: [exams.id],
+export const examSessionsRelations = relations(
+  examSessions,
+  ({ one, many }) => ({
+    exam: one(exams, {
+      fields: [examSessions.examId],
+      references: [exams.id],
+    }),
+    questions: many(questions),
   }),
-}));
+);
 
 export const choicesRelations = relations(choices, ({ one }) => ({
   question: one(questions, {

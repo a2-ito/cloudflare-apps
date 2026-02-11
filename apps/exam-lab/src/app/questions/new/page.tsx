@@ -85,6 +85,8 @@ export default function NewQuestionPage() {
         body,
         explanation,
         choices,
+        examId,
+        examSessionId: sessionId,
       }),
     });
 
