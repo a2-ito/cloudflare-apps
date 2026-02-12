@@ -61,6 +61,92 @@ export async function GET(
 }
 
 /**
+ * PUT /api/questions/:id
+ * 問題更新
+ */
+export async function PUT(
+  request: Request,
+  context: { params: Promise<{ id: string }> },
+) {
+  try {
+    const { id } = await context.params;
+    const questionId = Number(id);
+
+    if (Number.isNaN(questionId)) {
+      return NextResponse.json({ error: "invalid-id" }, { status: 400 });
+    }
+
+    const body = (await request.json()) as {
+      title?: string;
+      body?: string;
+      explanation?: string;
+      choices?: Array<{ text: string; isCorrect: boolean }>;
+    };
+    const {
+      title,
+      body: questionBody,
+      explanation,
+      choices: choiceData,
+    } = body;
+
+    if (!title || !questionBody || !choiceData || !Array.isArray(choiceData)) {
+      return NextResponse.json({ error: "invalid-input" }, { status: 400 });
+    }
+
+    const hasCorrectChoice = choiceData.some((c: any) => c.isCorrect);
+    if (!hasCorrectChoice) {
+      return NextResponse.json({ error: "no-correct-choice" }, { status: 400 });
+    }
+
+    const db = getDB();
+
+    // ---- 存在確認 ----
+    const exists = await db
+      .select({ id: questions.id })
+      .from(questions)
+      .where(eq(questions.id, questionId))
+      .get();
+
+    if (!exists) {
+      return NextResponse.json({ error: "not-found" }, { status: 404 });
+    }
+
+    // ---- 問題本体を更新 ----
+    await db
+      .update(questions)
+      .set({
+        title,
+        body: questionBody,
+        explanation: explanation || null,
+        updatedAt: Date.now(),
+      })
+      .where(eq(questions.id, questionId));
+
+    // ---- 既存の選択肢を全削除 ----
+    await db.delete(choices).where(eq(choices.questionId, questionId));
+
+    // ---- 新しい選択肢を挿入 ----
+    if (choiceData.length > 0) {
+      await db.insert(choices).values(
+        choiceData.map((c: any) => ({
+          questionId,
+          text: c.text,
+          isCorrect: c.isCorrect,
+        })),
+      );
+    }
+
+    return NextResponse.json({ ok: true });
+  } catch (err) {
+    console.error(err);
+    return NextResponse.json(
+      { error: "internal-server-error" },
+      { status: 500 },
+    );
+  }
+}
+
+/**
  * DELETE /api/questions/:id
  * 問題削除
  */

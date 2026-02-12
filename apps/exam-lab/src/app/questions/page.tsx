@@ -76,8 +76,9 @@ export default function QuestionsPage() {
         {questions.map((q) => (
           <Link
             key={q.id}
-            href={`/questions/${q.id}`}
+						href={`/questions/${q.id}`}
             className="block border rounded-md p-4 hover:bg-gray-50 transition"
+            // className="border rounded-md p-4 hover:bg-gray-50 transition"
           >
             <div className="text-xs text-gray-600 mt-2 space-y-1">
               <div>
@@ -87,9 +88,17 @@ export default function QuestionsPage() {
             </div>
             <div className="flex justify-between items-center">
               <h2 className="font-medium">{q.title}</h2>
-              <span className="text-xs text-gray-500">
-                {new Date(q.createdAt).toLocaleDateString()}
-              </span>
+              <div className="flex items-center gap-3">
+                <Link
+                  href={`/questions/${q.id}/edit`}
+                  className="text-xs bg-gray-600 text-white px-2 py-1 rounded-md"
+                >
+                  編集
+                </Link>
+                <span className="text-xs text-gray-500">
+                  {new Date(q.createdAt).toLocaleDateString()}
+                </span>
+              </div>
             </div>
           </Link>
         ))}

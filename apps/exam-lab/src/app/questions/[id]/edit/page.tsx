@@ -58,6 +58,20 @@ export default function QuestionEditPage() {
     });
   };
 
+  const addChoice = () => {
+    if (!data) return;
+    setData({
+      ...data,
+      choices: [...data.choices, { text: "", isCorrect: false }],
+    });
+  };
+
+  const removeChoice = (index: number) => {
+    if (!data || data.choices.length <= 2) return;
+    const updated = data.choices.filter((_, i) => i !== index);
+    setData({ ...data, choices: updated });
+  };
+
   const save = async () => {
     if (!data) return;
     setSaving(true);
@@ -144,8 +158,22 @@ export default function QuestionEditPage() {
               value={c.text}
               onChange={(e) => updateChoice(i, { text: e.target.value })}
             />
+            {data.choices.length > 2 && (
+              <button
+                onClick={() => removeChoice(i)}
+                className="text-red-600 text-sm px-2 py-1"
+              >
+                削除
+              </button>
+            )}
           </div>
         ))}
+        <button
+          onClick={addChoice}
+          className="w-full border-2 border-dashed border-gray-300 rounded-md p-2 text-gray-600 hover:border-gray-400"
+        >
+          + 選択肢を追加
+        </button>
       </div>
 
       {/* Explanation */}

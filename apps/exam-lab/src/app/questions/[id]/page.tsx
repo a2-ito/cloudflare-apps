@@ -55,9 +55,17 @@ export default function QuestionDetailPage() {
       {/* Header */}
       <div className="flex justify-between items-center">
         <h1 className="text-xl font-bold">{data.title}</h1>
-        <Link href="/questions" className="text-sm text-blue-600">
-          ← 一覧へ
-        </Link>
+        <div className="flex gap-3">
+          <Link
+            href={`/questions/${id}/edit`}
+            className="text-sm bg-gray-600 text-white px-3 py-1 rounded-md"
+          >
+            編集
+          </Link>
+          <Link href="/questions" className="text-sm text-blue-600">
+            ← 一覧へ
+          </Link>
+        </div>
       </div>
 
       {/* Body */}
