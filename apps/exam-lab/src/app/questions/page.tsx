@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 
 type Question = {
@@ -19,6 +20,7 @@ type QuestionsResponse = {
 };
 
 export default function QuestionsPage() {
+  const router = useRouter();
   const [questions, setQuestions] = useState<Question[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -74,11 +76,10 @@ export default function QuestionsPage() {
         )}
 
         {questions.map((q) => (
-          <Link
+          <div
             key={q.id}
-						href={`/questions/${q.id}`}
-            className="block border rounded-md p-4 hover:bg-gray-50 transition"
-            // className="border rounded-md p-4 hover:bg-gray-50 transition"
+            className="block rounded-md p-4 dark:bg-zinc-900 hover:bg-zinc-800 transition cursor-pointer"
+            onClick={() => router.push(`/questions/${q.id}`)}
           >
             <div className="text-xs text-gray-600 mt-2 space-y-1">
               <div>
@@ -87,7 +88,9 @@ export default function QuestionsPage() {
               </div>
             </div>
             <div className="flex justify-between items-center">
-              <h2 className="font-medium">{q.title}</h2>
+              <h2 className="font-medium dark:text-white text-gray-900">
+                {q.title}
+              </h2>
               <div className="flex items-center gap-3">
                 <Link
                   href={`/questions/${q.id}/edit`}
@@ -100,7 +103,7 @@ export default function QuestionsPage() {
                 </span>
               </div>
             </div>
-          </Link>
+          </div>
         ))}
       </div>
     </div>

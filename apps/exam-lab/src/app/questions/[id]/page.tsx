@@ -82,7 +82,7 @@ export default function QuestionDetailPage() {
               key={c.id}
               className={`block border rounded-md p-3 cursor-pointer
                 ${isSelected ? "border-blue-500" : ""}
-                ${isCorrect ? "bg-green-50 border-green-500" : ""}
+                ${isCorrect ? "bg-green-200 border-green-600 text-green-900" : ""}
               `}
             >
               <input
@@ -109,7 +109,7 @@ export default function QuestionDetailPage() {
         </button>
 
         {showExplanation && data.explanation && (
-          <div className="mt-4 border-l-4 border-blue-500 pl-4 text-sm">
+          <div className="mt-4 border-l-4 border-blue-500 pl-4 text-sm whitespace-pre-wrap">
             {data.explanation}
           </div>
         )}

@@ -135,7 +135,7 @@ export default function QuestionEditPage() {
 
       {/* Body */}
       <textarea
-        className="w-full border rounded-md p-2 min-h-[120px]"
+        className="w-full border rounded-md p-2 min-h-[80px]"
         value={data.body}
         onChange={(e) => setData({ ...data, body: e.target.value })}
         placeholder="問題文"
@@ -153,8 +153,8 @@ export default function QuestionEditPage() {
               checked={c.isCorrect}
               onChange={() => setCorrect(i)}
             />
-            <input
-              className="flex-1 border rounded-md p-1"
+            <textarea
+              className="flex-1 border rounded-md p-1 min-h-[30px] resize-y"
               value={c.text}
               onChange={(e) => updateChoice(i, { text: e.target.value })}
             />
@@ -178,7 +178,7 @@ export default function QuestionEditPage() {
 
       {/* Explanation */}
       <textarea
-        className="w-full border rounded-md p-2"
+        className="w-full border rounded-md p-2 min-h-[200px]"
         value={data.explanation ?? ""}
         onChange={(e) => setData({ ...data, explanation: e.target.value })}
         placeholder="解説"
