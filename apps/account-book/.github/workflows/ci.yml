@@ -39,8 +39,8 @@ jobs:
       - name: Typecheck
         run: npx tsc --noEmit
 
-      - name: Build
-        run: npm run build
+      - name: Build (Cloudflare)
+        run: npx opennextjs-cloudflare build
 
   auto-merge:
     name: Enable auto-merge
