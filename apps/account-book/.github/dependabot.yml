@@ -1,0 +1,38 @@
+version: 2
+updates:
+  # npm (package.json) の依存更新
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+      time: "09:00"
+      timezone: Asia/Tokyo
+    open-pull-requests-limit: 10
+    commit-message:
+      prefix: chore
+      include: scope
+    groups:
+      # minor / patch はまとめて1PRに（major は個別PR）
+      npm-minor-patch:
+        update-types:
+          - minor
+          - patch
+
+  # GitHub Actions の更新
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+      time: "09:00"
+      timezone: Asia/Tokyo
+    open-pull-requests-limit: 10
+    commit-message:
+      prefix: ci
+      include: scope
+    groups:
+      github-actions:
+        update-types:
+          - minor
+          - patch

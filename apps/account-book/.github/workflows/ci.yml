@@ -45,6 +45,8 @@ jobs:
   auto-merge:
     name: Enable auto-merge
     needs: verify
+    # Dependabot が作成した PR は手動マージするため auto-merge しない
+    if: github.event.pull_request.user.login != 'dependabot[bot]'
     runs-on: ubuntu-latest
     steps:
       - name: Enable auto-merge for the pull request
