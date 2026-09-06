@@ -45,11 +45,21 @@ jobs:
   auto-merge:
     name: Enable auto-merge
     needs: verify
-    # Dependabot が作成した PR は手動マージするため auto-merge しない
-    if: github.event.pull_request.user.login != 'dependabot[bot]'
     runs-on: ubuntu-latest
     steps:
+      # Dependabot PR の更新種別 (major / minor / patch) を取得する
+      - name: Fetch Dependabot metadata
+        id: metadata
+        if: github.event.pull_request.user.login == 'dependabot[bot]'
+        uses: dependabot/fetch-metadata@v2
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+      # Dependabot の major 更新のみ破壊的変更の確認のため手動マージとする
       - name: Enable auto-merge for the pull request
+        if: >-
+          github.event.pull_request.user.login != 'dependabot[bot]' ||
+          steps.metadata.outputs.update-type != 'version-update:semver-major'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: gh pr merge --auto --squash "${{ github.event.pull_request.number }}" --repo "${{ github.repository }}"
