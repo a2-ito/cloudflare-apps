@@ -1,16 +1,18 @@
 import { NextResponse } from "next/server";
-import { expenses } from "@/db/schema";
+import { expenses, expenseTags } from "@/db/schema";
 import { eq, and } from "drizzle-orm";
 import { getSessionUser } from "@/lib/session";
 import { getUserGroupId } from "@/lib/getUserGroupId";
 import { getCloudflareContext } from "@opennextjs/cloudflare";
 import { drizzle } from "drizzle-orm/d1";
+import { normalizeTagIds, replaceExpenseTags } from "@/lib/expenseTags";
 
 type UpdateExpenseBody = {
   amount: number;
   categoryId: string | null;
   date: string;
   memo?: string | null;
+  tagIds?: unknown;
 };
 
 export async function PUT(
@@ -30,9 +32,9 @@ export async function PUT(
   const expenseId = Number(id);
 
   const body = (await request.json()) as UpdateExpenseBody;
-  const { amount, categoryId, date, memo } = body;
+  const { amount, categoryId, date, memo, tagIds } = body;
 
-  await db
+  const updated = await db
     .update(expenses)
     .set({
       amount,
@@ -40,7 +42,17 @@ export async function PUT(
       date,
       memo: memo || null,
     })
-    .where(and(eq(expenses.id, expenseId), eq(expenses.groupId, groupId)));
+    .where(and(eq(expenses.id, expenseId), eq(expenses.groupId, groupId)))
+    .returning({ id: expenses.id });
+
+  if (updated.length === 0) {
+    return NextResponse.json({ error: "expense-not-found" }, { status: 404 });
+  }
+
+  // tagIds が渡されたときだけタグを置き換える（未指定なら現状維持）
+  if (tagIds !== undefined) {
+    await replaceExpenseTags(db, groupId, expenseId, normalizeTagIds(tagIds));
+  }
 
   return NextResponse.json({ ok: true });
 }
@@ -61,9 +73,20 @@ export async function DELETE(
   const groupId = await getUserGroupId(db, userId);
   const expenseId = Number(id);
 
-  await db
-    .delete(expenses)
-    .where(and(eq(expenses.id, expenseId), eq(expenses.groupId, groupId)));
+  // 他グループの明細を削除できないよう所有を確認する
+  const target = await db
+    .select({ id: expenses.id })
+    .from(expenses)
+    .where(and(eq(expenses.id, expenseId), eq(expenses.groupId, groupId)))
+    .get();
+
+  if (!target) {
+    return NextResponse.json({ ok: true });
+  }
+
+  // expense_tags が expenses を参照しているため紐付けを先に外す
+  await db.delete(expenseTags).where(eq(expenseTags.expenseId, expenseId));
+  await db.delete(expenses).where(eq(expenses.id, expenseId));
 
   return NextResponse.json({ ok: true });
 }

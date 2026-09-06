@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import TagSelector from "@/components/TagSelector";
 
 export type ExpenseForEdit = {
   id: number;
@@ -8,6 +9,7 @@ export type ExpenseForEdit = {
   categoryId: number | null;
   date: string;
   memo: string | null;
+  tags?: { id: number; name: string }[];
 };
 
 type Category = {
@@ -34,6 +36,9 @@ export default function EditExpenseModal({
   );
   const [date, setDate] = useState(expense.date);
   const [memo, setMemo] = useState(expense.memo ?? "");
+  const [tagIds, setTagIds] = useState<number[]>(
+    (expense.tags ?? []).map((tag) => tag.id),
+  );
   const [loading, setLoading] = useState(false);
 
   const submit = async () => {
@@ -47,6 +52,7 @@ export default function EditExpenseModal({
         categoryId: categoryId || null,
         date,
         memo,
+        tagIds,
       }),
     });
 
@@ -129,6 +135,8 @@ export default function EditExpenseModal({
             onChange={(e) => setMemo(e.target.value)}
           />
         </div>
+
+        <TagSelector selectedTagIds={tagIds} onChange={setTagIds} />
 
         <div className="flex justify-end gap-2">
           <button onClick={onClose} className="px-4 py-2 border rounded">

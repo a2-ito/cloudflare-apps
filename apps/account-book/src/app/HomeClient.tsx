@@ -34,6 +34,7 @@ type Expense = {
   category: string;
   categoryName: string;
   categoryId: number;
+  tags?: { id: number; name: string }[];
 };
 
 type CategoryDiff = {
@@ -161,9 +162,17 @@ export default function DashboardPage() {
   return (
     <main className="min-h-screen bg-gray-50 dark:bg-gray-900 p-4 pb-24">
       <header className="mb-6">
-        <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">
-          家計簿
-        </h1>
+        <div className="flex items-center justify-between">
+          <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">
+            家計簿
+          </h1>
+          <Link
+            href="/tags"
+            className="text-sm text-blue-600 hover:underline dark:text-blue-400"
+          >
+            🏷️ タグ管理
+          </Link>
+        </div>
 
         <div className="flex items-center justify-between mb-4">
           <button
@@ -267,6 +276,20 @@ export default function DashboardPage() {
                   {e.date}
                   {e.memo && ` · ${e.memo}`}
                 </p>
+
+                {e.tags && e.tags.length > 0 && (
+                  <div className="mt-1 flex flex-wrap gap-1">
+                    {e.tags.map((tag) => (
+                      <Link
+                        key={tag.id}
+                        href={`/tags/${tag.id}`}
+                        className="rounded-full bg-blue-100 px-2 py-0.5 text-xs text-blue-700 hover:bg-blue-200 dark:bg-blue-900/40 dark:text-blue-300"
+                      >
+                        {tag.name}
+                      </Link>
+                    ))}
+                  </div>
+                )}
               </div>
 
               {/* 右側：金額 + 操作 */}

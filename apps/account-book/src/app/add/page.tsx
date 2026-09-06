@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import TagSelector from "@/components/TagSelector";
 
 type Category = {
   id: number;
@@ -17,6 +18,7 @@ export default function AddExpensePage() {
   const [memo, setMemo] = useState("");
   const [categories, setCategories] = useState<Category[]>([]);
   const [newCategory, setNewCategory] = useState("");
+  const [tagIds, setTagIds] = useState<number[]>([]);
   const [saving, setSaving] = useState(false);
 
   useEffect(() => {
@@ -56,6 +58,7 @@ export default function AddExpensePage() {
         categoryId,
         date,
         memo: memo || null,
+        tagIds,
       }),
       headers: { "Content-Type": "application/json" },
     });
@@ -146,6 +149,9 @@ export default function AddExpensePage() {
             onChange={(e) => setMemo(e.target.value)}
           />
         </div>
+
+        {/* タグ */}
+        <TagSelector selectedTagIds={tagIds} onChange={setTagIds} />
       </div>
 
       {/* 保存ボタン */}

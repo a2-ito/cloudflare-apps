@@ -3,6 +3,7 @@ import {
   integer,
   text,
   primaryKey,
+  uniqueIndex,
 } from "drizzle-orm/sqlite-core";
 import { sql } from "drizzle-orm";
 
@@ -58,5 +59,38 @@ export const userGroups = sqliteTable(
   },
   (t) => ({
     pk: primaryKey({ columns: [t.userId, t.groupId] }),
+  }),
+);
+
+export const tags = sqliteTable(
+  "tags",
+  {
+    id: integer("id").primaryKey({ autoIncrement: true }),
+    groupId: text("group_id")
+      .notNull()
+      .references(() => groups.id),
+    name: text("name").notNull(),
+    createdAt: integer("created_at")
+      .notNull()
+      .default(sql`(unixepoch())`),
+  },
+  (t) => ({
+    // 同一グループ内でのタグ名重複を禁止
+    nameUnique: uniqueIndex("tags_group_id_name_unique").on(t.groupId, t.name),
+  }),
+);
+
+export const expenseTags = sqliteTable(
+  "expense_tags",
+  {
+    expenseId: integer("expense_id")
+      .notNull()
+      .references(() => expenses.id),
+    tagId: integer("tag_id")
+      .notNull()
+      .references(() => tags.id),
+  },
+  (t) => ({
+    pk: primaryKey({ columns: [t.expenseId, t.tagId] }),
   }),
 );
