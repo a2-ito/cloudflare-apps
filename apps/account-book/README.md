@@ -203,10 +203,28 @@ npx wrangler dev
 
 ## Database Migration
 
+マイグレーションファイルの生成:
+
 ```bash
-npx drizzle-kit generate
-npx drizzle-kit migrate
+npm run drizzle:generate
 ```
+
+ローカル D1 への適用:
+
+```bash
+npm run db:migrate:local
+```
+
+本番 D1 への適用は Cloudflare Workers Builds が担当します。
+ダッシュボードの Deploy command に以下を設定してください。
+
+```bash
+npm run db:migrate:remote && npx opennextjs-cloudflare deploy
+```
+
+デプロイと同じパイプラインで実行することで、マイグレーションが
+完了してからデプロイされる順序を保証しています。
+手動で本番へ適用する場合は `npm run db:migrate:remote` を実行します。
 
 ---
 
