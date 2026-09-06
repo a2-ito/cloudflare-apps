@@ -12,6 +12,13 @@ updates:
     commit-message:
       prefix: chore
       include: scope
+    ignore:
+      # eslint 10 は eslint-plugin-react / eslint-plugin-import が未対応で
+      # lint 実行時にクラッシュするため、メジャー更新を一時的に見送る。
+      # 上流が ESLint 10 に対応したらこの ignore を削除すること。
+      - dependency-name: "eslint"
+        update-types:
+          - version-update:semver-major
     groups:
       # minor / patch はまとめて1PRに（major は個別PR）
       npm-minor-patch:
