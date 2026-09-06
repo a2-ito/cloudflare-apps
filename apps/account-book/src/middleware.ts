@@ -13,13 +13,14 @@ export async function middleware(request: NextRequest) {
     return;
   }
 
-  if (!session && !request.nextUrl.pathname.startsWith("/login")) {
-    return NextResponse.redirect(new URL("/unauthorized", request.url));
+  // 未ログイン（セッションなし）はログイン画面へ
+  if (!session) {
+    return NextResponse.redirect(new URL("/login", request.url));
   }
 
   const userId = getSessionUser(request);
   if (!userId) {
-    return NextResponse.json({ error: "unauthorized" }, { status: 401 });
+    return NextResponse.redirect(new URL("/login", request.url));
   }
 
   const { env } = getCloudflareContext();
@@ -30,6 +31,7 @@ export async function middleware(request: NextRequest) {
     .where(eq(userGroups.userId, userId))
     .get();
 
+  // ログイン済みだがグループ未所属＝アクセス権なし
   if (!group) {
     return NextResponse.redirect(new URL("/unauthorized", request.url));
   }
