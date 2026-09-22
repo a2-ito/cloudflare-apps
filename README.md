@@ -43,6 +43,16 @@ npm run test
 npm run typecheck
 ```
 
+## ルートの依存
+
+`esbuild` はどのアプリも直接使わないが、ルートの `devDependencies` に置いている。
+
+`@opennextjs/cloudflare` は `esbuild` を import するのに依存として宣言しておらず、
+`@opennextjs/aws` 経由でルートへ巻き上がるのを当てにしている。巻き上がるかどうかは
+同時に入る他の依存で変わるため、Workers Builds のように一部のアプリだけを対象に
+install する環境では `Cannot find package 'esbuild'` で落ちる。明示的に置いて
+ルートに必ず存在させる。
+
 ## デプロイ
 
 Cloudflare Workers Builds が main への push で動く。設定はダッシュボードの
