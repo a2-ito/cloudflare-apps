@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="最安値メモ">
+  <rect width="32" height="32" rx="7" fill="#059669"/>
+  <g fill="none" stroke="#ffffff" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M9.5 8.5 16 16l6.5-7.5"/>
+    <path d="M16 16v7.5"/>
+    <path d="M10.5 17.5h11"/>
+    <path d="M10.5 21h11"/>
+  </g>
+</svg>

@@ -1,0 +1,62 @@
+{
+  "version": "7",
+  "dialect": "sqlite",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "6",
+      "when": 1789191923510,
+      "tag": "0000_cool_king_cobra",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "6",
+      "when": 1789208460095,
+      "tag": "0001_watery_amazoness",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1789211907572,
+      "tag": "0002_equal_molecule_man",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "6",
+      "when": 1789213037750,
+      "tag": "0003_rapid_juggernaut",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "6",
+      "when": 1789293964332,
+      "tag": "0004_add_product_amount",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "6",
+      "when": 1789294143870,
+      "tag": "0005_split_products_by_amount",
+      "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "6",
+      "when": 1789294143871,
+      "tag": "0006_drop_record_amount",
+      "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "6",
+      "when": 1789295522951,
+      "tag": "0007_add_product_count",
+      "breakpoints": true
+    }
+  ]
+}
