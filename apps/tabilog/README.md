@@ -61,8 +61,15 @@ HTML と API はキャッシュしない。
 
 ## セットアップ
 
+このアプリはモノレポ [cloudflare-apps](../../README.md) の一部。**依存はリポジトリ
+直下でまとめて入れる**（lockfile はルートに 1 つしかないため、このディレクトリで
+`npm ci` は通らない）。
+
 ```bash
+# リポジトリ直下で
 npm ci
+
+# 以降はこのディレクトリで
 
 # 環境変数
 cp .dev.vars.example .dev.vars
