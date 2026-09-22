@@ -87,8 +87,18 @@ NEXT_PUBLIC_BASE_URL=http://localhost:3000
 
 ## ローカル開発
 
+このアプリはモノレポ [cloudflare-apps](../../README.md) の一部。**依存はリポジトリ
+直下でまとめて入れる**（lockfile はルートに 1 つしかないため、このディレクトリで
+`npm ci` は通らない）。
+
 ```bash
-npm install
+# リポジトリ直下で
+npm ci
+```
+
+以降はこのディレクトリで作業する。
+
+```bash
 npm run dev
 ```
 
