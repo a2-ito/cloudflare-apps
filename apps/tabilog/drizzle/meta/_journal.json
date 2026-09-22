@@ -1,0 +1,48 @@
+{
+  "version": "7",
+  "dialect": "sqlite",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "6",
+      "when": 1789298177212,
+      "tag": "0000_smooth_hulk",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "6",
+      "when": 1789304237504,
+      "tag": "0001_remarkable_rocket_raccoon",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1789641472260,
+      "tag": "0002_solid_radioactive_man",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "6",
+      "when": 1789657760402,
+      "tag": "0003_outstanding_guardsmen",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "6",
+      "when": 1789794078237,
+      "tag": "0004_silent_alice",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "6",
+      "when": 1789822814503,
+      "tag": "0005_productive_echo",
+      "breakpoints": true
+    }
+  ]
+}
