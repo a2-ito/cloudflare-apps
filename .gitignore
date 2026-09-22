@@ -1,0 +1,8 @@
+# 依存は workspaces でルートに巻き上がる
+node_modules/
+
+.DS_Store
+*.pem
+npm-debug.log*
+
+# アプリ個別の除外は apps/<name>/.gitignore にある
