@@ -12,6 +12,9 @@ Cloudflare Workers で動く Next.js アプリをまとめたモノレポ。
 | --- | --- | --- | --- |
 | [price-tracker](apps/price-tracker) | https://price-tracker.a2ito.work | `price-tracker` | 店舗ごとの価格を容量あたりの単価で比較する最安値メモ |
 | [tabilog](apps/tabilog) | https://tabilog.a2ito.work | `tabilog` | 旅先の食事・買い物を記録して振り返る旅行メモ |
+| [account-book](apps/account-book) | https://account-book.a2ito.work | `account-book-on-cf` | グループ単位で管理する家計簿 |
+| [exam-lab](apps/exam-lab) | https://exam-lab.a2ito.work | `exam-lab` | 資格試験の問題を管理・学習する |
+| [warikan](apps/warikan) | https://warikan.a2ito.work | `warikan` | ログイン不要の割り勘。最小回数で自動精算する |
 
 ## 使い方
 
@@ -59,6 +62,10 @@ Wrangler 設定の `name` と一致していなければビルドが落ちる。
 
 アプリを追加したら、その Worker にも同じ設定を入れる。入れ忘れると、
 リポジトリは繋がっているのにデプロイだけ起きないという状態になる。
+
+**ディレクトリ名と Worker 名は一致するとは限らない。** `apps/account-book` の Worker は
+`account-book-on-cf` で、`-on-cf` は account-book という名前を Vercel 時代のリポジトリに
+取られていた名残り。Worker の改名は実質作り直しでダウンタイムが出るため、そのままにしてある。
 
 ## スキーマ変更
 
