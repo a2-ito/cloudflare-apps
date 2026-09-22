@@ -37,8 +37,27 @@ npm run typecheck
 
 ## デプロイ
 
-Cloudflare Workers Builds が、アプリごとにルートディレクトリを
-`apps/<name>` に設定して動く。main への merge で該当アプリだけがデプロイされる。
+Cloudflare Workers Builds が main への push で動く。設定はダッシュボードの
+**Workers & Pages > 各 Worker > Settings > Builds** にあり、リポジトリには
+残らないため、ここに控えておく。
+
+| 項目 | 値 |
+| --- | --- |
+| Repository | `a2-ito/cloudflare-apps` |
+| Branch | `main` |
+| Root directory | `apps/<name>` |
+| Build command | `npm run cf:build` |
+| Deploy command | `npm run cf:deploy` |
+| Build watch paths | `apps/<name>/*`、`package-lock.json` |
+
+**ルートディレクトリはアプリのディレクトリを指す。** Worker 名は、そこに置かれた
+Wrangler 設定の `name` と一致していなければビルドが落ちる。
+
+**build watch paths に `package-lock.json` を含める。** アプリ配下だけを見ていると、
+依存をまとめて更新したときに再デプロイされない。
+
+アプリを追加したら、その Worker にも同じ設定を入れる。入れ忘れると、
+リポジトリは繋がっているのにデプロイだけ起きないという状態になる。
 
 ## スキーマ変更
 
