@@ -10,6 +10,12 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
+# wrangler.jsonc と cloudflare-env.d.ts は実 ID を含む、あるいは生成物なので
+# 追跡していない。検証が目的なので雛形に仮の値を入れて組み立てる。
+env:
+  D1_DATABASE_ID: placeholder-database-id
+  APP_HOSTNAME: placeholder.example.com
+
 jobs:
   # 変更のあったアプリだけを後続の job に渡す。1 アプリの CSS を直しただけで
   # 全アプリのビルドが回るのを避ける。
@@ -79,6 +85,10 @@ jobs:
           cache: npm
       # Cloudflare Workers Builds も npm ci を使うため、ここでも ci で検証する
       - run: npm ci --no-audit --no-fund
+      # typecheck は Cloudflare のバインディング型を要求するアプリがある。
+      # 型は wrangler.jsonc から作られるので、設定の生成が先に来る。
+      - run: npm run cf:config --if-present -w apps/${{ matrix.app }}
+      - run: npm run cf-typegen --if-present -w apps/${{ matrix.app }}
       - run: npm run lint --if-present -w apps/${{ matrix.app }}
       - run: npm run typecheck --if-present -w apps/${{ matrix.app }}
       - run: npm run test --if-present -w apps/${{ matrix.app }}
@@ -100,10 +110,5 @@ jobs:
           cache: npm
       # Cloudflare Workers Builds も npm ci を使うため、ここでも ci で検証する
       - run: npm ci --no-audit --no-fund
-      # wrangler.jsonc は実 ID と公開ホスト名を含むため追跡していない。
-      # ビルドの成否確認が目的なので、雛形に仮の値を入れて生成する。
-      - name: Build
-        env:
-          D1_DATABASE_ID: placeholder-database-id
-          APP_HOSTNAME: placeholder.example.com
-        run: npm run cf:build -w apps/${{ matrix.app }}
+      # cf:build が wrangler.jsonc と型定義の生成まで面倒を見る
+      - run: npm run cf:build -w apps/${{ matrix.app }}
