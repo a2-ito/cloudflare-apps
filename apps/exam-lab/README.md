@@ -48,5 +48,22 @@ Next.js + Cloudflare Workers + D1 を使った
 | DB             | Cloudflare D1 (SQLite) |
 | ORM            | Drizzle ORM            |
 | 認証           | Google OAuth           |
-| デプロイ       | Cloudflare Pages       |
+| デプロイ       | Cloudflare Workers Builds |
 | スタイル       | Tailwind CSS           |
+
+## ローカル開発
+
+このアプリはモノレポ [cloudflare-apps](../../README.md) の一部。**依存はリポジトリ
+直下でまとめて入れる**（lockfile はルートに 1 つしかないため、このディレクトリで
+`npm ci` は通らない）。
+
+```bash
+# リポジトリ直下で
+npm ci
+```
+
+以降はこのディレクトリで作業する。
+
+```bash
+npm run dev
+```

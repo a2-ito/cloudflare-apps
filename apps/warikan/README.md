@@ -16,8 +16,18 @@
 
 ## ローカル開発
 
+このアプリはモノレポ [cloudflare-apps](../../README.md) の一部。**依存はリポジトリ
+直下でまとめて入れる**（lockfile はルートに 1 つしかないため、このディレクトリで
+`npm ci` は通らない）。
+
 ```bash
-npm install
+# リポジトリ直下で
+npm ci
+```
+
+以降はこのディレクトリで作業する。
+
+```bash
 
 # ローカル D1 にマイグレーション適用（初回・スキーマ変更時）
 npm run db:generate        # schema.ts からマイグレーション SQL 生成
@@ -50,8 +60,11 @@ npx wrangler d1 create warikan-db
 npm run db:migrate:remote
 
 # 4. ビルド & デプロイ
-npm run deploy
+npm run cf:deploy
 ```
+
+**通常のデプロイは手で流さない。** main への merge を Cloudflare Workers Builds が
+検知して、ビルドとデプロイを行う。上の手順は本番 D1 を作り直すときのもの。
 
 ### カスタムドメイン warikan.a2ito.work
 
