@@ -73,7 +73,7 @@ export async function POST(request: NextRequest) {
         "Set-Cookie": `session=${token}; HttpOnly; Path=/; Secure`,
       },
     });
-  } catch (err: any) {
+  } catch (err) {
     console.error(err);
   }
 }

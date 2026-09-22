@@ -62,7 +62,7 @@ export default function NewQuestionPage() {
   const updateChoice = (
     index: number,
     field: "text" | "isCorrect",
-    value: any,
+    value: string | boolean,
   ) => {
     setChoices((prev) =>
       prev.map((c, i) => (i === index ? { ...c, [field]: value } : c)),

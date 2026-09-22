@@ -93,7 +93,7 @@ export async function PUT(
       return NextResponse.json({ error: "invalid-input" }, { status: 400 });
     }
 
-    const hasCorrectChoice = choiceData.some((c: any) => c.isCorrect);
+    const hasCorrectChoice = choiceData.some((c) => c.isCorrect);
     if (!hasCorrectChoice) {
       return NextResponse.json({ error: "no-correct-choice" }, { status: 400 });
     }
@@ -128,10 +128,11 @@ export async function PUT(
     // ---- 新しい選択肢を挿入 ----
     if (choiceData.length > 0) {
       await db.insert(choices).values(
-        choiceData.map((c: any) => ({
+        choiceData.map((c) => ({
           questionId,
           text: c.text,
-          isCorrect: c.isCorrect,
+          // is_correct は integer カラム。POST 側 (api/questions) と同じ扱いにする
+          isCorrect: c.isCorrect ? 1 : 0,
         })),
       );
     }
@@ -183,8 +184,8 @@ export async function DELETE(
     });
 
     return NextResponse.json({ ok: true });
-  } catch (err: any) {
-    if (err.message === "not-found") {
+  } catch (err) {
+    if (err instanceof Error && err.message === "not-found") {
       return NextResponse.json({ error: "not-found" }, { status: 404 });
     }
 
