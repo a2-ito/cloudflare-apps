@@ -12,7 +12,7 @@ Cloudflare Workers で動く Next.js アプリをまとめたモノレポ。
 | --- | --- | --- | --- |
 | [price-tracker](apps/price-tracker) | https://price-tracker.a2ito.work | `price-tracker` | 店舗ごとの価格を容量あたりの単価で比較する最安値メモ |
 | [tabilog](apps/tabilog) | https://tabilog.a2ito.work | `tabilog` | 旅先の食事・買い物を記録して振り返る旅行メモ |
-| [account-book](apps/account-book) | https://account-book.a2ito.work | `account-book-on-cf` | グループ単位で管理する家計簿 |
+| [account-book](apps/account-book) | https://account-book.a2ito.work | `account-book` | グループ単位で管理する家計簿 |
 | [exam-lab](apps/exam-lab) | https://exam-lab.a2ito.work | `exam-lab` | 資格試験の問題を管理・学習する |
 | [warikan](apps/warikan) | https://warikan.a2ito.work | `warikan` | ログイン不要の割り勘。最小回数で自動精算する |
 
@@ -63,9 +63,13 @@ Wrangler 設定の `name` と一致していなければビルドが落ちる。
 アプリを追加したら、その Worker にも同じ設定を入れる。入れ忘れると、
 リポジトリは繋がっているのにデプロイだけ起きないという状態になる。
 
-**ディレクトリ名と Worker 名は一致するとは限らない。** `apps/account-book` の Worker は
-`account-book-on-cf` で、`-on-cf` は account-book という名前を Vercel 時代のリポジトリに
-取られていた名残り。Worker の改名は実質作り直しでダウンタイムが出るため、そのままにしてある。
+**Worker 名は Wrangler 設定の `name` と一致していなければならない。** 一致しないと
+Workers Builds が CI 側の名前で上書きし、自分自身への service binding が解決できずに
+デプロイが落ちる。ダッシュボードで Worker を改名したら、`wrangler.jsonc` も合わせる。
+
+Worker の改名自体は非破壊で、Worker の実体 (tag) もカスタムドメインも保たれる。
+`account-book` は移行の際に `account-book-on-cf` から改名した。`-on-cf` は
+account-book という名前を Vercel 時代のリポジトリに取られていた名残りだった。
 
 ## スキーマ変更
 
