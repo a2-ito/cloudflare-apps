@@ -1,0 +1,109 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+# 同じブランチで新しい実行が始まったら、古い実行は打ち切る
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  # 変更のあったアプリだけを後続の job に渡す。1 アプリの CSS を直しただけで
+  # 全アプリのビルドが回るのを避ける。
+  changes:
+    name: changes
+    runs-on: ubuntu-latest
+    outputs:
+      apps: ${{ steps.detect.outputs.apps }}
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      - id: detect
+        env:
+          # PR は base との差分、push は 1 つ前との差分を見る。
+          BASE_SHA: ${{ github.event_name == 'pull_request' && github.event.pull_request.base.sha || github.event.before }}
+        run: |
+          set -euo pipefail
+
+          all_apps() {
+            for d in apps/*/; do basename "$d"; done
+          }
+
+          # base が辿れないとき (ブランチの初回 push など) は全アプリを対象にする。
+          if [ -z "${BASE_SHA:-}" ] ||
+             [ "$BASE_SHA" = "0000000000000000000000000000000000000000" ] ||
+             ! git cat-file -e "${BASE_SHA}^{commit}" 2>/dev/null; then
+            echo 'base を辿れないため全アプリを対象にする'
+            apps=$(all_apps)
+          else
+            changed=$(git diff --name-only "$BASE_SHA" HEAD)
+            echo "変更されたファイル:"
+            echo "$changed" | sed 's/^/  /'
+
+            # apps/ の外 (ルートの package.json、workflow など) が変わったら
+            # 影響範囲が読めないので全アプリを回す。
+            if echo "$changed" | grep -qv '^apps/'; then
+              echo 'apps/ の外に変更があるため全アプリを対象にする'
+              apps=$(all_apps)
+            else
+              apps=$(echo "$changed" | cut -d/ -f2 | sort -u)
+            fi
+          fi
+
+          # 消えたアプリを拾わないよう、実在するものだけに絞る。
+          existing=$(for a in $apps; do [ -d "apps/$a" ] && echo "$a"; done)
+
+          echo "対象アプリ: ${existing:-なし}"
+          json=$(printf '%s\n' $existing | jq -R . | jq -sc .)
+          echo "apps=$json" >> "$GITHUB_OUTPUT"
+
+  quality:
+    name: quality (${{ matrix.app }})
+    needs: changes
+    if: needs.changes.outputs.apps != '[]'
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        app: ${{ fromJSON(needs.changes.outputs.apps) }}
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 24
+          cache: npm
+      # Cloudflare Workers Builds も npm ci を使うため、ここでも ci で検証する
+      - run: npm ci --no-audit --no-fund
+      - run: npm run lint --if-present -w apps/${{ matrix.app }}
+      - run: npm run typecheck --if-present -w apps/${{ matrix.app }}
+      - run: npm run test --if-present -w apps/${{ matrix.app }}
+
+  build:
+    name: build (${{ matrix.app }})
+    needs: changes
+    if: needs.changes.outputs.apps != '[]'
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        app: ${{ fromJSON(needs.changes.outputs.apps) }}
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 24
+          cache: npm
+      # Cloudflare Workers Builds も npm ci を使うため、ここでも ci で検証する
+      - run: npm ci --no-audit --no-fund
+      # wrangler.jsonc は実 ID と公開ホスト名を含むため追跡していない。
+      # ビルドの成否確認が目的なので、雛形に仮の値を入れて生成する。
+      - name: Build
+        env:
+          D1_DATABASE_ID: placeholder-database-id
+          APP_HOSTNAME: placeholder.example.com
+        run: npm run cf:build -w apps/${{ matrix.app }}
