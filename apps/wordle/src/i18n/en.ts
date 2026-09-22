@@ -1,0 +1,8 @@
+const en = {
+  title: "Daily Word Wordle",
+  description: "Guess the 5-letter word in 6 tries.",
+  howto: "How to play",
+  start: "Start Game",
+};
+
+export default en;
