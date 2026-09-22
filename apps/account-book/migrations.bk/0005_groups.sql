@@ -1,0 +1,6 @@
+-- Migration number: 0005 	 2026-01-11T13:14:13.352Z
+CREATE TABLE groups (
+  id TEXT PRIMARY KEY,
+  name TEXT NOT NULL,
+	created_at TEXT DEFAULT CURRENT_TIMESTAMP
+);
