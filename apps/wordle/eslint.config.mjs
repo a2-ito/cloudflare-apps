@@ -12,6 +12,9 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Cloudflare 側の生成物。lint の対象ではない。
+    ".open-next/**",
+    ".wrangler/**",
   ]),
 ]);
 

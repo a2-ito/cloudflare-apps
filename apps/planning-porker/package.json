@@ -14,7 +14,9 @@
     "lint:fix": "eslint --fix",
     "format": "prettier --check .",
     "format:fix": "prettier --write .",
-    "drizzle:generate": "drizzle-kit generate --config=./drizzle.config.ts"
+    "drizzle:generate": "drizzle-kit generate --config=./drizzle.config.ts",
+    "cf:build": "opennextjs-cloudflare build",
+    "cf:deploy": "opennextjs-cloudflare deploy"
   },
   "dependencies": {
     "@opennextjs/cloudflare": "^1.14.4",
