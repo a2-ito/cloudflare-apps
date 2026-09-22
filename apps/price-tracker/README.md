@@ -37,12 +37,16 @@ main への push を Cloudflare が検知し、ビルドしてデプロイする
 認証情報は置かない。
 
 Workers Builds の設定は Cloudflare ダッシュボードの **Settings > Build** で行う。
+モノレポなので **root directory にこのアプリのディレクトリを指す**。Worker 名は
+そこに置かれた Wrangler 設定の `name` と一致していなければビルドが落ちる。
 
 | 項目 | 値 |
 | --- | --- |
+| Root directory | `apps/price-tracker` |
 | Build command | `npm run cf:build` |
 | Deploy command | `npm run cf:deploy` |
 | Git branch | `main` |
+| Build watch paths | `apps/price-tracker/*`、`package-lock.json` |
 | Build variables | `D1_DATABASE_ID`, `APP_HOSTNAME` |
 
 `wrangler.jsonc` は追跡していないため、`npm run cf:config` が雛形のプレースホルダを
@@ -54,6 +58,9 @@ Workers Builds の設定は Cloudflare ダッシュボードの **Settings > Bui
 スキーマ変更は自動適用しない。`npm run db:migrate:remote` を手で流してからマージする。
 
 ## セットアップ
+
+依存はリポジトリ直下でまとめて入れる。lockfile はルートに 1 つしかないため、
+このディレクトリで `npm ci` は通らない。
 
 ### 1. Google OAuth クライアントの作成
 
