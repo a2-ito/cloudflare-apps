@@ -285,18 +285,6 @@ export default function Page() {
                     cards: movingCards,
                   });
                 }}
-  onClick={() => {
-    if (!card.faceUp) return;
-
-    // このカードから下を全部選択
-    const cards = pile.slice(cardIndex);
-
-    setSelected({
-      type: "tableau",
-      pileIndex,
-      cards,
-    });
-  }}
               >
                 <Card card={card} />
               </div>

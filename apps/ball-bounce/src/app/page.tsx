@@ -12,6 +12,13 @@ type Ball = {
 
 const INITIAL_BALL_COUNT = 5;
 
+// Reset ボタンから canvas の描画ループ内の状態を初期化するため、window 経由で公開している。
+declare global {
+  interface Window {
+    resetBalls?: () => void;
+  }
+}
+
 export default function Home() {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const [friction, setFriction] = useState(1.0);
@@ -147,7 +154,7 @@ export default function Home() {
     });
 
     // 🔥 リセットをグローバルに公開
-    (window as any).resetBalls = resetBalls;
+    window.resetBalls = resetBalls;
   }, []);
 
   return (
@@ -208,7 +215,7 @@ export default function Home() {
         <button
           className="px-3 py-1 border rounded hover:bg-gray-200 dark:hover:bg-gray-700"
           onClick={() => {
-            (window as any).resetBalls();
+            window.resetBalls?.();
           }}
         >
           Reset
