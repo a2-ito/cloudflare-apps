@@ -25,7 +25,8 @@
     "next": "^15.5.20",
     "react": "19.3.0",
     "react-dom": "19.3.0",
-    "zod": "^4.4.3"
+    "zod": "^4.4.3",
+    "esbuild": "0.28.2"
   },
   "devDependencies": {
     "@opennextjs/cloudflare": "^1.20.1",

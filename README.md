@@ -43,17 +43,21 @@ npm run test
 npm run typecheck
 ```
 
-## ルートの依存
+## esbuild をアプリの依存に置いている理由
 
-`esbuild` はどのアプリも直接使わないが、ルートの `dependencies` に置いている。
-**`devDependencies` では届かない。** Workers Builds は本番依存だけを入れるため、
-開発依存に置くとビルド環境に存在しない。
+どのアプリも `esbuild` を直接使わないが、全アプリの `dependencies` に入れている。
 
 `@opennextjs/cloudflare` は `esbuild` を import するのに依存として宣言しておらず、
 `@opennextjs/aws` 経由でルートへ巻き上がるのを当てにしている。巻き上がるかどうかは
-同時に入る他の依存で変わるため、Workers Builds のように一部のアプリだけを対象に
-install する環境では `Cannot find package 'esbuild'` で落ちる。明示的に置いて
-ルートに必ず存在させる。
+同時に入る他の依存で変わるため、アプリによっては
+`Cannot find package 'esbuild'` で落ちる。
+
+**ルートの `package.json` に置いても効かない。** Workers Builds は
+`npm ci --workspace=apps/<name>` 相当で、対象のアプリだけを入れる。ルート自身の
+依存は無視される。手元の `npm install` は全部入れるため、この差は手元では出ない。
+確かめるときは `npm ci --workspace=apps/<name>` で再現する。
+
+`devDependencies` でも届かない。本番依存だけが入る。
 
 ## デプロイ
 
