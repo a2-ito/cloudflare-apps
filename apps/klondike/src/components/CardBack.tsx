@@ -2,7 +2,8 @@ export function CardBack() {
   return (
     <div
       className="
-        w-16 h-24 rounded
+          w-12 h-18 sm:w-16 sm:h-24
+ rounded bg-gray-700
         bg-gradient-to-br from-blue-700 to-blue-900
         border border-gray-500
         flex items-center justify-center

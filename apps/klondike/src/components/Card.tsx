@@ -38,8 +38,7 @@ export function Card({ card, onDragStart }: Props) {
       onDragStart={onDragStart}
       src={`/cards/${fileName}`}
       className="
-				w-16
-				h-24
+        w-12 h-18 sm:w-16 sm:h-24
 				cursor-grab
 				active:cursor-grabbing
 				active:scale-105

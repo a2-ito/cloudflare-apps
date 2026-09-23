@@ -73,22 +73,23 @@ export default function Page() {
   return (
     <div className="space-y-4">
       {/* Header */}
-      <div className="flex justify-between items-center">
+      <div className="flex flex-col sm:flex-row gap-2 sm:gap-0 justify-between items-start sm:items-center">
         <button
           onClick={newGame}
           className="px-4 py-2 bg-blue-600 rounded hover:bg-blue-500"
         >
           New Game
         </button>
-        <div className="text-lg">Score: {score}</div>
+
+        <div className="text-base sm:text-lg">Score: {score}</div>
       </div>
 
       {/* Stock / Waste / Foundation */}
-      <div className="flex gap-6">
+      <div className="grid grid-cols-6 gap-1 sm:flex sm:gap-6 items-start">
         {/* Stock */}
-        <div onClick={drawFromStock} className="cursor-pointer">
+        <div onClick={drawFromStock} className="cursor-pointer p-1 sm:p-0">
           {stock.length === 0 ? (
-            <div className="w-16 h-24 border border-gray-600 rounded" />
+            <div className="w-12 h-18 sm:w-16 sm:h-24 border border-gray-600 rounded" />
           ) : (
             <Card card={{ ...stock[stock.length - 1], faceUp: false }} />
           )}
@@ -184,7 +185,7 @@ export default function Page() {
               {pile.length > 0 ? (
                 <Card card={pile[pile.length - 1]} />
               ) : (
-                <div className="w-16 h-24 border border-gray-600 rounded" />
+                <div className="w-10 h-15 sm:w-16 sm:h-24 border border-gray-600 rounded" />
               )}
             </div>
           ))}
@@ -192,7 +193,7 @@ export default function Page() {
       </div>
 
       {/* Tableau（複数枚ドラッグ対応） */}
-      <div className="flex gap-4">
+      <div className="grid grid-cols-7 gap-1 sm:flex sm:gap-4">
         {tableau.map((pile, pileIndex) => (
           <div
             key={pileIndex}
@@ -261,14 +262,19 @@ export default function Page() {
           >
             {/* 空列プレースホルダ */}
             {pile.length === 0 && (
-              <div className="w-16 h-24 border-2 border-dashed border-gray-500 rounded" />
+              <div
+                className="
+    w-10 h-15 sm:w-16 sm:h-24
+    border border-dashed rounded
+  "
+              />
             )}
 
             {/* カード */}
             {pile.map((card, cardIndex) => (
               <div
                 key={card.id}
-                className={cardIndex > 0 ? "-mt-16" : ""}
+                className={cardIndex > 0 ? "-mt-14 sm:-mt-16" : ""}
                 draggable={card.faceUp}
                 onDragStart={() => {
                   const movingCards = pile.slice(cardIndex);
@@ -279,6 +285,18 @@ export default function Page() {
                     cards: movingCards,
                   });
                 }}
+  onClick={() => {
+    if (!card.faceUp) return;
+
+    // このカードから下を全部選択
+    const cards = pile.slice(cardIndex);
+
+    setSelected({
+      type: "tableau",
+      pileIndex,
+      cards,
+    });
+  }}
               >
                 <Card card={card} />
               </div>
