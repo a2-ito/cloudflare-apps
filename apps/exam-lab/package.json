@@ -37,7 +37,7 @@
     "eslint-config-next": "16.3.6",
     "prettier": "^3.8.1",
     "tailwindcss": "^4",
-    "typescript": "^5.7.4",
+    "typescript": "^7.0.2",
     "wrangler": "^4.63.0"
   }
 }
