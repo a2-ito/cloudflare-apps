@@ -21,9 +21,13 @@ type MonthlyRow = {
   total: number;
 };
 
+// month 以外はカテゴリ名をキーにした金額。TypeScript 7 は
+// { month: string } & Record<string, ...> の交差型を month 側だけで解決し、
+// 任意のキーへの代入を拒む。index signature に month を含めて 1 つの型で表す。
 type MonthlyChartRow = {
+  [key: string]: number | string;
   month: string;
-} & Record<string, number | string>;
+};
 
 type CategoryTotal = {
   category: string;
