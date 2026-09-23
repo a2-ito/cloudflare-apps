@@ -24,6 +24,7 @@ Cloudflare Workers で動く Next.js アプリをまとめたモノレポ。
 | [english-vocabulary-quiz](apps/english-vocabulary-quiz) | https://app.a2ito.work/english-vocabulary-quiz | `english-vocabulary-quiz` | 英文の意味に合う英単語を 4 択で答えるクイズ |
 | [klondike](apps/klondike) | https://app.a2ito.work/klondike | `klondike` | クロンダイク（ソリティア）。ハイスコアを KV に保存する |
 | [tetris](apps/tetris) | https://app.a2ito.work/tetris | `tetris` | ブラウザで遊ぶテトリス |
+| [app-portal](apps/app-portal) | https://app.a2ito.work | `app-portal` | app.a2ito.work 配下のアプリへのリンク集。静的アセットだけの Worker |
 
 ## 使い方
 
@@ -111,6 +112,8 @@ Service Worker を共有し、1 本の XSS が全アプリに及ぶ。
   カスタムドメインはパスを持てないので Route を使う
 - **basePath が自動で付くのは `<Link>`・`next/image`・`router` だけ。** 生の `<img>`・`fetch`・
   `<link rel="icon">` は `withBasePath()` を通す
+- `apps/app-portal/public/index.html` にリンクを足す。app-portal の Route は `app.a2ito.work/*` で、
+  より具体的な各アプリの Route が優先される。どのアプリにも当たらないパスは app-portal の 404 になる
 - localStorage / sessionStorage のキーにはアプリ名を付ける。Cookie は `path` をアプリのパスに絞る
 - `_headers` は `public/` ではなくアプリ直下に置き、`cf:build` でアセットのルートへコピーする。
   basePath を設定すると `public/` の中身は `assets/<name>/` に入るが、Workers が読むのは
