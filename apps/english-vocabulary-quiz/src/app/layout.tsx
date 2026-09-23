@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { withBasePath } from "@/lib/base-path";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -25,7 +26,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <link rel="icon" href="/favicon.ico" type="image/svg+xml"></link>
+        <link rel="icon" href={withBasePath("/favicon.ico")} type="image/svg+xml"></link>
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}

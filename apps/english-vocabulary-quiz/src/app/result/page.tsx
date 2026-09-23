@@ -4,13 +4,14 @@ import { useEffect, useState } from "react";
 import { calculateScore } from "@/lib/game";
 import { Question } from "@/data/questions";
 import Link from "next/link";
+import { RESULT_STORAGE_KEY } from "@/lib/storage-keys";
 
 export default function ResultPage() {
   const [score, setScore] = useState<number | null>(null);
   const HIGH_SCORE_KEY = "toeic-high-score";
 
   useEffect(() => {
-    const raw = sessionStorage.getItem("result");
+    const raw = sessionStorage.getItem(RESULT_STORAGE_KEY);
     if (!raw) return;
 
     const { questions, answers } = JSON.parse(raw);

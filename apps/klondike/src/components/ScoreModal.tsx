@@ -1,10 +1,11 @@
 import { useState } from "react";
+import { withBasePath } from "@/lib/base-path";
 
 function ScoreModal({ score }: { score: number }) {
   const [name, setName] = useState("");
 
   async function submit() {
-    await fetch("/api/score", {
+    await fetch(withBasePath("/api/score"), {
       method: "POST",
       body: JSON.stringify({ name, score }),
     });

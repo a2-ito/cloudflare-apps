@@ -2,6 +2,7 @@
 import type { Card as CardType } from "@/lib/klondike";
 import { SuitIcon } from "./SuitIcon";
 import { CardBack } from "./CardBack";
+import { withBasePath } from "@/lib/base-path";
 
 type Props = {
   card: CardType;
@@ -36,7 +37,7 @@ export function Card({ card, onDragStart }: Props) {
     <img
       draggable
       onDragStart={onDragStart}
-      src={`/cards/${fileName}`}
+      src={withBasePath(`/cards/${fileName}`)}
       className="
         w-12 h-18 sm:w-16 sm:h-24
 				cursor-grab

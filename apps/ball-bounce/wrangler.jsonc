@@ -32,6 +32,13 @@
   "observability": {
     "enabled": true,
   },
+  "routes": [
+    {
+      // ゲーム系は app.a2ito.work/<name> に並べる。カスタムドメインはパスを持てないため Route にする
+      "pattern": "app.a2ito.work/ball-bounce*",
+      "zone_name": "a2ito.work",
+    },
+  ],
   /**
    * Smart Placement
    * https://developers.cloudflare.com/workers/configuration/smart-placement/#smart-placement
