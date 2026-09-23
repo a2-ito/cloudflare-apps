@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - id: metadata
-        uses: dependabot/fetch-metadata@v2
+        uses: dependabot/fetch-metadata@v3
 
       # 実際のマージは GitHub が CI の成功を待って行う。9 アプリの
       # quality と build が通らなければマージされない。
