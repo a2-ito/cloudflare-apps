@@ -1,0 +1,15 @@
+@import "tailwindcss";
+
+@source "./src/app/**/*.{ts,tsx}";
+
+/* dark: を class ベースに切り替える */
+@custom-variant dark (&:where(.dark, .dark *));
+
+html {
+  touch-action: manipulation;
+}
+
+/* globals.css */
+/*@tailwind base;*/
+/*@tailwind components;*/
+/*@tailwind utilities;*/
