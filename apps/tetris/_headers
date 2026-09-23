@@ -1,7 +1,0 @@
-# https://developers.cloudflare.com/workers/static-assets/headers
-# https://opennext.js.org/cloudflare/caching#static-assets-caching
-#
-# basePath を設定すると public/ の中身は assets/<basePath>/ に置かれるが、Workers が
-# 読むのはアセットのルートにある _headers だけ。public/ には置かず、cf:build でルートへコピーする。
-/tetris/_next/static/*
-  Cache-Control: public,max-age=31536000,immutable
