@@ -20,11 +20,7 @@ Cloudflare Workers で動く Next.js アプリをまとめたモノレポ。
 | [number-logic](apps/number-logic) | https://number-logic.a2ito.work | `number-logic` | 数独ベースのロジックパズル |
 | [dev-toolbox](apps/dev-toolbox) | https://toolbox.a2ito.work | `dev-toolbox` | パスワード生成や Unix time 変換などの開発者向けユーティリティ |
 | [planning-porker](apps/planning-porker) | https://porker.a2ito.work | `planning-porker` | チーム見積り用のプランニングポーカー |
-| [ball-bounce](apps/ball-bounce) | https://app.a2ito.work/ball-bounce | `ball-bounce` | 摩擦や重力を変えながらボールを跳ねさせる 2D 物理シミュレーション |
-| [english-vocabulary-quiz](apps/english-vocabulary-quiz) | https://app.a2ito.work/english-vocabulary-quiz | `english-vocabulary-quiz` | 英文の意味に合う英単語を 4 択で答えるクイズ |
-| [klondike](apps/klondike) | https://app.a2ito.work/klondike | `klondike` | クロンダイク（ソリティア）。ハイスコアを KV に保存する |
-| [tetris](apps/tetris) | https://app.a2ito.work/tetris | `tetris` | ブラウザで遊ぶテトリス |
-| [app-portal](apps/app-portal) | https://app.a2ito.work | `app-portal` | app.a2ito.work 配下のアプリへのリンク集。静的アセットだけの Worker |
+| [games](apps/games) | https://game.a2ito.work | `games` | klondike / tetris / english-vocabulary-quiz / ball-bounce を 1 本にまとめたゲーム集 |
 
 ## 使い方
 
@@ -97,27 +93,11 @@ Worker の改名自体は非破壊で、Worker の実体 (tag) もカスタム�
 `account-book` は移行の際に `account-book-on-cf` から改名した。`-on-cf` は
 account-book という名前を Vercel 時代のリポジトリに取られていた名残りだった。
 
-## app.a2ito.work 配下のアプリ
+## ゲーム
 
-認証の要らないアプリ（ball-bounce / english-vocabulary-quiz / klondike / tetris）は、
-サブドメインではなく `app.a2ito.work/<name>` に並べる。
-
-**認証のあるアプリはここに入れない。** 同じオリジンになると Cookie・localStorage・
-Service Worker を共有し、1 本の XSS が全アプリに及ぶ。
-
-1 本足すときにやること:
-
-- `src/lib/base-path.ts` に `BASE_PATH = "/<name>"` を置き、`next.config.ts` の `basePath` から参照する
-- `wrangler.jsonc` の `routes` を `app.a2ito.work/<name>*`（`zone_name: "a2ito.work"`）にする。
-  カスタムドメインはパスを持てないので Route を使う
-- **basePath が自動で付くのは `<Link>`・`next/image`・`router` だけ。** 生の `<img>`・`fetch`・
-  `<link rel="icon">` は `withBasePath()` を通す
-- `apps/app-portal/public/index.html` にリンクを足す。app-portal の Route は `app.a2ito.work/*` で、
-  より具体的な各アプリの Route が優先される。どのアプリにも当たらないパスは app-portal の 404 になる
-- localStorage / sessionStorage のキーにはアプリ名を付ける。Cookie は `path` をアプリのパスに絞る
-- `_headers` は `public/` ではなくアプリ直下に置き、`cf:build` でアセットのルートへコピーする。
-  basePath を設定すると `public/` の中身は `assets/<name>/` に入るが、Workers が読むのは
-  ルートの `_headers` だけで、しかも `/<name>/_headers` として公開されてしまう
+認証の要らないゲームは、アプリを分けずに [apps/games](apps/games) の 1 本に
+`/<name>` として足す。Worker も Workers Builds の設定も増えない。
+足し方は apps/games の README にある。
 
 ## スキーマ変更
 
