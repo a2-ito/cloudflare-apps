@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { BASE_PATH } from "@/lib/base-path";
 
 const COLS = 10;
 const ROWS = 20;
@@ -85,7 +86,7 @@ export default function Tetris() {
       : 0;
 
   function saveHighScore(v: number) {
-    document.cookie = `highScore=${v}; max-age=31536000; path=/`;
+    document.cookie = `highScore=${v}; max-age=31536000; path=${BASE_PATH}`;
   }
 
   function rotate(shape: readonly (readonly number[])[]) {

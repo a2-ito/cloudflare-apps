@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { pickRandomQuestions } from "@/lib/game";
 import { Question } from "@/data/questions";
 import { useRouter } from "next/navigation";
+import { RESULT_STORAGE_KEY } from "@/lib/storage-keys";
 
 export default function GamePage() {
   const [questions, setQuestions] = useState<Question[]>([]);
@@ -29,7 +30,7 @@ export default function GamePage() {
 
     if (current === 9) {
       sessionStorage.setItem(
-        "result",
+        RESULT_STORAGE_KEY,
         JSON.stringify({ questions, answers: next }),
       );
       router.push("/result");
