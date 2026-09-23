@@ -112,3 +112,24 @@ jobs:
       - run: npm ci --no-audit --no-fund
       # cf:build が wrangler.jsonc と型定義の生成まで面倒を見る
       - run: npm run cf:build -w apps/${{ matrix.app }}
+
+  # ruleset の必須チェックに指定する集約ジョブ。quality と build は変更のあった
+  # アプリだけ matrix で作るためジョブ名が毎回変わり、必須チェックに指定できない。
+  # 対象アプリが無く両方が skipped になった場合は成功として扱う。
+  ci-result:
+    name: ci-result
+    needs: [changes, quality, build]
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check results
+        env:
+          RESULTS: ${{ join(needs.*.result, ' ') }}
+        run: |
+          echo "結果: $RESULTS"
+          for r in $RESULTS; do
+            case "$r" in
+              success|skipped) ;;
+              *) echo "失敗したジョブがある: $r"; exit 1 ;;
+            esac
+          done
