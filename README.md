@@ -45,7 +45,9 @@ npm run typecheck
 
 ## ルートの依存
 
-`esbuild` はどのアプリも直接使わないが、ルートの `devDependencies` に置いている。
+`esbuild` はどのアプリも直接使わないが、ルートの `dependencies` に置いている。
+**`devDependencies` では届かない。** Workers Builds は本番依存だけを入れるため、
+開発依存に置くとビルド環境に存在しない。
 
 `@opennextjs/cloudflare` は `esbuild` を import するのに依存として宣言しておらず、
 `@opennextjs/aws` 経由でルートへ巻き上がるのを当てにしている。巻き上がるかどうかは
