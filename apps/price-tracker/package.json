@@ -42,7 +42,7 @@
     "@types/react-dom": "^19.1.7",
     "drizzle-kit": "^0.31.10",
     "eslint": "^9",
-    "eslint-config-next": "16.3.4",
+    "eslint-config-next": "16.3.5",
     "miniflare": "^5.20260911.0-alpha",
     "tailwindcss": "^4",
     "typescript": "^5.7.4",
