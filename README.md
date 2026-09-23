@@ -17,8 +17,8 @@ Cloudflare Workers で動く Next.js アプリをまとめたモノレポ。
 | [warikan](apps/warikan) | https://warikan.a2ito.work | `warikan` | ログイン不要の割り勘。最小回数で自動精算する |
 | [wordle](apps/wordle) | https://wordle.a2ito.work | `wordle` | ブラウザで遊ぶ Wordle |
 | [number-logic](apps/number-logic) | https://number-logic.a2ito.work | `number-logic` | 数独ベースのロジックパズル |
-| [dev-toolbox](apps/dev-toolbox) | https://dev-toolbox.a2ito.work | `dev-toolbox` | パスワード生成や Unix time 変換などの開発者向けユーティリティ |
-| [planning-porker](apps/planning-porker) | https://planning-porker.a2ito.work | `planning-porker` | チーム見積り用のプランニングポーカー |
+| [dev-toolbox](apps/dev-toolbox) | https://toolbox.a2ito.work | `dev-toolbox` | パスワード生成や Unix time 変換などの開発者向けユーティリティ |
+| [planning-porker](apps/planning-porker) | https://porker.a2ito.work | `planning-porker` | チーム見積り用のプランニングポーカー |
 
 ## 使い方
 
