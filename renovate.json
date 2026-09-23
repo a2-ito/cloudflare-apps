@@ -4,12 +4,12 @@
   "extends": ["github>a2-ito/renovate-config"],
   "packageRules": [
     {
-      "description": "react は 9 アプリで同じ版に揃えている。ばらけるとアプリごとにコピーがネストし、Next 15 系が /404 のプリレンダーで落ちる。上げるときは 9 アプリまとめて手で上げる",
+      "description": "react は 全アプリで同じ版に揃えている。ばらけるとアプリごとにコピーがネストし、Next 15 系が /404 のプリレンダーで落ちる。上げるときは 全アプリまとめて手で上げる",
       "matchPackageNames": ["react", "react-dom"],
       "enabled": false
     },
     {
-      "description": "patch 更新だけを自動マージする。脆弱性修正の多くは patch で来るため、放置される時間を減らす。実際のマージは GitHub が 9 アプリの CI の成功を待って行う",
+      "description": "patch 更新だけを自動マージする。脆弱性修正の多くは patch で来るため、放置される時間を減らす。実際のマージは GitHub が 全アプリの CI の成功を待って行う",
       "matchUpdateTypes": ["patch"],
       "automerge": true,
       "automergeStrategy": "squash"
