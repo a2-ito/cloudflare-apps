@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import * as cronParser from "cron-parser";
+import { CronExpressionParser, type CronExpressionOptions } from "cron-parser";
 import cronstrue from "cronstrue";
 
 type Props = {
@@ -46,7 +46,7 @@ export default function CronExpressionTester({ t }: Props) {
     }
 
     try {
-      const options: cronParser.ParserOptions = {
+      const options: CronExpressionOptions = {
         currentDate: new Date(),
       };
 
@@ -54,7 +54,7 @@ export default function CronExpressionTester({ t }: Props) {
         options.tz = timezone;
       }
 
-      const interval = cronParser.parseExpression(expression, options);
+      const interval = CronExpressionParser.parse(expression, options);
 
       // Get next runs
       const nextRuns: string[] = [];
