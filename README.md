@@ -12,6 +12,7 @@ Cloudflare Workers で動く Next.js アプリをまとめたモノレポ。
 | --- | --- | --- | --- |
 | [price-tracker](apps/price-tracker) | https://price-tracker.a2ito.work | `price-tracker` | 店舗ごとの価格を容量あたりの単価で比較する最安値メモ |
 | [tabilog](apps/tabilog) | https://tabilog.a2ito.work | `tabilog` | 旅先の食事・買い物を記録して振り返る旅行メモ |
+| [winelog](apps/winelog) | https://winelog.a2ito.work | `winelog` | 飲んだワインの銘柄・品種・値段と 5 軸の評価を残すメモ |
 | [account-book](apps/account-book) | https://account-book.a2ito.work | `account-book` | グループ単位で管理する家計簿 |
 | [exam-lab](apps/exam-lab) | https://exam-lab.a2ito.work | `exam-lab` | 資格試験の問題を管理・学習する |
 | [warikan](apps/warikan) | https://warikan.a2ito.work | `warikan` | ログイン不要の割り勘。最小回数で自動精算する |
