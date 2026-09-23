@@ -4,7 +4,7 @@
 declare namespace Cloudflare {
   interface Env {
     NEXTJS_ENV: string;
-    WORKER_SELF_REFERENCE: Fetcher /* english-vocablary-quiz */;
+    WORKER_SELF_REFERENCE: Fetcher /* english-vocabulary-quiz */;
     IMAGES: ImagesBinding;
     ASSETS: Fetcher;
   }

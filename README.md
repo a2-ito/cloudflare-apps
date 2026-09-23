@@ -19,6 +19,10 @@ Cloudflare Workers で動く Next.js アプリをまとめたモノレポ。
 | [number-logic](apps/number-logic) | https://number-logic.a2ito.work | `number-logic` | 数独ベースのロジックパズル |
 | [dev-toolbox](apps/dev-toolbox) | https://toolbox.a2ito.work | `dev-toolbox` | パスワード生成や Unix time 変換などの開発者向けユーティリティ |
 | [planning-porker](apps/planning-porker) | https://porker.a2ito.work | `planning-porker` | チーム見積り用のプランニングポーカー |
+| [ball-bounce](apps/ball-bounce) | — | `ball-bounce` | 摩擦や重力を変えながらボールを跳ねさせる 2D 物理シミュレーション |
+| [english-vocabulary-quiz](apps/english-vocabulary-quiz) | https://english-vocab.a2ito.work | `english-vocabulary-quiz` | 英文の意味に合う英単語を 4 択で答えるクイズ |
+| [klondike](apps/klondike) | https://klondike.a2ito.work | `klondike` | クロンダイク（ソリティア）。ハイスコアを KV に保存する |
+| [tetris](apps/tetris) | https://tetris.a2ito.work | `tetris` | ブラウザで遊ぶテトリス |
 
 ## 使い方
 
