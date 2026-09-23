@@ -1,0 +1,25 @@
+/**
+ * app.a2ito.work のトップページ。静的アセットだけで、Worker のコードは持たない。
+ * https://developers.cloudflare.com/workers/static-assets/
+ */
+{
+  "$schema": "../../node_modules/wrangler/config-schema.json",
+  "name": "app-portal",
+  "compatibility_date": "2026-09-01",
+  "assets": {
+    "directory": "./public",
+    // 配下のアプリに当たらないパスはここに落ちる。トップへ戻れる 404 を返す
+    "not_found_handling": "404-page",
+  },
+  "routes": [
+    {
+      // 各アプリの app.a2ito.work/<name>* の方が具体的なので、そちらが優先される。
+      // ここはトップページと、どのアプリにも当たらないパスだけを受ける
+      "pattern": "app.a2ito.work/*",
+      "zone_name": "a2ito.work",
+    },
+  ],
+  "observability": {
+    "enabled": true,
+  },
+}
