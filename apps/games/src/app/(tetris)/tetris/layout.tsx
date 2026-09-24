@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { ServiceWorkerRegistrar } from "@/components/service-worker";
+import { APPLE_TOUCH_ICON, PWA_METADATA } from "@/lib/pwa";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -13,7 +15,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  ...PWA_METADATA,
   title: "Tetris",
+  icons: { apple: APPLE_TOUCH_ICON },
   description: "",
 };
 
@@ -31,6 +35,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         {children}
+        <ServiceWorkerRegistrar />
       </body>
     </html>
   );

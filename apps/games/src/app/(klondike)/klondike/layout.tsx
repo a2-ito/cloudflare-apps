@@ -3,11 +3,14 @@ import "./globals.css";
 import type { Metadata } from "next";
 import { ThemeProvider } from "@/games/klondike/components/ThemeProvider";
 import { ThemeToggle } from "@/games/klondike/components/ThemeToggle";
+import { ServiceWorkerRegistrar } from "@/components/service-worker";
+import { APPLE_TOUCH_ICON, PWA_METADATA } from "@/lib/pwa";
 
 export const metadata: Metadata = {
+  ...PWA_METADATA,
   title: "Klondike Solitaire",
   description: "Play Klondike Solitaire online",
-  icons: { icon: "/klondike/favicon.svg" },
+  icons: { icon: "/klondike/favicon.svg", apple: APPLE_TOUCH_ICON },
 };
 
 export default function RootLayout({
@@ -28,6 +31,7 @@ export default function RootLayout({
         </ThemeProvider>
 
         <footer className="border-t border-gray-700 p-2 text-center text-sm text-gray-400"></footer>
+        <ServiceWorkerRegistrar />
       </body>
     </html>
   );

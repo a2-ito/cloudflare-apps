@@ -32,11 +32,19 @@ root layout をまたぐ遷移はフルリロードになるが、別のゲー�
 ゲーム名を付け、Cookie は `path` をゲームのパスに絞る。認証のあるアプリはここに入れない。
 1 つの XSS が全部に及ぶため。
 
+**サイト全体を 1 つの PWA にしている。** `src/app/manifest.ts` の scope は `/` で、
+どのゲームから追加してもトップページが開く。`public/sw.js` は一度開いたページと
+アセットをキャッシュし、圏外でも遊べるようにする（画面はネットワーク優先）。
+klondike を開くと 52 枚のカード画像もまとめてキャッシュする。各 root layout で
+`PWA_METADATA`（`src/lib/pwa.ts`）と `<ServiceWorkerRegistrar />` を入れている。
+アイコンは `node scripts/gen-icons.mjs` で `public/icons/` に生成する。
+
 ## ゲームを足すとき
 
-1. `src/app/(<name>)/<name>/` に `layout.tsx`・`page.tsx`・`globals.css` を置く
+1. `src/app/(<name>)/<name>/` に `layout.tsx`・`page.tsx`・`globals.css` を置く。
+   `layout.tsx` には `PWA_METADATA` と `<ServiceWorkerRegistrar />` を入れる
 2. components や lib は `src/games/<name>/`、画像は `public/<name>/` に置く
-3. `src/app/(portal)/page.tsx` の `GAMES` に足す
+3. `src/app/(portal)/page.tsx` の `GAMES` と `src/app/manifest.ts` の `shortcuts` に足す
 
 ## 開発
 
