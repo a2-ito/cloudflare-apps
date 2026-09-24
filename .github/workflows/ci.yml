@@ -110,6 +110,18 @@ jobs:
           cache: npm
       # Cloudflare Workers Builds も npm ci を使うため、ここでも ci で検証する
       - run: npm ci --no-audit --no-fund
+      # next build はアプリ全体を毎回コンパイルし直す。games のように 1 アプリへ
+      # 複数の画面を載せていると、1 画面を直しただけで残り全部が再コンパイルになる。
+      # .next/cache を持ち越すと、変わっていない部分はコンパイル結果を使い回せる。
+      # key に sha を含めて毎回書き戻し、読み出しは restore-keys で直近のものに落とす。
+      - name: Next.js のビルドキャッシュ
+        uses: actions/cache@v4
+        with:
+          path: apps/${{ matrix.app }}/.next/cache
+          key: next-${{ matrix.app }}-${{ hashFiles('package-lock.json') }}-${{ github.sha }}
+          restore-keys: |
+            next-${{ matrix.app }}-${{ hashFiles('package-lock.json') }}-
+            next-${{ matrix.app }}-
       # cf:build が wrangler.jsonc と型定義の生成まで面倒を見る
       - run: npm run cf:build -w apps/${{ matrix.app }}
 
