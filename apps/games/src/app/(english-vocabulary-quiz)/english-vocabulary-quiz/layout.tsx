@@ -16,9 +16,9 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   ...PWA_METADATA,
-  title: "Vocablary Teset",
+  title: "English Vocabulary Quiz",
   icons: { apple: APPLE_TOUCH_ICON },
-  description: "",
+  description: "Pick the English word that matches the meaning. 10 questions per round.",
 };
 
 export default function RootLayout({
