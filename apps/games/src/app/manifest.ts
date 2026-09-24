@@ -39,6 +39,9 @@ export default function manifest(): MetadataRoute.Manifest {
       { name: "Tetris", url: "/tetris" },
       { name: "English Vocabulary Quiz", url: "/english-vocabulary-quiz" },
       { name: "BounceLab", url: "/ball-bounce" },
+      { name: "2048", url: "/2048" },
+      { name: "マインスイーパー", url: "/minesweeper" },
+      { name: "Snake", url: "/snake" },
     ],
   };
 }

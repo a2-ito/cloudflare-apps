@@ -26,6 +26,22 @@ const GAMES: readonly Game[] = [
     name: "BounceLab",
     description: "摩擦や重力を変えながらボールを跳ねさせる物理シミュレーション",
   },
+  {
+    path: "/2048",
+    name: "2048",
+    description:
+      "同じ数字のタイルをくっつけて 2048 を目指す。スワイプでも遊べる",
+  },
+  {
+    path: "/minesweeper",
+    name: "マインスイーパー",
+    description: "数字を手がかりに地雷を避けてマスを開ける。長押しで旗",
+  },
+  {
+    path: "/snake",
+    name: "Snake",
+    description: "餌を食べて伸びる蛇を、壁と自分にぶつけないように操る",
+  },
 ];
 
 export default function PortalPage() {
