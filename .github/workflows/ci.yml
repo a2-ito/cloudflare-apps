@@ -15,6 +15,9 @@ concurrency:
 env:
   D1_DATABASE_ID: placeholder-database-id
   APP_HOSTNAME: placeholder.example.com
+  # price-tracker の画像は R2 のカスタムドメインから配る。基底 URL は next build
+  # 時に埋め込まれるため、検証用の値を渡しておかないとビルドが落ちる。
+  NEXT_PUBLIC_IMAGES_BASE_URL: https://images.placeholder.example.com
 
 jobs:
   # 変更のあったアプリだけを後続の job に渡す。1 アプリの CSS を直しただけで

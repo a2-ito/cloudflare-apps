@@ -48,7 +48,26 @@ describe("deleteImage", () => {
 });
 
 describe("imageUrl", () => {
-	it("配信 API のパスを返す", () => {
+	it("R2 カスタムドメイン上の URL を返す", () => {
+		expect(imageUrl("products/abc.jpg")).toBe("https://images.example.com/products/abc.jpg");
+	});
+
+	it("基底 URL 末尾の / は重ねない", () => {
+		vi.stubEnv("NEXT_PUBLIC_IMAGES_BASE_URL", "https://images.example.com/");
+		expect(imageUrl("products/abc.jpg")).toBe("https://images.example.com/products/abc.jpg");
+		vi.unstubAllEnvs();
+	});
+
+	it("基底 URL が無ければ開発用に /api/images へ落とす", () => {
+		vi.stubEnv("NEXT_PUBLIC_IMAGES_BASE_URL", "");
 		expect(imageUrl("products/abc.jpg")).toBe("/api/images/products/abc.jpg");
+		vi.unstubAllEnvs();
+	});
+
+	it("本番で基底 URL が無ければ落とす", () => {
+		vi.stubEnv("NEXT_PUBLIC_IMAGES_BASE_URL", "");
+		vi.stubEnv("NODE_ENV", "production");
+		expect(() => imageUrl("products/abc.jpg")).toThrow(/NEXT_PUBLIC_IMAGES_BASE_URL/);
+		vi.unstubAllEnvs();
 	});
 });

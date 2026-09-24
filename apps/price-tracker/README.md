@@ -20,6 +20,27 @@
 - 配色の切り替え（ライト / ダーク / システム追従）。選択は端末に保存し、描画前に適用するのでリロード時もちらつかない
 - 画像はブラウザ側で長辺 1200px に縮小してから R2 に保存
 
+### 画像の配信
+
+画像は R2 のカスタムドメインから CDN が直に返す。Worker を経由しない。
+
+以前は Worker 上の Route Handler (`/api/images`) が認証を確かめてから R2 を読んでいた。
+ただしトップページが商品数ぶんのサムネイルを並べるため、一覧を 1 回開くだけで商品数ぶんの
+Worker が起動し、その全てで Auth.js のセッション復号が走っていた。
+
+**引き換えに、画像は URL を知っていれば認証なしで取得できる。** キーが UUID v4 で推測できない
+ことに依存している。バケットの一覧は公開されないため列挙もできない。商品名・価格・履歴は D1 に
+あり、今まで通り認証の内側にある。
+
+配信の基底 URL は `NEXT_PUBLIC_IMAGES_BASE_URL` で渡す。`imageUrl()` はクライアント
+コンポーネントからも呼ぶため `NEXT_PUBLIC_` 付きで、`next build` 時に値が埋め込まれる。
+実行時の環境変数では差し替わらないので、変えたら再ビルドが要る。
+
+手元では画像が Miniflare のローカル R2 に入り、カスタムドメインからは取れない。そのため
+基底 URL が無いときに限り `/api/images` へ落ちる。`src/app/api/images/[...key]/route.ts`
+はこの開発用の経路で、本番では使われない。基底 URL を渡さないまま本番ビルドすると、
+気づかないうちに Worker 経由へ戻るのを避けるため `imageUrl()` は例外を投げる。
+
 ## CI / CD
 
 Pull Request を作ると GitHub Actions で lint・型チェック・テスト・ビルドが走る。
@@ -47,7 +68,7 @@ Workers Builds の設定は Cloudflare ダッシュボードの **Settings > Bui
 | Deploy command | `npm run cf:deploy` |
 | Git branch | `main` |
 | Build watch paths | `apps/price-tracker/*`、`package-lock.json` |
-| Build variables | `D1_DATABASE_ID`, `APP_HOSTNAME` |
+| Build variables | `D1_DATABASE_ID`, `APP_HOSTNAME`, `NEXT_PUBLIC_IMAGES_BASE_URL` |
 
 `wrangler.jsonc` は追跡していないため、`npm run cf:config` が雛形のプレースホルダを
 これらの変数で埋めて生成する。手元に `wrangler.jsonc` がある場合は上書きしない。
@@ -133,7 +154,7 @@ npm run db:migrate:remote
 | --- | --- |
 | Worker | `price-tracker` |
 | D1 | `price-tracker-db` |
-| R2 | `price-tracker-images` |
+| R2 | `price-tracker-images`（カスタムドメインを生やして公開配信） |
 | ビルド | Cloudflare Workers Builds |
 
 ログインを許可するアカウントを増やすときは、`ALLOWED_EMAILS` の Secret を

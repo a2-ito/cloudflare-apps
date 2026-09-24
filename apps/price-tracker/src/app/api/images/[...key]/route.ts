@@ -2,6 +2,11 @@ import { NextResponse } from "next/server";
 import { auth } from "@/lib/auth";
 import { getEnv } from "@/lib/cloudflare";
 
+/**
+ * 開発用の画像配信。本番は R2 のカスタムドメインから CDN が直に返すため、この経路は
+ * 使われない（src/lib/images.ts の imageUrl を参照）。手元では Miniflare のローカル
+ * R2 に入った画像をカスタムドメインから取れないので、その代わりにここが受ける。
+ */
 export async function GET(_req: Request, ctx: RouteContext<"/api/images/[...key]">) {
 	const session = await auth();
 	if (!session?.user?.email) return new NextResponse("Unauthorized", { status: 401 });
