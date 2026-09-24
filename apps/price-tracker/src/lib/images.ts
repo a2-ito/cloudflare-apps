@@ -52,14 +52,16 @@ export async function deleteImage(key: string | null): Promise<void> {
  * 商品名や価格は D1 にあり、今まで通り認証の内側にある。
  *
  * 基底 URL はクライアントコンポーネントからも呼ぶため NEXT_PUBLIC_ 付きで、
- * next build 時に値が埋め込まれる。手元では Miniflare のローカル R2 に入るため
- * カスタムドメインからは取れない。開発時に限り /api/images へ落として、
- * ローカルで上げた画像もそのまま見えるようにする。
+ * next build 時に値が埋め込まれる。未設定なら /api/images へ落とす。
+ *
+ * 手元では画像が Miniflare のローカル R2 に入り、カスタムドメインからは取れないため
+ * この経路が要る。本番でも、基底 URL を渡し忘れたときは CPU 削減が効かないだけで
+ * 画像は出る。以前はここで例外を投げていたが、全ページが動的レンダリングのため
+ * ビルドは通ってしまい、本番のトップページが 500 になった。落とすより遅い方がよい。
  */
 export function imageUrl(key: string): string {
 	const base = process.env.NEXT_PUBLIC_IMAGES_BASE_URL;
 	if (base) return `${base.replace(/\/+$/, "")}/${key}`;
-	// 本番で未設定なら、気づかないまま Worker 経由に戻るのを避けて落とす
-	if (process.env.NODE_ENV === "production") throw new Error("NEXT_PUBLIC_IMAGES_BASE_URL が未設定です");
+	// 基底 URL が無ければ Worker 経由に落とす。CPU は減らないが画像は出る。
 	return `/api/images/${key}`;
 }

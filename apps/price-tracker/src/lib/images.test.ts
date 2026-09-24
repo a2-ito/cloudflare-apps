@@ -64,10 +64,4 @@ describe("imageUrl", () => {
 		vi.unstubAllEnvs();
 	});
 
-	it("本番で基底 URL が無ければ落とす", () => {
-		vi.stubEnv("NEXT_PUBLIC_IMAGES_BASE_URL", "");
-		vi.stubEnv("NODE_ENV", "production");
-		expect(() => imageUrl("products/abc.jpg")).toThrow(/NEXT_PUBLIC_IMAGES_BASE_URL/);
-		vi.unstubAllEnvs();
-	});
 });
