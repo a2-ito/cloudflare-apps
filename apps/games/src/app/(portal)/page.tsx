@@ -38,6 +38,11 @@ const GAMES: readonly Game[] = [
     description: "数字を手がかりに地雷を避けてマスを開ける。長押しで旗",
   },
   {
+    path: "/hexspin",
+    name: "Hexspin",
+    description: "六角形のタイルを 3 枚ずつ回して、同じ色の三角形を作って消す",
+  },
+  {
     path: "/snake",
     name: "Snake",
     description: "餌を食べて伸びる蛇を、壁と自分にぶつけないように操る",

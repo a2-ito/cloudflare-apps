@@ -42,6 +42,7 @@ export default function manifest(): MetadataRoute.Manifest {
       { name: "2048", url: "/2048" },
       { name: "マインスイーパー", url: "/minesweeper" },
       { name: "Snake", url: "/snake" },
+      { name: "Hexspin", url: "/hexspin" },
     ],
   };
 }
