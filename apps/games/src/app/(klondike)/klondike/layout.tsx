@@ -7,6 +7,7 @@ import { ThemeToggle } from "@/games/klondike/components/ThemeToggle";
 export const metadata: Metadata = {
   title: "Klondike Solitaire",
   description: "Play Klondike Solitaire online",
+  icons: { icon: "/klondike/favicon.svg" },
 };
 
 export default function RootLayout({
