@@ -139,7 +139,7 @@ main への push を Cloudflare の [Workers Builds](https://developers.cloudfla
 | --- | --- |
 | Root directory | `apps/sakelog` |
 | Build command | `npm run cf:build` |
-| Deploy command | `npm run db:migrate:remote && npm run cf:deploy` |
+| Deploy command | `npm run cf:deploy` |
 | Git branch | `main` |
 | Build variables | `D1_DATABASE_ID`, `APP_HOSTNAME`, `NEXT_PUBLIC_PHOTOS_BASE_URL` |
 
@@ -148,7 +148,7 @@ main への push を Cloudflare の [Workers Builds](https://developers.cloudfla
 
 ### スキーマ変更の進め方
 
-マイグレーションは deploy command の先頭で適用されるので、手で流す必要はない。
+マイグレーションは `npm run cf:deploy` の中でデプロイより先に適用されるので、手で流す必要はない。
 `&&` で繋いでいるため、適用に失敗したらデプロイも行われず、古いコードが動き続ける。
 
 ただし**適用からデプロイ完了までの数分間は「新しいスキーマ + 古いコード」が同時に
@@ -168,8 +168,7 @@ npx wrangler secret put AUTH_GOOGLE_ID
 npx wrangler secret put AUTH_GOOGLE_SECRET
 npx wrangler secret put ALLOWED_EMAILS
 
-npm run db:migrate:remote
-npm run cf:deploy
+npm run cf:deploy   # マイグレーション適用も含む
 ```
 
 ## 写真の配信

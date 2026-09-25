@@ -85,7 +85,7 @@ main への push を Cloudflare の [Workers Builds](https://developers.cloudfla
 | --- | --- |
 | Root directory | `apps/kcalog` |
 | Build command | `npm run cf:build` |
-| Deploy command | `npm run db:migrate:remote && npm run cf:deploy` |
+| Deploy command | `npm run cf:deploy` |
 | Git branch | `main` |
 | Build watch paths | `apps/kcalog/*`、`package-lock.json` |
 | Build variables | `D1_DATABASE_ID`, `APP_HOSTNAME` |
@@ -94,7 +94,7 @@ main への push を Cloudflare の [Workers Builds](https://developers.cloudfla
 雛形 `wrangler.jsonc.example` のプレースホルダをこれらの変数で埋めて生成する。
 手元に `wrangler.jsonc` がある場合は上書きしない。
 
-マイグレーションは deploy command の先頭で適用される。適用からデプロイ完了までの数分間は
+マイグレーションは `npm run cf:deploy` の中でデプロイより先に適用される。適用からデプロイ完了までの数分間は
 「新しいスキーマ + 古いコード」が同時に存在するため、カラムやテーブルを消す変更は
 2 回に分けて出す（expand / contract）。
 

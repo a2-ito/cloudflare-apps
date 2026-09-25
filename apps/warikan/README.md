@@ -56,10 +56,8 @@ npx wrangler login
 #    d1_databases[0].database_id に反映する
 npx wrangler d1 create warikan-db
 
-# 3. 本番 D1 にマイグレーション適用
-npm run db:migrate:remote
-
-# 4. ビルド & デプロイ
+# 3. ビルド & デプロイ（cf:deploy が本番 D1 へのマイグレーション適用も行う）
+npm run cf:build
 npm run cf:deploy
 ```
 
