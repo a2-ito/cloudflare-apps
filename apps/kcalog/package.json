@@ -1,0 +1,35 @@
+{
+  "name": "kcalog",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint .",
+    "preview": "npm run cf:build && opennextjs-cloudflare preview",
+    "cf-typegen": "wrangler types --env-interface CloudflareEnv ./cloudflare-env.d.ts",
+    "typecheck": "next typegen && tsc --noEmit",
+    "cf:config": "node scripts/gen-wrangler-config.mjs",
+    "cf:build": "npm run cf:config && npm run cf-typegen && opennextjs-cloudflare build",
+    "cf:deploy": "npm run cf:config && opennextjs-cloudflare deploy"
+  },
+  "dependencies": {
+    "@opennextjs/cloudflare": "^1.20.3",
+    "next": "16.3.6",
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
+    "esbuild": "0.28.2"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4",
+    "@types/node": "^26.6.2",
+    "@types/react": "^19.1.7",
+    "@types/react-dom": "^19.1.7",
+    "eslint": "^9",
+    "eslint-config-next": "16.3.6",
+    "tailwindcss": "^4",
+    "typescript": "7.0.2",
+    "wrangler": "^4.131.1"
+  }
+}
