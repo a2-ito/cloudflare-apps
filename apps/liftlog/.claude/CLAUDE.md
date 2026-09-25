@@ -1,6 +1,7 @@
 # CLAUDE.md
 
-筋トレ記録アプリ「liftlog」。Next.js 16 (App Router) を Cloudflare Workers で動かす。
+筋トレ記録アプリ「liftlog」。Next.js 16 (App Router) を Cloudflare Workers で動かし、
+DB は D1、認証は Auth.js + Google OAuth。
 技術構成・セットアップ手順は `README.md` を読む。
 
 このファイルには、毎回思い出してほしい約束だけを書く。
@@ -25,11 +26,33 @@ Next.js が自動生成するため `.gitignore` で無視しているから。
 npm ci
 
 # 初回のみ。wrangler.jsonc と cloudflare-env.d.ts が無いと typecheck が落ちる
-APP_HOSTNAME=placeholder.example.com npm run cf:config && npm run cf-typegen
+D1_DATABASE_ID=placeholder-database-id APP_HOSTNAME=placeholder.example.com \
+  npm run cf:config && npm run cf-typegen
 
-npm run lint && npm run typecheck
+npm run lint && npm run typecheck && npm test
 ```
 
 ## コードの約束
 
+- **記録は持ち主で絞る**。読む・変える・消すクエリは必ず `user_id` を条件に入れる。
+  `user_id` を持たない `menu_items` / `workout_sets` は親（`menus` / `workouts`）の持ち主で確かめる
+- **「今日やること」の規則は `src/lib/training.ts` の純粋な関数に置く**（`nextMenu` / `nextWeight`）。
+  DB に触らずテストできるようにするため
+- **重量は 0.25kg 刻み**（`WEIGHT_STEP`）。この前提で浮動小数点の丸めをしていない
+- **やった日（`performed_on`）は日付の文字列**。「今日」は `src/lib/date.ts` の `today()` で
+  日本時間から決める。`new Date()` をそのまま使うと朝 9 時まで前日になる
+- **`"use server"` のファイルからは非同期関数しか export できない**。クライアントと
+  共有する定数は `src/lib/limits.ts` などに置く
+
 - コメントには「なぜそうなっているか」を書く。コードを読めば分かることは書かない
+
+## テスト
+
+- Vitest。拾うのは `src/**/*.test.ts` のみ
+- D1 は Miniflare で本物を起動して検証する（`src/test/d1.ts`）。マイグレーションは
+  `drizzle/` の SQL をそのまま適用する
+
+## スキーマ変更
+
+- `npm run db:generate` で生成する。`drizzle/` の SQL とスナップショットは手で書かない
+- **消す変更は 2 回に分ける**（expand / contract）
