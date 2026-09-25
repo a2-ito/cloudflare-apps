@@ -102,13 +102,15 @@ account-book という名前を Vercel 時代のリポジトリに取られて�
 
 ## スキーマ変更
 
-**D1 のマイグレーションは自動適用しない。** merge する前に手で流す。
+**D1 のマイグレーションはデプロイ時に自動で適用する。** D1 を使うアプリは
+`cf:deploy` の中で `db:migrate:remote` をデプロイより先に流す。
+Deploy command をアプリごとに変えると、ダッシュボードの設定漏れに気付けない。
+実際に、README には自動適用と書きながら Deploy command が `npm run cf:deploy` だけになっていて、
+新しいアプリのテーブルが本番に作られなかったことがある。
 
-```bash
-npm run db:migrate:remote -w apps/price-tracker
-```
+適用からデプロイ完了までは「新しいスキーマ + 古いコード」が同時に存在するため、
+カラムやテーブルを消す変更は 2 回に分けて出す（expand / contract）。
 
-どのアプリの D1 を触っているかがコマンドに出るので、取り違えにくい。
 データ移行を伴う場合は先に `wrangler d1 export --remote` で控えを取る。
 
 ## wrangler.jsonc

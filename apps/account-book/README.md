@@ -226,13 +226,10 @@ npm run db:migrate:local
 ```
 
 本番 D1 への適用は Cloudflare Workers Builds が担当します。
-ダッシュボードの Deploy command に以下を設定してください。
+ダッシュボードの Deploy command は `npm run cf:deploy` とし、その中で
+`npm run db:migrate:remote` をデプロイより先に実行します。
 
-```bash
-npm run db:migrate:remote && npx opennextjs-cloudflare deploy
-```
-
-デプロイと同じパイプラインで実行することで、マイグレーションが
+デプロイと同じコマンドで実行することで、マイグレーションが
 完了してからデプロイされる順序を保証しています。
 手動で本番へ適用する場合は `npm run db:migrate:remote` を実行します。
 

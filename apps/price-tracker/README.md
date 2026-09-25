@@ -79,7 +79,8 @@ Workers Builds の設定は Cloudflare ダッシュボードの **Settings > Bui
 `@emnapi/core` と `@emnapi/runtime` は直接使わないが、Tailwind の wasm パッケージが
 要求する版が lock に記録されず `npm ci` が同期エラーになるため、明示的に依存へ加えている。
 
-スキーマ変更は自動適用しない。`npm run db:migrate:remote` を手で流してからマージする。
+マイグレーションは `npm run cf:deploy` の中でデプロイより先に適用されるので、手で流す必要はない。
+`&&` で繋いでいるため、適用に失敗したらデプロイも行われず、古いコードが動き続ける。
 
 ## セットアップ
 
@@ -137,8 +138,8 @@ npx wrangler secret put AUTH_GOOGLE_ID
 npx wrangler secret put AUTH_GOOGLE_SECRET
 npx wrangler secret put ALLOWED_EMAILS       # 許可するメールをカンマ区切りで
 
-npm run db:migrate:remote
-npm run deploy
+npm run cf:build
+npm run cf:deploy   # マイグレーション適用も含む
 ```
 
 ## スキーマ変更
@@ -148,8 +149,9 @@ npm run deploy
 ```sh
 npm run db:generate          # drizzle/ に SQL を生成
 npm run db:migrate:local
-npm run db:migrate:remote
 ```
+
+本番への適用は main へのマージ後、Workers Builds の `npm run cf:deploy` が行う。
 
 ## リソース
 
