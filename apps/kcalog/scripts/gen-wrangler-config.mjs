@@ -1,4 +1,4 @@
-// wrangler.jsonc は公開ホスト名を含むため追跡していない。
+// wrangler.jsonc は実 ID と公開ホスト名を含むため追跡していない。
 // CI やビルド環境では、雛形のプレースホルダを環境変数の値で埋めて生成する。
 import { readFileSync, writeFileSync, existsSync } from "node:fs";
 
@@ -6,6 +6,7 @@ const TEMPLATE = "wrangler.jsonc.example";
 const OUTPUT = "wrangler.jsonc";
 
 const PLACEHOLDERS = {
+	__D1_DATABASE_ID__: "D1_DATABASE_ID",
 	__APP_HOSTNAME__: "APP_HOSTNAME",
 };
 
