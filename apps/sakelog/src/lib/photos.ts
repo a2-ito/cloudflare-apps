@@ -1,6 +1,7 @@
 import { getEnv } from "./cloudflare";
 import { isAllowedPhotoType, MAX_PHOTO_BYTES, MAX_PHOTOS_PER_DRINK } from "./photo-limits";
 
+const CACHE_CONTROL = "public, max-age=31536000, immutable";
 export const PHOTO_LIMITS = { maxBytes: MAX_PHOTO_BYTES, maxCount: MAX_PHOTOS_PER_DRINK } as const;
 
 function extensionFor(type: string): string {
@@ -34,7 +35,11 @@ export async function storePhotos(files: readonly File[], drinkId: number): Prom
 	const stored: StoredPhoto[] = [];
 	for (const file of targets) {
 		const key = `drinks/${drinkId}/${crypto.randomUUID()}.${extensionFor(file.type)}`;
-		await env.PHOTOS_BUCKET.put(key, await file.arrayBuffer(), { httpMetadata: { contentType: file.type } });
+		await env.PHOTOS_BUCKET.put(key, await file.arrayBuffer(), {
+			// キーは UUID で、同じキーの中身が入れ替わることはない。CDN とブラウザに
+			// 恒久的にキャッシュさせてよい。
+			httpMetadata: { contentType: file.type, cacheControl: CACHE_CONTROL },
+		});
 		stored.push({ key, contentType: file.type });
 	}
 	return stored;
@@ -46,6 +51,22 @@ export async function deletePhotos(keys: readonly string[]): Promise<void> {
 	await env.PHOTOS_BUCKET.delete([...keys]);
 }
 
+/**
+ * 写真の配信 URL。R2 のカスタムドメインを直に指すので Worker を経由しない。
+ *
+ * Route Handler (/api/photos) 経由だと写真 1 枚につき Worker が 1 回起動し、その
+ * すべてで Auth.js のセッション復号が走る。CDN から直に返せば Worker は起動しない。
+ *
+ * 引き換えに、写真は URL を知っていれば認証なしで取得できる。キーが UUID v4 で
+ * 推測できないことに依存している。バケットの一覧は公開されないため列挙もできない。
+ * 記録の中身は D1 にあり、今まで通り認証の内側にある。
+ *
+ * 基底 URL が無いときは /api/photos へ落とす。手元では写真が Miniflare のローカル
+ * R2 に入り、カスタムドメインからは取れないためこの経路が要る。本番でも渡し忘れた
+ * ときは CPU 削減が効かないだけで写真は出る。
+ */
 export function photoUrl(key: string): string {
+	const base = process.env.NEXT_PUBLIC_PHOTOS_BASE_URL;
+	if (base) return `${base.replace(/\/+$/, "")}/${key}`;
 	return `/api/photos/${key}`;
 }

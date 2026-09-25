@@ -126,7 +126,7 @@ main への push を Cloudflare の [Workers Builds](https://developers.cloudfla
 | Build command | `npm run cf:build` |
 | Deploy command | `npm run db:migrate:remote && npm run cf:deploy` |
 | Git branch | `main` |
-| Build variables | `D1_DATABASE_ID`, `APP_HOSTNAME` |
+| Build variables | `D1_DATABASE_ID`, `APP_HOSTNAME`, `NEXT_PUBLIC_PHOTOS_BASE_URL` |
 
 `wrangler.jsonc` は追跡していないため、`npm run cf:config` が雛形のプレースホルダを
 これらの変数で埋めて生成する。手元に `wrangler.jsonc` がある場合は上書きしない。
@@ -163,3 +163,19 @@ npx wrangler secret put ALLOWED_EMAILS
 npm run db:migrate:remote
 npm run cf:deploy
 ```
+
+## 写真の配信
+
+写真は R2 のカスタムドメインから CDN が直に返す。Worker を経由しない。
+
+Route Handler (`/api/photos`) 経由だと写真 1 枚につき Worker が 1 回起動し、その
+すべてで Auth.js のセッション復号が走る。CDN から直に返せば Worker は起動しない。
+
+**引き換えに、写真は URL を知っていれば認証なしで取得できる。** キーが UUID v4 で
+推測できないことに依存している。バケットの一覧は公開されないため列挙もできない。
+記録の中身は D1 にあり、今まで通り認証の内側にある。
+
+配信の基底 URL は `NEXT_PUBLIC_PHOTOS_BASE_URL` で渡す。`photoUrl()` は `next build`
+時に値が埋め込まれるため、変えたら再ビルドが要る。渡さないときは `/api/photos` へ
+落ちる。手元では写真が Miniflare のローカル R2 に入りカスタムドメインから取れない
+ため、この経路が必ず要る。
