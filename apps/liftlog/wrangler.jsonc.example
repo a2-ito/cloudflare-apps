@@ -1,0 +1,31 @@
+/**
+ * wrangler.jsonc の雛形。公開ホスト名を含む wrangler.jsonc は追跡しない。
+ * `npm run cf:config` で環境変数 APP_HOSTNAME を埋めて生成する。
+ */
+{
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"name": "liftlog",
+	"main": ".open-next/worker.js",
+	"compatibility_date": "2026-09-11",
+	"compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
+	"assets": {
+		"binding": "ASSETS",
+		"directory": ".open-next/assets"
+	},
+	"services": [
+		{
+			"binding": "WORKER_SELF_REFERENCE",
+			"service": "liftlog"
+		}
+	],
+	"routes": [
+		{
+			"pattern": "__APP_HOSTNAME__",
+			"custom_domain": true
+		}
+	],
+	"observability": {
+		"enabled": true
+	},
+	"upload_source_maps": true
+}
