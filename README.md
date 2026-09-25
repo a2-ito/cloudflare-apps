@@ -14,6 +14,7 @@ Cloudflare Workers で動く Next.js アプリをまとめたモノレポ。
 | [tabilog](apps/tabilog) | https://tabilog.a2ito.work | `tabilog` | 旅先の食事・買い物を記録して振り返る旅行メモ |
 | [sakelog](apps/sakelog) | https://sakelog.a2ito.work | `sakelog` | ワインから日本酒まで、飲んだお酒を 5 軸の評価付きで残すメモ |
 | [kcalog](apps/kcalog) | https://kcalog.a2ito.work | `kcalog` | 食べたものとカロリーを記録して 1 日の摂取量を振り返るメモ |
+| [liftlog](apps/liftlog) | https://liftlog.a2ito.work | `liftlog` | 目標から今日のメニューを提案し、実際の重量と回数を残す筋トレ記録（準備中） |
 | [lifelog](apps/lifelog) | https://lifelog.a2ito.work | `lifelog` | 日々の出来事を写真付きの日記として残すライフログ（準備中） |
 | [account-book](apps/account-book) | https://account-book.a2ito.work | `account-book` | グループ単位で管理する家計簿 |
 | [exam-lab](apps/exam-lab) | https://exam-lab.a2ito.work | `exam-lab` | 資格試験の問題を管理・学習する |
